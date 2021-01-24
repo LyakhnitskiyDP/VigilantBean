@@ -26,8 +26,14 @@ public class ProductRetrievalServiceImpl implements ProductRetrievalService {
     @Value("${interface.numberOfProductsPerPage}")
     private Integer numberOfProductsPerPage;
 
-    @Autowired
     private ProductRetrievalRepository productRetrievalRepository;
+
+    public ProductRetrievalServiceImpl(
+            @Autowired
+            ProductRetrievalRepository productRetrievalRepository) {
+
+        this.productRetrievalRepository = productRetrievalRepository;
+    }
 
     @Override
     public List<Product> getAllProducts(int pageNumber) {
