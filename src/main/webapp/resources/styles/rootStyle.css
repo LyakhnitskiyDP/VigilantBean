@@ -1,0 +1,35 @@
+:root {
+  /* h1, h2, ... , legends, label */
+  --hex-shadow-light: #E1DCD9;
+  --rgb-shadow-light: 225, 220, 217;
+
+  /* paragraphs, captions, etc */
+  --hex-shadow-dark: #8F8681;
+  --rgb-shadow-dark: 143, 134, 129;
+
+  --hex-main-light: #A67F78;
+  --rgb-main-light: 166, 127, 120;
+
+  --hex-main-dark: #3E3C3C;
+  --rgb-main-dark: 62, 60, 60;
+
+  --hex-main-bright: #E64346;
+  --rgb-main-bright: 230, 67, 70;
+
+  --rgb-background: 18, 16, 19;
+  --hex-background: #121013;
+
+  /* Font */
+  font-size: calc(1rem + .5vmax);
+  font-family: pacifico;
+}
+
+@font-face {
+  font-family: merriweather;
+  src: url('fonts/Pacifico.ttf');
+}
+
+@font-face {
+  font-family: pacifico;
+  src: url('fonts/Merriweather.ttf');
+}

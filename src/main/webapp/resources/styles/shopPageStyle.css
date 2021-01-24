@@ -1,0 +1,135 @@
+
+/* Header showcase */
+#header-showcase {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 15vh;
+  border-top: 1px solid var(--hex-main-bright);
+}
+
+#header-showcase h1 {
+  color: var(--hex-shadow-light);
+  background-color: rgba(var(--rgb-main-bright), .75);
+  border-radius: .3em;
+  width: fit-content;
+  margin: auto;
+  margin-top: 1em;
+  padding-bottom: .0em;
+  padding: 0 .5em .1em;
+  text-align: center;
+}
+
+/* Main */
+.content {
+  display: flex;
+  margin: .75em;
+}
+
+#sort-by-label {
+  color: var(--hex-shadow-light);
+}
+
+#product-area {
+  min-width: 75%;
+}
+
+.product-showcase {
+  flex-wrap: wrap;
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Products section */
+select {
+  height: 1.5rem;
+  border-radius: .5em;
+  font-size: 1rem;
+  font-family: 'pacifico';
+  background: var(--hex-shadow-light);
+}
+
+select:hover {
+  border-radius: .5em;
+}
+
+.product-item {
+  flex-grow: 1;
+  width: 25%;
+  text-align: center;
+  margin: 1em;
+  flex-grow: inherit;
+  cursor: pointer;
+}
+
+.product-item .product-name {
+  color: var(--hex-shadow-light);
+}
+
+.product-item .product-description {
+  font-size: 0.75rem;
+}
+
+.product-item img {
+    width: 100%;
+}
+
+/* Categories section */
+#categories-area {
+  min-width: 25%;
+}
+
+#categories-area > p {
+  text-align: left;
+  padding-bottom: 2px;
+  border-bottom: 2px solid;
+  color: var(--hex-shadow-light)
+}
+
+#categories-area ul object {
+  width: .8rem;
+  padding-right: .25rem;
+  color: red;
+}
+
+#categories-area ul object svg path {
+  fill: currentcolor;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li {
+    margin: 1em 0;
+}
+
+ul .category-label {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul .category-label:hover {
+    color: var(--hex-shadow-light);
+}
+
+/* Pages List */
+#pages-list {
+    display: flex;
+    width: 80%;
+    margin: auto;
+    justify-content: space-evenly;
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+.page-number-label {
+    color: var(--hex-background);
+    font-size: 1.25rem;
+    background: rgba(var(--rgb-main-bright), .75);
+    padding: .5rem;
+    border-radius: .25rem;
+}
+
+

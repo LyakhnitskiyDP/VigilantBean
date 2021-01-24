@@ -1,0 +1,29 @@
+header {
+  justify-content: space-around;
+  display: flex;
+  min-height: 10vh;
+  align-items: center;
+  border-bottom: 1px solid var(--hex-main-bright);
+}
+
+header a {
+    text-decoration: none;
+    color: var(--hex-main-bright);
+}
+
+header * {
+  display: inline;
+}
+
+header .logo img {
+    height: 75;
+}
+
+#page-navigation * {
+  padding: 0 .5rem;
+
+}
+
+#user-navigation * {
+  padding: 0 1rem;
+}

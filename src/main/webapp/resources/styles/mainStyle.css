@@ -1,0 +1,19 @@
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--hex-background);
+  color: var(--hex-shadow-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header {
+  color: var(--hex-main-bright);
+}
+
+footer {
+  color: var(--hex-main-bright);
+}
