@@ -2,6 +2,8 @@ package com.ldp.vigilantBean.repository.impl;
 
 import com.ldp.vigilantBean.domain.Category;
 import com.ldp.vigilantBean.repository.CategoryRetrievalRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import java.util.Optional;
 
 @Repository
 public class CategoryRetrievalRepositoryImpl implements CategoryRetrievalRepository {
+
+    private static final Logger log =
+            LogManager.getLogger(CategoryRetrievalRepositoryImpl.class.getName());
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -30,6 +35,8 @@ public class CategoryRetrievalRepositoryImpl implements CategoryRetrievalReposit
                             );
 
         } catch (NoResultException noResultException) {
+
+            log.info("Attempting to access non-existing category: " + categoryName);
 
             return Optional.empty();
         }

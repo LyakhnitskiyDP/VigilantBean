@@ -97,7 +97,7 @@ public class ProductRetrievalRepositoryImpl implements ProductRetrievalRepositor
             return Optional.of(product);
         } catch (NoResultException noResultException) {
 
-            log.info("Attempting to access non-existing products with id: " + id);
+            log.info("Attempting to access non-existing product with id: " + id);
 
             return Optional.empty();
         }
