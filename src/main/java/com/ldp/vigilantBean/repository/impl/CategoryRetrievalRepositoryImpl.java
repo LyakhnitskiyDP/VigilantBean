@@ -19,8 +19,11 @@ public class CategoryRetrievalRepositoryImpl implements CategoryRetrievalReposit
     private static final Logger log =
             LogManager.getLogger(CategoryRetrievalRepositoryImpl.class.getName());
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+    public CategoryRetrievalRepositoryImpl(@Autowired SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Optional<Category> getCategoryByName(String categoryName) {

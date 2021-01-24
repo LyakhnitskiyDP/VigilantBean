@@ -30,8 +30,11 @@ public class ProductRetrievalRepositoryImpl implements ProductRetrievalRepositor
     @Value("${interface.numberOfProductsPerPage}")
     private Integer numberOfProductsPerPage;
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+    public ProductRetrievalRepositoryImpl(@Autowired SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     @SuppressWarnings("unchecked")
