@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "app_user")
 public class AppUser {
 
     @Id
@@ -16,13 +17,10 @@ public class AppUser {
     @JoinTable(name = "user_role",
                joinColumns = @JoinColumn(name = "user_id"),
                inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> authorities;
+    private List<Role> roles;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "second_name")
-    private String secondName;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -33,6 +31,12 @@ public class AppUser {
     @Column(name = "registration_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
+
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @Column(name = "not_locked")
+    private boolean notLocked;
 
     @Override
     public boolean equals(Object o) {
@@ -55,20 +59,20 @@ public class AppUser {
         this.appUserId = appUserId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -93,5 +97,21 @@ public class AppUser {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isNotLocked() {
+        return notLocked;
+    }
+
+    public void setNotLocked(boolean notLocked) {
+        this.notLocked = notLocked;
     }
 }

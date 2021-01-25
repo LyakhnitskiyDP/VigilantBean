@@ -1,3 +1,6 @@
+DROP TABLE user_role IF EXISTS;
+DROP TABLE role IF EXISTS;
+DROP TABLE app_user IF EXISTS;
 
 DROP TABLE product_picture IF EXISTS;
 DROP TABLE category_picture IF EXISTS;
@@ -53,6 +56,25 @@ CREATE TABLE product_picture (
     picture_id INTEGER FOREIGN KEY REFERENCES picture (picture_id),
     product_id INTEGER FOREIGN KEY REFERENCES product (product_id),
     CONSTRAINT pk_product_picture PRIMARY KEY (picture_id, product_id)
+)
+
+CREATE TABLE app_user (
+    user_id INTEGER PRIMARY KEY,
+    user_name VARCHAR(100) NOT NULL,
+    PASSWORD VARCHAR(512) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    registration_date TIMESTAMP DEFAULT NOW()
+)
+
+CREATE TABLE role (
+    role_id INTEGER PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+)
+
+CREATE TABLE user_role (
+    user_id INTEGER FOREIGN KEY REFERENCES app_user (user_id),
+    role_id INTEGER FOREIGN KEY REFERENCES role (role_id),
+    CONSTRAINT pk_user_role PRIMARY KEY (user_id, role_id)
 )
 
 
