@@ -23,12 +23,12 @@ public class AppUserRetrievalRepositoryImpl implements AppUserRetrievalRepositor
     }
 
     @Override
-    public Optional<AppUser> getUserByUsername(String username) {
+    public Optional<AppUser> getUserByEmail(String email) {
 
         try (Session session = sessionFactory.openSession()) {
 
-            AppUser user = session.createNamedQuery(AppUser.GET_APP_USER_BY_USERNAME, AppUser.class)
-                                  .setParameter("username", username)
+            AppUser user = session.createNamedQuery(AppUser.GET_APP_USER_BY_EMAIL, AppUser.class)
+                                  .setParameter("email", email)
                                   .getSingleResult();
 
             return Optional.of(user);

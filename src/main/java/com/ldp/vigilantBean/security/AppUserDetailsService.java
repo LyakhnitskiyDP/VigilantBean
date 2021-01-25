@@ -23,15 +23,15 @@ public class AppUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
         Optional<AppUser> optUser =
-                appUserRetrievalRepository.getUserByUsername(username);
+                appUserRetrievalRepository.getUserByEmail(email);
 
         UserDetails userDetails =
                 new AppUserDetails(optUser.orElseThrow(
-                        () -> new UsernameNotFoundException(username + " cannot be found") )
+                        () -> new UsernameNotFoundException(email + " cannot be found") )
                 );
 
         return userDetails;

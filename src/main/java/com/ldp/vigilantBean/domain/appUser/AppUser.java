@@ -8,13 +8,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "app_user")
 @NamedQueries({
-        @NamedQuery(name = AppUser.GET_APP_USER_BY_USERNAME,
+        @NamedQuery(name = AppUser.GET_APP_USER_BY_EMAIL,
                     query = "from AppUser appUser " +
-                            "where appUser.username = :username")
+                            "where appUser.email = :email")
 })
 public class AppUser {
 
-    public static final String GET_APP_USER_BY_USERNAME =
+    public static final String GET_APP_USER_BY_EMAIL =
             "AppUser.getAppUserByUsername";
 
     @Id
