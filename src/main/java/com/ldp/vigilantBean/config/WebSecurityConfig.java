@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public WebSecurityConfig(
             @Autowired
             AuthenticationProvider authenticationProvider) {
-
+        this.authenticationProvider = authenticationProvider;
     }
 
     @Override
@@ -38,12 +38,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.authenticationProvider(authenticationProvider);
     }
-
-    @Bean(name = "sCryptPasswordEncoder")
-    public PasswordEncoder sCryptPasswordEncoder() {
-
-        return new SCryptPasswordEncoder();
-    }
-
 
 }

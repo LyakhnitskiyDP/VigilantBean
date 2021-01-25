@@ -5,10 +5,12 @@ import com.ldp.vigilantBean.repository.AppUserRetrievalRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import java.util.Optional;
 
+@Repository
 public class AppUserRetrievalRepositoryImpl implements AppUserRetrievalRepository {
 
     private SessionFactory sessionFactory;
