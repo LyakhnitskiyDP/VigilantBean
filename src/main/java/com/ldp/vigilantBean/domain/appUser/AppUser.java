@@ -7,7 +7,15 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "app_user")
+@NamedQueries({
+        @NamedQuery(name = AppUser.GET_APP_USER_BY_USERNAME,
+                    query = "from AppUser appUser " +
+                            "where appUser.username = :username")
+})
 public class AppUser {
+
+    public static final String GET_APP_USER_BY_USERNAME =
+            "AppUser.getAppUserByUsername";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
