@@ -28,8 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests()
-                    .antMatchers("/signUp/**")
-                    .permitAll();
+                    .antMatchers("/shop/**")
+                    .authenticated();
 
     }
 

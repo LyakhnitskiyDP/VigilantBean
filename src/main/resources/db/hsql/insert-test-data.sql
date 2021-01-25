@@ -17,13 +17,13 @@ INSERT INTO product (product_id,
                      ingredients,
                      allergy_information)
     VALUES (1, '1Holy beans', 'Coffee beans with magic power', 5, 200, 10, 3, 11.99, 'Brazil', 'SISCO', 'Beans', 'None'),
-       (2, '2Jelly Beans', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
-      (3, '3Chocolate Beans', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
-     (4, '4Wooden Beans', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
-    (5, '5Milk', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
-   (6, '6Cheese', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
-  (7, '7Chocolate cream', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
-(8, '8Ultra cool beans', 'Just plain coffee beans here, nothing special', 5, 200, 10, 3, 11.99, 'Russia', 'SISCO', 'Beans', 'None');
+           (2, '2Jelly Beans', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
+           (3, '3Chocolate Beans', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
+           (4, '4Wooden Beans', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
+           (5, '5Milk', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
+           (6, '6Cheese', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
+           (7, '7Chocolate cream', 'It is not coffee beans, but it is beans', 5, 200, 10, 3, 11.99, 'Argentina', 'SISCO', 'Beans', 'None'),
+           (8, '8Ultra cool beans', 'Just plain coffee beans here, nothing special', 5, 200, 10, 3, 11.99, 'Russia', 'SISCO', 'Beans', 'None');
 
 INSERT INTO product_category (product_id, category_id)
     VALUES (1, 1),
@@ -46,3 +46,13 @@ INSERT INTO category_picture (picture_id, category_id)
     VALUES (1, 1),
            (2, 2),
            (3, 3);
+
+INSERT INTO app_user (user_id, username, password, email)
+    VALUES (1, 'cody', '$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG', 'HamsterGo2014@yandex.ru');
+
+INSERT INTO role (role_id, name)
+    VALUES (1, 'customer'),
+           (2, 'admin');
+
+INSERT INTO user_role (user_id, role_id)
+    VALUES (1, 1);

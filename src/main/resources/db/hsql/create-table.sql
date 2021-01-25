@@ -60,7 +60,7 @@ CREATE TABLE product_picture (
 
 CREATE TABLE app_user (
     user_id INTEGER PRIMARY KEY,
-    user_name VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL,
     password VARCHAR(512) NOT NULL,
     email VARCHAR(100) NOT NULL,
     registration_date TIMESTAMP DEFAULT NOW()
