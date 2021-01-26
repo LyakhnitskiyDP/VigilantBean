@@ -1,5 +1,6 @@
 package com.ldp.vigilantBean.controller;
 
+import com.ldp.vigilantBean.domain.appUser.AppUserDTO;
 import com.ldp.vigilantBean.domain.registration.RegistrationRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +26,7 @@ public class RegistrationController {
     @RequestMapping(method = RequestMethod.GET)
     public String getRegistrationForm(Model model) {
 
+        model.addAttribute("newUser", new AppUserDTO());
         return "registration";
     }
 
