@@ -16,16 +16,7 @@ import java.util.regex.Pattern;
 @Component
 public class NewUserValidator implements Validator {
 
-
-    private Map<Pattern, String> regexPasswordPatterns;
-
-    {
-        regexPasswordPatterns = Map.of(Pattern.compile(".*\\d"), "must contain digits",
-                                       Pattern.compile(".*[a-z]"), "must contain lower-case letters",
-                                       Pattern.compile(".{8,}"), "must be at least 8 characters");
-
-    }
-
+    private PasswordValidator passwordValidator;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -42,18 +33,11 @@ public class NewUserValidator implements Validator {
     private void checkPassword(final String password,
                                final Errors errors) {
 
-        regexPasswordPatterns.forEach(
-                (pattern, description) -> {
-
-                    if (!pattern.matcher(password).matches())
-                        errors.rejectValue(password, description);
-                }
-        );
     }
 
     private void checkEmail(AppUserDTO user, Errors errors) {
 
-        
+
     }
 
     private void checkUsername(AppUserDTO user, Errors errors) {
