@@ -1,22 +1,30 @@
 package com.ldp.vigilantBean.validator;
 
 
-import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.appUser.AppUserDTO;
+import com.ldp.vigilantBean.repository.AppUserRetrievalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 @Component
 public class NewUserValidator implements Validator {
 
-    private PasswordValidator passwordValidator;
+    private PasswordValidator regexPasswordValidator;
+
+    private AppUserRetrievalRepository appUserRetrievalRepository;
+
+    public NewUserValidator(
+            @Autowired
+            PasswordValidator regexPasswordValidator,
+            @Autowired
+            AppUserRetrievalRepository appUserRetrievalRepository) {
+
+        this.appUserRetrievalRepository = appUserRetrievalRepository;
+
+        this.regexPasswordValidator = regexPasswordValidator;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -26,21 +34,28 @@ public class NewUserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
+        AppUserDTO user = (AppUserDTO) target;
 
+        regexPasswordValidator.validate(user.getPassword(), errors);
 
-    }
+        checkEmail(user, errors);
 
-    private void checkPassword(final String password,
-                               final Errors errors) {
-
+        checkUsername(user, errors);
     }
 
     private void checkEmail(AppUserDTO user, Errors errors) {
 
+        String email = user.getEmail();
+        boolean isEmailPresent = appUserRetrievalRepository.getUserByEmail(email)
+                                                           .isPresent();
 
+        if (isEmailPresent)
+            errors.rejectValue("email", "Email is already taken");
     }
 
     private void checkUsername(AppUserDTO user, Errors errors) {
 
+        if (user.getUsername().length() < 3)
+            errors.rejectValue("username", "Username is too short");
     }
 }

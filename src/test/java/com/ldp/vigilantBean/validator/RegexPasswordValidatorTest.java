@@ -3,19 +3,17 @@ package com.ldp.vigilantBean.validator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
 import java.util.List;
 import java.util.Map;
 
-public class PasswordValidatorTest {
+public class RegexPasswordValidatorTest {
 
-    private static PasswordValidator passwordValidator;
+    private static RegexPasswordValidator regexPasswordValidator;
 
     private static List<String> errorDescriptor =
             List.of("mustContainDigits",
@@ -31,7 +29,7 @@ public class PasswordValidatorTest {
                         errorDescriptor.get(1), "(?=.*[A-Z]).+",
                         errorDescriptor.get(2),".{8,}");
 
-        passwordValidator = new PasswordValidator(regexPasswordPatterns);
+        regexPasswordValidator = new RegexPasswordValidator(regexPasswordPatterns);
 
     }
 
@@ -42,7 +40,7 @@ public class PasswordValidatorTest {
         Errors errors =
                 new BeanPropertyBindingResult(validPassword, "validPassword");
 
-        passwordValidator.validate(validPassword, errors);
+        regexPasswordValidator.validate(validPassword, errors);
 
         Assertions.assertFalse(errors.hasErrors());
     }
@@ -55,7 +53,7 @@ public class PasswordValidatorTest {
         Errors errors =
                 new BeanPropertyBindingResult(invalidPassword, "invalidPassword");
 
-        passwordValidator.validate(invalidPassword, errors);
+        regexPasswordValidator.validate(invalidPassword, errors);
 
         Assertions.assertTrue(
                 errors.getAllErrors().stream()
@@ -73,7 +71,7 @@ public class PasswordValidatorTest {
         Errors errors =
                 new BeanPropertyBindingResult(invalidPassword, "invalidPassword");
 
-        passwordValidator.validate(invalidPassword, errors);
+        regexPasswordValidator.validate(invalidPassword, errors);
 
         Assertions.assertTrue(
                 errors.getAllErrors().stream()
@@ -91,7 +89,7 @@ public class PasswordValidatorTest {
         Errors errors =
                 new BeanPropertyBindingResult(invalidPassword, "invalidPassword");
 
-        passwordValidator.validate(invalidPassword, errors);
+        regexPasswordValidator.validate(invalidPassword, errors);
 
         Assertions.assertTrue(
                 errors.getAllErrors().stream()
