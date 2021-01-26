@@ -25,6 +25,15 @@ public class AppUserDTO implements Serializable {
         return Objects.hash(email);
     }
 
+    @Override
+    public String toString() {
+        return "AppUserDTO{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public String getUsername() {
         return username;
     }
@@ -48,4 +57,6 @@ public class AppUserDTO implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

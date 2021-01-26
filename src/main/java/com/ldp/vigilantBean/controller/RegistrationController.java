@@ -16,11 +16,11 @@ public class RegistrationController {
             LogManager.getLogger(RegistrationController.class.getName());
 
     @PostMapping
-    public void register(
-            @RequestBody
-            RegistrationRequest registrationRequest) {
+    public void register(@ModelAttribute("newUser") AppUserDTO newUser) {
 
-       log.info("Got a registration request: " + registrationRequest.getEmail());
+        log.info("New user registration: " +
+                newUser.toString());
+
     }
 
     @RequestMapping(method = RequestMethod.GET)
