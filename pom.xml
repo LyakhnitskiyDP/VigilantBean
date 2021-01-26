@@ -17,6 +17,8 @@
         <spring.security.version>5.4.2</spring.security.version>
 
         <hibernate.version>5.4.27.Final</hibernate.version>
+
+        <junit.version>5.7.0</junit.version>
     </properties>
 
     <dependencies>
@@ -100,14 +102,21 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.4.0</version>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>5.7.0</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 

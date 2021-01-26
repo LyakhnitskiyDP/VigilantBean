@@ -15,11 +15,11 @@ import java.util.regex.Pattern;
 @PropertySource("classpath:regexPasswordPatterns.properties")
 class PasswordValidator implements Validator {
 
-    private Map<Pattern, String> passwordPatterns;
+    private final Map<Pattern, String> passwordPatterns;
 
 
     public PasswordValidator(
-            @Value("${passwordPatterns")
+            @Value("#{${passwordPatterns}}")
             Map<String, String> regexPasswordPatterns) {
 
        passwordPatterns = new HashMap<>();
@@ -30,6 +30,7 @@ class PasswordValidator implements Validator {
                    passwordPatterns.put(Pattern.compile(pattern), description);
                }
        );
+
     }
 
 
@@ -47,7 +48,7 @@ class PasswordValidator implements Validator {
                (pattern, description) -> {
 
                    if (!pattern.matcher(password).matches())
-                       errors.rejectValue("password", description);
+                       errors.reject("password", description);
                }
        );
 
