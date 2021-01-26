@@ -1,0 +1,1 @@
+<h1>Hello, it is registration</h1>

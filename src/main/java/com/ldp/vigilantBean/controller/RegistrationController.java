@@ -1,20 +1,31 @@
 package com.ldp.vigilantBean.controller;
 
 import com.ldp.vigilantBean.domain.registration.RegistrationRequest;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/signUp")
 public class RegistrationController {
 
-   public String register(
-           @RequestBody
-           RegistrationRequest registrationRequest) {
+    private static final Logger log =
+            LogManager.getLogger(RegistrationController.class.getName());
 
+    @PostMapping
+    public void register(
+            @RequestBody
+            RegistrationRequest registrationRequest) {
 
-     return "hello";
-   }
+       log.info("Got a registration request: " + registrationRequest.getEmail());
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String getRegistrationForm(Model model) {
+
+        return "registration";
+    }
 
 }
