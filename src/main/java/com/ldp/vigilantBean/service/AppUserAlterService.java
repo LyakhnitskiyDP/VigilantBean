@@ -1,12 +1,12 @@
-package com.ldp.vigilantBean.repository;
+package com.ldp.vigilantBean.service;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 
 import java.util.Optional;
 
-public interface AppUserAlterRepository {
+public interface AppUserAlterService {
 
-    Optional<AppUser> registerUser(AppUser appUserDTO);
+    Optional<AppUser> registerUser(AppUserDTO appUserDTO);
 
 }

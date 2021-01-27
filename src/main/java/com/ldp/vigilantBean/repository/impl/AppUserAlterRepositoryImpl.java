@@ -23,7 +23,7 @@ public class AppUserAlterRepositoryImpl implements AppUserAlterRepository {
 
 
     @Override
-    public Optional<AppUser> signUpUser(AppUser appUser) {
+    public Optional<AppUser> registerUser(AppUser appUser) {
 
         try (Session session = sessionFactory.openSession()) {
 
@@ -34,7 +34,7 @@ public class AppUserAlterRepositoryImpl implements AppUserAlterRepository {
             tx.commit();
 
             return Optional.of(appUser);
-        } 
+        }
     }
 
 }
