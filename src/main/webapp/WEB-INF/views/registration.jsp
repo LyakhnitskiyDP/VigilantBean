@@ -28,7 +28,8 @@
 
   <section class="form-container">
 
-    <form:form method="POST" modelAttribute="newUser">
+    <spring:url value="" var="registrationURL" />
+    <form:form action="signUp" method="POST" modelAttribute="newUser">
 
         <fieldset>
 

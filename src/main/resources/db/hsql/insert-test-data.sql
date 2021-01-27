@@ -47,12 +47,12 @@ INSERT INTO category_picture (picture_id, category_id)
            (2, 2),
            (3, 3);
 
-INSERT INTO app_user (user_id, username, password, email)
+INSERT INTO app_user (app_user_id, username, password, email)
     VALUES (1, 'cody', '$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG', 'HamsterGo2014@yandex.ru');
 
 INSERT INTO role (role_id, name)
     VALUES (1, 'customer'),
            (2, 'admin');
 
-INSERT INTO user_role (user_id, role_id)
+INSERT INTO user_role (app_user_id, role_id)
     VALUES (1, 1);

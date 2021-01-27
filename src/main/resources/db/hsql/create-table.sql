@@ -59,11 +59,13 @@ CREATE TABLE product_picture (
 )
 
 CREATE TABLE app_user (
-    user_id INTEGER PRIMARY KEY,
+    app_user_id INTEGER PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
     password VARCHAR(512) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    registration_date TIMESTAMP DEFAULT NOW()
+    registration_date TIMESTAMP DEFAULT NOW(),
+    enabled BOOLEAN DEFAULT TRUE,
+    not_locked BOOLEAN DEFAULT FALSE
 )
 
 CREATE TABLE role (
@@ -72,9 +74,9 @@ CREATE TABLE role (
 )
 
 CREATE TABLE user_role (
-    user_id INTEGER FOREIGN KEY REFERENCES app_user (user_id),
+    app_user_id INTEGER FOREIGN KEY REFERENCES app_user (app_user_id),
     role_id INTEGER FOREIGN KEY REFERENCES role (role_id),
-    CONSTRAINT pk_user_role PRIMARY KEY (user_id, role_id)
+    CONSTRAINT pk_user_role PRIMARY KEY (app_user_id, role_id)
 )
 
 

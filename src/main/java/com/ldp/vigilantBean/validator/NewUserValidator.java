@@ -11,19 +11,13 @@ import org.springframework.validation.Validator;
 @Component
 public class NewUserValidator implements Validator {
 
-    private PasswordValidator regexPasswordValidator;
-
     private AppUserRetrievalRepository appUserRetrievalRepository;
 
     public NewUserValidator(
             @Autowired
-            PasswordValidator regexPasswordValidator,
-            @Autowired
             AppUserRetrievalRepository appUserRetrievalRepository) {
 
         this.appUserRetrievalRepository = appUserRetrievalRepository;
-
-        this.regexPasswordValidator = regexPasswordValidator;
     }
 
     @Override
@@ -36,11 +30,10 @@ public class NewUserValidator implements Validator {
 
         AppUserDTO user = (AppUserDTO) target;
 
-        regexPasswordValidator.validate(user.getPassword(), errors);
-
         checkEmail(user, errors);
-
         checkUsername(user, errors);
+
+        System.out.println("Errors? " + errors.hasErrors());
     }
 
     private void checkEmail(AppUserDTO user, Errors errors) {

@@ -13,7 +13,7 @@
     <spring:url value="/resources/styles/includesStyles/headerStyle.css" var="headerStyle" />
     <spring:url value="/resources/styles/includesStyles/footerStyle.css" var="footerStyle" />
 
-    <title>Vigilant bean</title>
+    <title>Vigilant Bean</title>
 
     <link rel="stylesheet" href="${rootStyle}" />
     <link rel="stylesheet" href="${mainStyle}" />

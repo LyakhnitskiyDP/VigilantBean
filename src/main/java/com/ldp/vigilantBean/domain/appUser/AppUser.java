@@ -15,15 +15,16 @@ import java.util.Objects;
 public class AppUser {
 
     public static final String GET_APP_USER_BY_EMAIL =
-            "AppUser.getAppUserByUsername";
+            "AppUser.getAppUserByEmail";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "app_user_id")
     private Long appUserId;
 
     @ManyToMany
     @JoinTable(name = "user_role",
-               joinColumns = @JoinColumn(name = "user_id"),
+               joinColumns = @JoinColumn(name = "app_user_id"),
                inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
