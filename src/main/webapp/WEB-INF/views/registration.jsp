@@ -9,6 +9,7 @@
 
     <spring:url value="/resources/styles/rootStyle.css" var="rootStyle" />
     <spring:url value="/resources/styles/mainStyle.css" var="mainStyle" />
+    <spring:url value="/resources/styles/registrationPageStyle.css" var="registrationStyle" />
     <spring:url value="/resources/styles/includesStyles/headerStyle.css" var="headerStyle" />
     <spring:url value="/resources/styles/includesStyles/footerStyle.css" var="footerStyle" />
 
@@ -19,6 +20,8 @@
     <link rel="stylesheet" href="${mainStyle}" />
     <link rel="stylesheet" href="${headerStyle}" />
     <link rel="stylesheet" href="${footerStyle}" />
+
+    <link rel="stylesheet" href="${registrationStyle}"
 </head>
 <body>
 
@@ -37,52 +40,61 @@
 
             <div class="form-group">
 
+              <div class="input-group" />
                 <label class="form-label" for="username">
-                    Username
+                    <spring:message code="view.registration.username.label" />
                 </label>
 
                 <div class="form-input-field">
 
                     <form:input id="username" path="username"
                                 type="text" />
-
-                    <form:errors path="username" cssClass="label-error" />
-
                 </div>
+              </div>
+
+              <div class="error-group" />
+                <form:errors path="username" cssClass="label-error" />
+              </div>
 
             </div>
 
             <div class="form-group">
 
+              <div class="input-group">
                 <label class="form-label" for="email">
-                    Email
+                  <spring:message code="view.registration.email.label" />
                 </label>
 
                 <div class="form-input-field">
 
                     <form:input id="email" path="email"
                                 type="text" />
-
-                    <form:errors path="email" cssClass="label-error" />
-
                 </div>
+              </div>
+
+              <div class="error-group">
+                <form:errors path="email" cssClass="label-error" />
+              </div>
 
             </div>
 
             <div class="form-group">
 
+              <div class="input-group">
                 <label class="form-label" for="password">
-                    Password
+                  <spring:message code="view.registration.password.label" />
                 </label>
 
                 <div class="form-input-field">
 
                     <form:input id="password" path="password"
                                 type="password" />
-
-                    <form:errors path="password" cssClass="label-error" />
-
                 </div>
+              </div>
+
+              <div class="error-group">
+                <form:errors path="password" cssClass="label-error" />
+              </div>
 
             </div>
 
