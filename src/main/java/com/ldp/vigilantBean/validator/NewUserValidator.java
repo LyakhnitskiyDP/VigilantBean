@@ -8,16 +8,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.ConstraintViolation;
+import java.util.Set;
+
 @Component
 public class NewUserValidator implements Validator {
 
     private AppUserRetrievalRepository appUserRetrievalRepository;
 
+    private javax.validation.Validator beanValidator;
+
     public NewUserValidator(
             @Autowired
-            AppUserRetrievalRepository appUserRetrievalRepository) {
+            AppUserRetrievalRepository appUserRetrievalRepository,
+            @Autowired
+            javax.validation.Validator validator) {
 
         this.appUserRetrievalRepository = appUserRetrievalRepository;
+        this.beanValidator = validator;
     }
 
     @Override
@@ -28,12 +36,20 @@ public class NewUserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
+        Set<ConstraintViolation<Object>> constraintViolations =
+                beanValidator.validate(target);
+
+        for (ConstraintViolation<Object> violation : constraintViolations) {
+
+            String propertyPath = violation.getPropertyPath().toString();
+            String message = violation.getMessage();
+
+            errors.rejectValue(propertyPath, message);
+        }
+
         AppUserDTO user = (AppUserDTO) target;
 
         checkEmail(user, errors);
-        checkUsername(user, errors);
-
-        System.out.println("Errors? " + errors.hasErrors());
     }
 
     private void checkEmail(AppUserDTO user, Errors errors) {
@@ -43,12 +59,7 @@ public class NewUserValidator implements Validator {
                                                            .isPresent();
 
         if (isEmailPresent)
-            errors.rejectValue("email", "Email is already taken");
+            errors.rejectValue("email", "validation.newUser.email.isInUse");
     }
 
-    private void checkUsername(AppUserDTO user, Errors errors) {
-
-        if (user.getUsername().length() < 3)
-            errors.rejectValue("username", "Username is too short");
-    }
 }

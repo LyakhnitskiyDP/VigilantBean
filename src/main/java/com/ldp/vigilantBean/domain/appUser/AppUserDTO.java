@@ -1,15 +1,37 @@
 package com.ldp.vigilantBean.domain.appUser;
 
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class AppUserDTO implements Serializable {
 
+    @Size(
+            min = 4,
+            max = 40,
+            message = "validation.newUser.username.tooShort"
+    )
     private String username;
 
+    @Pattern(
+            regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,5}$",
+            message = "validation.newUser.email.isNotValid"
+    )
     private String email;
 
+    @Pattern(
+            regexp = ".*\\d",
+            message = "validation.newUser.password.noDigits"
+    )
+    @Pattern(
+            regexp = "(?=.*[A-Z]).+",
+            message = "validation.newUser.password.noUpperCaseLetters"
+    )
+    @Size(
+            min = 8,
+            message = "validation.newUser.password.tooShort"
+    )
     private String password;
 
     @Override
@@ -57,6 +79,5 @@ public class AppUserDTO implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 }

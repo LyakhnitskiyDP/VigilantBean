@@ -11,6 +11,10 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import org.hibernate.validator.HibernateValidatorFactory;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.ldp.vigilantBean")
@@ -55,6 +59,24 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8");
 
         return messageSource;
+    }
+
+    @Bean
+    public javax.validation.Validator validator() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        return factory.getValidator();
+    }
+
+    @Bean(name = "springValidator")
+    public LocalValidatorFactoryBean springValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }
+
+    @Override
+    public Validator getValidator(){
+        return springValidator();
     }
 
 }

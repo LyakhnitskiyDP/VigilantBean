@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/signUp")
@@ -19,19 +21,19 @@ public class RegistrationController {
     private static final Logger log =
             LogManager.getLogger(RegistrationController.class.getName());
 
-    private NewUserValidator userValidator;
+    private NewUserValidator newUserValidator;
 
     public RegistrationController(
             @Autowired
             NewUserValidator newUserValidator) {
 
-        this.userValidator = newUserValidator;
+        this.newUserValidator = newUserValidator;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String register(
             @ModelAttribute("newUser")
-            @Validated
+            @Valid
             AppUserDTO newUser,
             BindingResult bindingResult) {
 
@@ -52,9 +54,12 @@ public class RegistrationController {
     }
 
     @InitBinder
-    public void initialiseBinder(WebDataBinder binder) {
+    public void initializeBinder(WebDataBinder binder) {
 
-        binder.setValidator(userValidator);
+        binder.setValidator(newUserValidator);
     }
+
+
+
 
 }
