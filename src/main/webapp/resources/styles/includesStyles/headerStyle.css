@@ -13,6 +13,8 @@ header a {
 
 header * {
   display: inline;
+  width: 33%;
+  text-align: center;
 }
 
 header .logo img {

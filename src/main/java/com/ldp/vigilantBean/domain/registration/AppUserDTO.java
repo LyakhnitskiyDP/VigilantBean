@@ -1,4 +1,4 @@
-package com.ldp.vigilantBean.domain.appUser;
+package com.ldp.vigilantBean.domain.registration;
 
 
 import javax.validation.constraints.*;

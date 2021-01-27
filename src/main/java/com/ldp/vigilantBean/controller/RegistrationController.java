@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.controller;
 
-import com.ldp.vigilantBean.domain.appUser.AppUserDTO;
+import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.validator.NewUserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

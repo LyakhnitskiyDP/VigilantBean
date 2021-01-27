@@ -64,8 +64,8 @@ CREATE TABLE app_user (
     password VARCHAR(512) NOT NULL,
     email VARCHAR(100) NOT NULL,
     registration_date TIMESTAMP DEFAULT NOW(),
-    enabled BOOLEAN DEFAULT TRUE,
-    not_locked BOOLEAN DEFAULT FALSE
+    enabled BOOLEAN DEFAULT FALSE,
+    not_locked BOOLEAN DEFAULT TRUE
 )
 
 CREATE TABLE role (

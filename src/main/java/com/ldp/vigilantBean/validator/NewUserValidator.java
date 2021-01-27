@@ -1,7 +1,7 @@
 package com.ldp.vigilantBean.validator;
 
 
-import com.ldp.vigilantBean.domain.appUser.AppUserDTO;
+import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.repository.AppUserRetrievalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
