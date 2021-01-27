@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -41,17 +42,18 @@ public class RegistrationController {
             @ModelAttribute("newUser")
             @Valid
             AppUserDTO newUser,
-            BindingResult bindingResult) {
+            BindingResult bindingResult,
+            Model model) {
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        log.info("No errors found");
 
         registrationService.registerUser(newUser);
 
-        return "registration";
+        model.addAttribute("newUser", null);
+        return "redirect:/signUp/confirmEmail";
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -65,6 +67,12 @@ public class RegistrationController {
     public void initializeBinder(WebDataBinder binder) {
 
         binder.setValidator(newUserValidator);
+    }
+
+    @RequestMapping(value = "/confirmEmail")
+    public String getEmailConfirmPage() {
+
+        return "confirmEmailPage";
     }
 
 

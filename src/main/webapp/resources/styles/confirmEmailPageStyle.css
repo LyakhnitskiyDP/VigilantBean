@@ -1,0 +1,24 @@
+main {
+    width: 80%;
+    margin: auto;
+}
+
+#title {
+    width: 100%;
+    text-align: center;
+}
+
+#title img {
+    width: 25vmin;
+    margin: auto;
+}
+
+#title h1 {
+    color: var(--hex-shadow-light);
+}
+
+#description {
+    width: 80%;
+    text-align: center;
+    margin: auto;
+}

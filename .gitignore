@@ -2,6 +2,7 @@ target/
 src/main/resources/hibernateConfig.properties
 src/main/webapp/resources/images
 
+!src/main/webapp/resources/images/icons
 
 ### IntelliJ IDEA ###
 .idea
