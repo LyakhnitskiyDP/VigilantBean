@@ -68,7 +68,10 @@
     </div>
 
     <div id="categories-area">
-      <p>Categories</p>
+      <p>
+        <spring:message code="view.shop.categories.label" />
+      </p>
+
       <ul>
         <spring:url value="/resources/images/icons/coffee-bean.svg" var="coffeeBeanIcon" />
 
