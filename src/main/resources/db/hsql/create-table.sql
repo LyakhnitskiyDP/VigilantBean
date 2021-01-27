@@ -59,7 +59,7 @@ CREATE TABLE product_picture (
 )
 
 CREATE TABLE app_user (
-    app_user_id INTEGER PRIMARY KEY,
+    app_user_id INTEGER IDENTITY PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
     password VARCHAR(512) NOT NULL,
     email VARCHAR(100) NOT NULL,

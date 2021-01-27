@@ -18,7 +18,7 @@ public class AppUser {
             "AppUser.getAppUserByEmail";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "app_user_id")
     private Long appUserId;
 

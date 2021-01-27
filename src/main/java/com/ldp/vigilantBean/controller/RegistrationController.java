@@ -1,6 +1,7 @@
 package com.ldp.vigilantBean.controller;
 
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
+import com.ldp.vigilantBean.service.AppUserRegistrationService;
 import com.ldp.vigilantBean.validator.NewUserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,11 +24,16 @@ public class RegistrationController {
 
     private NewUserValidator newUserValidator;
 
+    private AppUserRegistrationService registrationService;
+
     public RegistrationController(
             @Autowired
-            NewUserValidator newUserValidator) {
+            NewUserValidator newUserValidator,
+            @Autowired
+            AppUserRegistrationService registrationService) {
 
         this.newUserValidator = newUserValidator;
+        this.registrationService = registrationService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -42,6 +48,8 @@ public class RegistrationController {
         }
 
         log.info("No errors found");
+
+        registrationService.registerUser(newUser);
 
         return "registration";
     }

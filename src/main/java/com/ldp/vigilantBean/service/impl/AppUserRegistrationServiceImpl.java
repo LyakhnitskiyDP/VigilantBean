@@ -3,18 +3,20 @@ package com.ldp.vigilantBean.service.impl;
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.repository.AppUserAlterRepository;
-import com.ldp.vigilantBean.service.AppUserAlterService;
+import com.ldp.vigilantBean.service.AppUserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-public class AppUserAlterServiceImpl implements AppUserAlterService {
+@Service
+public class AppUserRegistrationServiceImpl implements AppUserRegistrationService {
 
     private AppUserAlterRepository appUserAlterRepository;
     private PasswordEncoder passwordEncoder;
 
-    public AppUserAlterServiceImpl(
+    public AppUserRegistrationServiceImpl(
             @Autowired
             AppUserAlterRepository appUserAlterRepository,
             @Autowired

@@ -65,6 +65,13 @@
             <version>${spring.security.version}</version>
         </dependency>
 
+        <!-- Crypto provider -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.64</version>
+        </dependency>
+
 
         <!-- javax servlet API -->
         <dependency>

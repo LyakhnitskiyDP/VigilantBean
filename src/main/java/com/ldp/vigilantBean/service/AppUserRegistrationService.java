@@ -5,7 +5,7 @@ import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 
 import java.util.Optional;
 
-public interface AppUserAlterService {
+public interface AppUserRegistrationService {
 
     Optional<AppUser> registerUser(AppUserDTO appUserDTO);
 
