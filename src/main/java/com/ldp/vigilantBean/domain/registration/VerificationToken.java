@@ -48,16 +48,8 @@ public class VerificationToken implements Serializable {
                 ChronoUtils.convertToDate(expiryDateTime);
     }
 
-    public VerificationToken() {
-        this(new Date());
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getToken() {
