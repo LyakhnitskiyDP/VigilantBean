@@ -88,6 +88,20 @@
             <scope>provided</scope>
         </dependency>
 
+
+        <!-- javax mail service -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.5.0-b01</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- Hibernate -->
         <!-- Hibernate Core -->
         <dependency>
