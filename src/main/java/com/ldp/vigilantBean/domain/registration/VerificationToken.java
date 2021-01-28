@@ -18,6 +18,7 @@ import java.util.Date;
 @PropertySource("classpath:webappConfig.properties")
 public class VerificationToken implements Serializable {
 
+
     @Value("${verificationToken.expirationInMinutes}")
     private static int EXPIRATION_IN_MINUTES;
 
