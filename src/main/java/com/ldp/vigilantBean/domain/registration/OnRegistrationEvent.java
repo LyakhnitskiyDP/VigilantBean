@@ -23,5 +23,15 @@ public class OnRegistrationEvent extends ApplicationEvent {
         this.user = source;
     }
 
+    public String getAppUrl() {
+        return appUrl;
+    }
 
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public AppUser getUser() {
+        return user;
+    }
 }

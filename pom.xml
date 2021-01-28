@@ -46,6 +46,13 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!-- Spring Mail Support -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
