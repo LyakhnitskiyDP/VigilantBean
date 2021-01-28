@@ -1,8 +1,9 @@
 target/
 src/main/resources/hibernateConfig.properties
-src/main/webapp/resources/images
+src/main/resources/embeddedConnectionConfig.properties
+src/main/webapp/resources/images/
 
-!src/main/webapp/resources/images/icons
+!src/main/webapp/resources/images/icons/
 
 ### IntelliJ IDEA ###
 .idea

@@ -49,10 +49,8 @@ public class RegistrationController {
             return "registration";
         }
 
-
         registrationService.registerUser(newUser);
 
-        model.addAttribute("newUser", null);
         return "redirect:/signUp/confirmEmail";
     }
 

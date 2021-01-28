@@ -37,7 +37,9 @@ public class AppUser {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "registration_date")
+    @Column(name = "registration_date",
+            nullable = true,
+            insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
