@@ -89,6 +89,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>javax.activation-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Hibernate c3p0 Connection pooling -->
@@ -96,6 +102,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
             <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>javax.activation-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Hibernate validator -->
