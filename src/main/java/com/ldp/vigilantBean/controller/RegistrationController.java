@@ -28,11 +28,11 @@ public class RegistrationController {
     private static final Logger log =
             LogManager.getLogger(RegistrationController.class.getName());
 
-    private NewUserValidator newUserValidator;
+    private final NewUserValidator newUserValidator;
 
-    private AppUserRegistrationService registrationService;
+    private final AppUserRegistrationService registrationService;
 
-    private ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher eventPublisher;
 
     public RegistrationController(
             @Autowired
@@ -75,7 +75,7 @@ public class RegistrationController {
 
         eventPublisher.publishEvent(registrationEvent);
 
-        return "redirect:/signUp/confirmEmail";
+        return "redirect:/signUp/finish";
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -91,7 +91,7 @@ public class RegistrationController {
         binder.setValidator(newUserValidator);
     }
 
-    @RequestMapping(value = "/confirmEmail")
+    @RequestMapping(value = "/finish")
     public String getEmailConfirmPage() {
 
         return "confirmEmailPage";

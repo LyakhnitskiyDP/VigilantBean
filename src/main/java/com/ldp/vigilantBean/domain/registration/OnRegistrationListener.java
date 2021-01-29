@@ -1,5 +1,6 @@
 package com.ldp.vigilantBean.domain.registration;
 
+import com.ldp.vigilantBean.config.MailSessionFactory;
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.service.VerificationTokenService;
 import org.apache.logging.log4j.LogManager;
@@ -7,11 +8,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -26,14 +31,11 @@ public class OnRegistrationListener
 
     private MessageSource messageSource;
 
-    private JavaMailSender mailSender;
+    private MailSessionFactory mailSessionFactory;
 
     private AppUser user;
-
     private Locale locale;
-
     private String appUrl;
-
     private String token;
 
     public OnRegistrationListener(
@@ -42,17 +44,17 @@ public class OnRegistrationListener
             @Autowired
             MessageSource messageSource,
             @Autowired
-            JavaMailSender mailSender) {
+            MailSessionFactory mailSessionFactory) {
 
         this.verificationTokenService = verificationTokenService;
         this.messageSource = messageSource;
-        this.mailSender = mailSender;
+        this.mailSessionFactory = mailSessionFactory;
     }
-
 
     @Override
     public void onApplicationEvent(OnRegistrationEvent onRegistrationEvent) {
 
+        log.info("Executing application even listener logic!");
         extractData(onRegistrationEvent);
 
         initToken();
@@ -82,15 +84,30 @@ public class OnRegistrationListener
         String confirmationMessage =
                 messageSource.getMessage("event.registrationConfirm.message", null, locale);
 
+        Message message = new MimeMessage(
+                mailSessionFactory.getSession()
+        );
 
-        SimpleMailMessage mail = new SimpleMailMessage();
+        try {
+            message.setFrom(new InternetAddress("vigilantbean@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientAddress));
+            message.setSubject(subject);
 
-        mail.setTo(recipientAddress);
-        mail.setSubject(subject);
-        mail.setText(confirmationMessage + "\r\n" + "http://localhost:8080" + confirmationURL);
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setContent(confirmationMessage + "\r\n" + "http://localhost:8080" + confirmationURL, "text/html");
 
-        mailSender.send(mail);
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(mimeBodyPart);
 
-        log.info("Message has been sent");
+            message.setContent(multipart);
+
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+
+        log.info("Message has been sent" + this);
     }
 }

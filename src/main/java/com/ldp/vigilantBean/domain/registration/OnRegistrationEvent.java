@@ -34,4 +34,5 @@ public class OnRegistrationEvent extends ApplicationEvent {
     public AppUser getUser() {
         return user;
     }
+
 }

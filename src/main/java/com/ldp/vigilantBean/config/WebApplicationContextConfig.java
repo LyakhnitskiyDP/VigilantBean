@@ -17,7 +17,7 @@ import org.hibernate.validator.HibernateValidatorFactory;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.ldp.vigilantBean")
+@ComponentScan("com.ldp.vigilantBean.controller")
 public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     @Override
@@ -54,7 +54,8 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
                 new ReloadableResourceBundleMessageSource();
 
         messageSource.setBasenames("classpath:/messages/validation/message",
-                                   "classpath:/messages/view/message");
+                                   "classpath:/messages/view/message",
+                                   "classpath:/messages/event/message");
 
         messageSource.setDefaultEncoding("UTF-8");
 
