@@ -1,11 +1,15 @@
 package com.ldp.vigilantBean.controller;
 
+import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
+import com.ldp.vigilantBean.domain.registration.OnRegistrationEvent;
 import com.ldp.vigilantBean.service.AppUserRegistrationService;
 import com.ldp.vigilantBean.validator.NewUserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @Controller
@@ -27,14 +32,19 @@ public class RegistrationController {
 
     private AppUserRegistrationService registrationService;
 
+    private ApplicationEventPublisher eventPublisher;
+
     public RegistrationController(
             @Autowired
             NewUserValidator newUserValidator,
             @Autowired
-            AppUserRegistrationService registrationService) {
+            AppUserRegistrationService registrationService,
+            @Autowired
+            ApplicationEventPublisher eventPublisher) {
 
         this.newUserValidator = newUserValidator;
         this.registrationService = registrationService;
+        this.eventPublisher = eventPublisher;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -43,13 +53,27 @@ public class RegistrationController {
             @Valid
             AppUserDTO newUser,
             BindingResult bindingResult,
-            Model model) {
+            HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        registrationService.registerUser(newUser);
+        Optional<AppUser> optUser =
+                registrationService.registerUser(newUser);
+
+        //TODO: add more suitable exception
+        if (!optUser.isPresent())
+            throw new RuntimeException("Something went wrong");
+
+        ApplicationEvent registrationEvent =
+                new OnRegistrationEvent(
+                        optUser.get(),
+                        request.getLocale(),
+                        request.getContextPath()
+                );
+
+        eventPublisher.publishEvent(registrationEvent);
 
         return "redirect:/signUp/confirmEmail";
     }
