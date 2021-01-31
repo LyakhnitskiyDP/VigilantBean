@@ -15,7 +15,7 @@ import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
 @Entity
-@PropertySource("classpath:webappConfig.properties")
+@Table(name = "verification_token")
 @NamedQueries({
         @NamedQuery(
                 name = VerificationToken.GET_BY_TOKEN,
@@ -29,12 +29,12 @@ public class VerificationToken implements Serializable {
             "VerificationToken.getByToken";
 
     @Transient
-    @Value("${verificationToken.expirationInMinutes}")
-    private static int EXPIRATION_IN_MINUTES;
+    private int expirationInMinutes;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "verification_token_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long verificationTokenId;
 
     @Column
     private String token;
@@ -44,29 +44,35 @@ public class VerificationToken implements Serializable {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    @Column(name = "expiry_date",
-            insertable = false)
+    @Column(name = "expiry_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate;
 
-    public VerificationToken(Date initialDate) {
+    public VerificationToken(Date initialDate, int expirationInMinutes) {
+
+        this.expirationInMinutes = expirationInMinutes;
 
         LocalDateTime initialDateTime =
                 ChronoUtils.convertToLocalDateTime(initialDate);
 
         LocalDateTime expiryDateTime =
-                initialDateTime.plus(EXPIRATION_IN_MINUTES, ChronoUnit.MINUTES);
+                initialDateTime.plus(expirationInMinutes, ChronoUnit.MINUTES);
 
         this.expiryDate =
                 ChronoUtils.convertToDate(expiryDateTime);
     }
 
-    public VerificationToken() {
-        this(new Date());
+    public boolean isExpired(Date dateToCompare) {
+
+        return expiryDate.before(dateToCompare);
     }
 
-    public Long getId() {
-        return id;
+    public VerificationToken() {
+        this(new Date(), 1440);
+    }
+
+    public Long getVerificationTokenId() {
+        return verificationTokenId;
     }
 
     public String getToken() {
@@ -89,4 +95,11 @@ public class VerificationToken implements Serializable {
         return expiryDate;
     }
 
+    public int getExpirationInMinutes() {
+        return expirationInMinutes;
+    }
+
+    public void setExpirationInMinutes(int expirationInMinutes) {
+        this.expirationInMinutes = expirationInMinutes;
+    }
 }

@@ -5,15 +5,21 @@ import com.ldp.vigilantBean.domain.registration.VerificationToken;
 import com.ldp.vigilantBean.repository.VerificationTokenRepository;
 import com.ldp.vigilantBean.service.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
 
 @Service
+@PropertySource("classpath:webappConfig.properties")
 public class VerificationTokenServiceImpl implements VerificationTokenService {
 
     private VerificationTokenRepository verificationTokenRepository;
+
+    @Value("${verificationToken.expirationInMinutes}")
+    private int tokenExpirationInMinutes;
 
     public VerificationTokenServiceImpl(
             @Autowired
@@ -27,10 +33,11 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
     public Optional<VerificationToken> create(AppUser user, String token) {
 
         VerificationToken verificationToken =
-                new VerificationToken(new Date());
+                new VerificationToken(new Date(), tokenExpirationInMinutes);
 
         verificationToken.setToken(token);
         verificationToken.setAppUser(user);
+
 
         return verificationTokenRepository.create(verificationToken);
     }

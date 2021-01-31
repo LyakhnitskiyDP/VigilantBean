@@ -4,6 +4,7 @@ import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.domain.registration.OnRegistrationEvent;
 import com.ldp.vigilantBean.domain.registration.VerificationToken;
+import com.ldp.vigilantBean.exception.InvalidVerificationToken;
 import com.ldp.vigilantBean.service.AppUserRegistrationService;
 import com.ldp.vigilantBean.service.VerificationTokenService;
 import com.ldp.vigilantBean.validator.NewUserValidator;
@@ -21,8 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
+
 
 
 @Controller
@@ -84,7 +86,7 @@ public class RegistrationController {
 
         eventPublisher.publishEvent(registrationEvent);
 
-        return "redirect:/signUp/finish";
+        return "redirect:/signUp/confirmEmailPage";
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -96,20 +98,30 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registrationConfirm")
     public String confirmRegistration(
-            @RequestParam(name = "token")
-            String token) {
+            @RequestParam(name = "token") String token,
+            Model model) {
 
-        Optional<VerificationToken> verificationToken =
+        Optional<VerificationToken> optVerificationToken =
                 verificationTokenService.get(token);
 
-        if (verificationToken.isPresent()) {
+        VerificationToken verificationToken =
+                optVerificationToken.orElseThrow(
+                        () -> new InvalidVerificationToken(InvalidVerificationToken.Cause.NO_SUCH_TOKEN)
+                );
 
+        log.info(verificationToken.getExpiryDate());
 
-        } else {
+        if (verificationToken.isExpired(new Date()))
+            throw new InvalidVerificationToken(
+                    InvalidVerificationToken.Cause.EXPIRED
+            );
 
+        boolean enabled =
+                registrationService.enableUser(verificationToken.getAppUser());
 
-        }
+        model.addAttribute("appUserEnabled", enabled);
 
+        return "registrationFinish";
     }
 
     @InitBinder
@@ -118,7 +130,7 @@ public class RegistrationController {
         binder.setValidator(newUserValidator);
     }
 
-    @RequestMapping(value = "/finish")
+    @RequestMapping(value = "/confirmEmailPage")
     public String getEmailConfirmPage() {
 
         return "confirmEmailPage";

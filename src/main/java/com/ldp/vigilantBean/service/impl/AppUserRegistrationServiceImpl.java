@@ -39,4 +39,10 @@ public class AppUserRegistrationServiceImpl implements AppUserRegistrationServic
 
         return appUserAlterRepository.registerUser(user);
     }
+
+    @Override
+    public boolean enableUser(AppUser appUser) {
+
+        return appUserAlterRepository.enableUser(appUser);
+    }
 }

@@ -86,7 +86,7 @@ public class OnRegistrationListener
                 messageSource.getMessage("event.registrationConfirm.subject", null, locale);
 
         String confirmationURL =
-                appUrl + "signUp/registrationConfirm?token=" + token;
+                appUrl + "/signUp/registrationConfirm?token=" + token;
 
         String confirmationMessage =
                 messageSource.getMessage("event.registrationConfirm.message", null, locale);

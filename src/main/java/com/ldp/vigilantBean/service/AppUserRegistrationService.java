@@ -9,4 +9,6 @@ public interface AppUserRegistrationService {
 
     Optional<AppUser> registerUser(AppUserDTO appUserDTO);
 
+    boolean enableUser(AppUser appUser);
+
 }
