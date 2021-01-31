@@ -34,4 +34,10 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 
         return verificationTokenRepository.create(verificationToken);
     }
+
+    @Override
+    public Optional<VerificationToken> get(String token) {
+
+        return verificationTokenRepository.get(token);
+    }
 }

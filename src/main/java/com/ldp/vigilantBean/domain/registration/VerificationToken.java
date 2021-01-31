@@ -16,8 +16,17 @@ import java.util.Date;
 
 @Entity
 @PropertySource("classpath:webappConfig.properties")
+@NamedQueries({
+        @NamedQuery(
+                name = VerificationToken.GET_BY_TOKEN,
+                query = "from VerificationToken t " +
+                        "where t.token = :token"
+        )
+})
 public class VerificationToken implements Serializable {
 
+    public static final String GET_BY_TOKEN =
+            "VerificationToken.getByToken";
 
     @Transient
     @Value("${verificationToken.expirationInMinutes}")
@@ -52,6 +61,10 @@ public class VerificationToken implements Serializable {
                 ChronoUtils.convertToDate(expiryDateTime);
     }
 
+    public VerificationToken() {
+        this(new Date());
+    }
+
     public Long getId() {
         return id;
     }
@@ -76,7 +89,4 @@ public class VerificationToken implements Serializable {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
-    }
 }

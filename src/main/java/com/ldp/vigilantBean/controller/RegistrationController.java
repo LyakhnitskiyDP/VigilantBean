@@ -3,8 +3,11 @@ package com.ldp.vigilantBean.controller;
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.domain.registration.OnRegistrationEvent;
+import com.ldp.vigilantBean.domain.registration.VerificationToken;
 import com.ldp.vigilantBean.service.AppUserRegistrationService;
+import com.ldp.vigilantBean.service.VerificationTokenService;
 import com.ldp.vigilantBean.validator.NewUserValidator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +38,22 @@ public class RegistrationController {
 
     private final ApplicationEventPublisher eventPublisher;
 
+    private final VerificationTokenService verificationTokenService;
+
     public RegistrationController(
             @Autowired
             NewUserValidator newUserValidator,
             @Autowired
             AppUserRegistrationService registrationService,
             @Autowired
+            VerificationTokenService verificationTokenService,
+            @Autowired
             ApplicationEventPublisher eventPublisher) {
 
         this.newUserValidator = newUserValidator;
         this.registrationService = registrationService;
         this.eventPublisher = eventPublisher;
+        this.verificationTokenService = verificationTokenService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -84,6 +92,15 @@ public class RegistrationController {
 
         model.addAttribute("newUser", new AppUserDTO());
         return "registration";
+    }
+
+    @RequestMapping(value = "/registrationConfirm")
+    public void confirmRegistration(
+            @RequestParam(name = "token")
+            String token) {
+
+        VerificationToken verificationToken = verificationTokenService
+
     }
 
     @InitBinder

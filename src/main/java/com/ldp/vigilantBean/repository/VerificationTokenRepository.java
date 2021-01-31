@@ -8,4 +8,6 @@ public interface VerificationTokenRepository {
 
     Optional<VerificationToken> create(VerificationToken token);
 
+    Optional<VerificationToken> get(String token);
+
 }

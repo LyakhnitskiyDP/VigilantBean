@@ -17,6 +17,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -54,10 +55,11 @@ public class OnRegistrationListener
     @Override
     public void onApplicationEvent(OnRegistrationEvent onRegistrationEvent) {
 
-        log.info("Executing application even listener logic!");
         extractData(onRegistrationEvent);
 
         initToken();
+
+        persistVerificationToken();
 
         sendMessage();
     }
@@ -72,6 +74,11 @@ public class OnRegistrationListener
         this.token = UUID.randomUUID().toString();
     }
 
+    private void persistVerificationToken() {
+
+        verificationTokenService.create(user, token);
+    }
+
     private void sendMessage() {
 
         String recipientAddress = user.getEmail();
@@ -79,7 +86,7 @@ public class OnRegistrationListener
                 messageSource.getMessage("event.registrationConfirm.subject", null, locale);
 
         String confirmationURL =
-                appUrl + "/registrationConfirm?token=" + token;
+                appUrl + "signUp/registrationConfirm?token=" + token;
 
         String confirmationMessage =
                 messageSource.getMessage("event.registrationConfirm.message", null, locale);

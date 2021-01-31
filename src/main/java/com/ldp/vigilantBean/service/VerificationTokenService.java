@@ -10,4 +10,6 @@ public interface VerificationTokenService {
 
     Optional<VerificationToken> create(AppUser user, String token);
 
+    Optional<VerificationToken> get(String token);
+
 }

@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.Optional;
 
 @Repository
@@ -35,7 +37,26 @@ public class VerificationTokenRepositoryImpl implements VerificationTokenReposit
 
             return Optional.of(token);
         }
-
     }
 
+
+    @Override
+    public Optional<VerificationToken> get(String token) {
+
+        try (Session session = sessionFactory.openSession()) {
+
+
+            Query query = session.getNamedQuery(VerificationToken.GET_BY_TOKEN)
+                                 .setParameter("token", token);
+
+            Optional<VerificationToken> optVerificationToken =
+                    Optional.ofNullable((VerificationToken) query.getSingleResult());
+
+            return optVerificationToken;
+        } catch (NoResultException noResultException) {
+
+            return Optional.empty();
+        }
+
+    }
 }
