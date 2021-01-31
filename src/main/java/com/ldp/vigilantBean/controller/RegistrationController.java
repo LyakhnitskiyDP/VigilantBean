@@ -95,11 +95,20 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/registrationConfirm")
-    public void confirmRegistration(
+    public String confirmRegistration(
             @RequestParam(name = "token")
             String token) {
 
-        VerificationToken verificationToken = verificationTokenService
+        Optional<VerificationToken> verificationToken =
+                verificationTokenService.get(token);
+
+        if (verificationToken.isPresent()) {
+
+
+        } else {
+
+
+        }
 
     }
 

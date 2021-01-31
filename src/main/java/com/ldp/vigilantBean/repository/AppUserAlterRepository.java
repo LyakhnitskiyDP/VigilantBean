@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface AppUserAlterRepository {
 
-    Optional<AppUser> registerUser(AppUser appUserDTO);
+    Optional<AppUser> registerUser(AppUser appUser);
+
+    boolean enableUser(AppUser appUser);
 
 }
