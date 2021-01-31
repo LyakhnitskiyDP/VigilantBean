@@ -19,6 +19,7 @@ import java.util.Date;
 public class VerificationToken implements Serializable {
 
 
+    @Transient
     @Value("${verificationToken.expirationInMinutes}")
     private static int EXPIRATION_IN_MINUTES;
 
@@ -26,6 +27,7 @@ public class VerificationToken implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column
     private String token;
 
     @OneToOne(targetEntity = AppUser.class,
@@ -33,6 +35,7 @@ public class VerificationToken implements Serializable {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
+    @Column(name = "expiry_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate;
 
