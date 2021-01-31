@@ -1,3 +1,5 @@
+DROP TABLE verification_token IF EXISTS;
+
 DROP TABLE user_role IF EXISTS;
 DROP TABLE role IF EXISTS;
 DROP TABLE app_user IF EXISTS;
@@ -77,6 +79,13 @@ CREATE TABLE user_role (
     app_user_id INTEGER FOREIGN KEY REFERENCES app_user (app_user_id),
     role_id INTEGER FOREIGN KEY REFERENCES role (role_id),
     CONSTRAINT pk_user_role PRIMARY KEY (app_user_id, role_id)
+)
+
+CREATE TABLE verification_token (
+    verification_token_id INTEGER IDENTITY PRIMARY KEY,
+    app_user_id INTEGER FOREIGN KEY REFERENCES app_user (app_user_id),
+    token VARCHAR(512) NOT NULL,
+    expiry_date TIMESTAMP DEFAULT NOW()
 )
 
 

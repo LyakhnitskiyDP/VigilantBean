@@ -35,7 +35,8 @@ public class VerificationToken implements Serializable {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    @Column(name = "expiry_date")
+    @Column(name = "expiry_date",
+            insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate;
 
