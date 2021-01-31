@@ -4,6 +4,7 @@ import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.domain.registration.OnRegistrationEvent;
 import com.ldp.vigilantBean.domain.registration.VerificationToken;
+import com.ldp.vigilantBean.exception.InternalRegistrationException;
 import com.ldp.vigilantBean.exception.InvalidVerificationToken;
 import com.ldp.vigilantBean.service.AppUserRegistrationService;
 import com.ldp.vigilantBean.service.VerificationTokenService;
@@ -73,9 +74,8 @@ public class RegistrationController {
         Optional<AppUser> optUser =
                 registrationService.registerUser(newUser);
 
-        //TODO: add more suitable exception
         if (!optUser.isPresent())
-            throw new RuntimeException("Something went wrong");
+            throw new InternalRegistrationException();
 
         ApplicationEvent registrationEvent =
                 new OnRegistrationEvent(
@@ -106,14 +106,12 @@ public class RegistrationController {
 
         VerificationToken verificationToken =
                 optVerificationToken.orElseThrow(
-                        () -> new InvalidVerificationToken(InvalidVerificationToken.Cause.NO_SUCH_TOKEN)
+                        () -> new InvalidVerificationToken(InvalidVerificationToken.Reason.NO_SUCH_TOKEN)
                 );
-
-        log.info(verificationToken.getExpiryDate());
 
         if (verificationToken.isExpired(new Date()))
             throw new InvalidVerificationToken(
-                    InvalidVerificationToken.Cause.EXPIRED
+                    InvalidVerificationToken.Reason.EXPIRED
             );
 
         boolean enabled =
