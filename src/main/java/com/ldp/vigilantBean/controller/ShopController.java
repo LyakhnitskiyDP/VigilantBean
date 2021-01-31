@@ -115,9 +115,6 @@ public class ShopController {
 
     private void initPageListModel(Model model, int numberOfProducts) {
 
-        log.error("Number of Products: " + numberOfProducts);
-        log.error("Number of Products per page: " + numberOfProductsPerPage);
-
         List<Integer> pageList =
                 ProductsUtil.getPageList(numberOfProducts, numberOfProductsPerPage);
 

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class ChronoUtils {
+public class ChronoUtil {
 
     public static LocalDateTime convertToLocalDateTime(Date date) {
 

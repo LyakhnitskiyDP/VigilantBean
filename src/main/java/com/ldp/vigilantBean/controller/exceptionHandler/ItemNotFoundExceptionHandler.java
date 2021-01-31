@@ -1,4 +1,4 @@
-package com.ldp.vigilantBean.controller;
+package com.ldp.vigilantBean.controller.exceptionHandler;
 
 import com.ldp.vigilantBean.exception.CategoryNotFoundException;
 import com.ldp.vigilantBean.exception.ProductNotFoundException;

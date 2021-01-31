@@ -1,17 +1,12 @@
 package com.ldp.vigilantBean.domain.registration;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
-import com.ldp.vigilantBean.utils.ChronoUtils;
-import net.bytebuddy.asm.Advice;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import com.ldp.vigilantBean.utils.ChronoUtil;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
 @Entity
@@ -53,13 +48,13 @@ public class VerificationToken implements Serializable {
         this.expirationInMinutes = expirationInMinutes;
 
         LocalDateTime initialDateTime =
-                ChronoUtils.convertToLocalDateTime(initialDate);
+                ChronoUtil.convertToLocalDateTime(initialDate);
 
         LocalDateTime expiryDateTime =
                 initialDateTime.plus(expirationInMinutes, ChronoUnit.MINUTES);
 
         this.expiryDate =
-                ChronoUtils.convertToDate(expiryDateTime);
+                ChronoUtil.convertToDate(expiryDateTime);
     }
 
     public boolean isExpired(Date dateToCompare) {
