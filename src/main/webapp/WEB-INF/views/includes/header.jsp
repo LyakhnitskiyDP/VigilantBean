@@ -20,8 +20,14 @@
 </div>
 
 <nav id="user-navigation">
-  <p>L</p>
-  <p>C</p>
-  <p>U</p>
+
+  <spring:url value="/resources/images/icons/loupe.svg" var="loupeIconURL" />
+  <img src="${loupeIconURL}" />
+
+  <spring:url value="/resources/images/icons/shopping-cart.svg" var="cartIconURL" />
+  <img src="${cartIconURL}" />
+
+  <spring:url value="/resources/images/icons/user.svg" var="userIconURL" />
+  <img src="${userIconURL}" />
 </nav>
 </header>

@@ -17,6 +17,10 @@ header * {
   text-align: center;
 }
 
+header img {
+    height: 1.5rem;
+}
+
 header .logo img {
     height: 75;
 }
@@ -28,4 +32,6 @@ header .logo img {
 
 #user-navigation * {
   padding: 0 1rem;
+  display: flex;
+  justify-content: left;
 }

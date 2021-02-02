@@ -1,6 +1,5 @@
-package com.ldp.vigilantBean.controller.exceptionHandler;
+package com.ldp.vigilantBean.exception.exceptionHandler;
 
-import com.ldp.vigilantBean.controller.ItemNotFoundExceptionHandler;
 import com.ldp.vigilantBean.exception.InvalidVerificationToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
