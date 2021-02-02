@@ -89,7 +89,6 @@ public class VerificationTokenExceptionHandler {
 
         modelAndView.addObject("exceptionDescription", message);
         modelAndView.addObject("exceptionTitle", title);
-
         modelAndView.addObject("iconName", exceptionName + ".svg");
     }
 

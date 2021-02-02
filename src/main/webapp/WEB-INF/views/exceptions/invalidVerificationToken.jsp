@@ -28,7 +28,23 @@
 
   <c:import url="/WEB-INF/views/includes/header.jsp" />
 
-  <p>${exceptionDescription}</p>
+  <main>
+
+    <div id="exception-image">
+
+        <spring:url value="/resources/images/icons/${iconName}" var="exceptionImageURL" />
+        <img src="${exceptionImageURL}" alt="Exception Image" />
+
+    </div>
+
+    <div id="exception-description">
+
+        <h1>${exceptionTitle}</h1>
+        <p>${exceptionDescription}</p>
+
+    </div>
+
+  </main>
 
 </div>
 
