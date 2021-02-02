@@ -35,6 +35,10 @@ header .logo img {
   justify-content: left;
 }
 
+#user-navigation img {
+    cursor: pointer;
+}
+
 /* Drop down menu */
 #account-nav {
     display: flex;

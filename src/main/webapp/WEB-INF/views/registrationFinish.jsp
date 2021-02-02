@@ -31,7 +31,12 @@
 
   <main>
 
+  <spring:url value="/resources/images/icons/check.svg" var="checkIconURL" />
+  <img src="${checkIconURL}" alt="Success icon" />
 
+  <h1><spring:message code="view.registration.success.title"/></h1>
+
+  <p><spring:message code="view.registration.success.description" /><p>
 
   </main>
 
