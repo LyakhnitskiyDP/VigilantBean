@@ -1,4 +1,20 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<script>
+
+$(document).ready(function() {
+
+    $('#account-nav').toggleClass('hidden');
+
+    $('#userIcon').click(function() {
+        $('#account-nav').toggleClass('hidden');
+    });
+
+});
+
+</script>
+
 <header>
 <nav id="page-navigation">
   <div class="nav-item">
@@ -27,7 +43,25 @@
   <spring:url value="/resources/images/icons/shopping-cart.svg" var="cartIconURL" />
   <img src="${cartIconURL}" />
 
+  <div class="dropdown">
   <spring:url value="/resources/images/icons/user.svg" var="userIconURL" />
-  <img src="${userIconURL}" />
+  <img id="userIcon" src="${userIconURL}" />
+
+  <div id="account-nav">
+
+    <a href="#">Sign&nbsp;In</a>
+
+    <spring:url value="/signUp" var="signUpURL" />
+    <a href="${signUpURL}">Sign&nbsp;Up</a>
+
+    <div class="delimiter"> </div>
+
+    <a href="#">Orders</a>
+    <a href="#">My&nbsp;Account</a>
+  </div>
+
+  </div>
+
 </nav>
+
 </header>

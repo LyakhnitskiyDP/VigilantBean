@@ -30,8 +30,36 @@ header .logo img {
 
 }
 
-#user-navigation * {
-  padding: 0 1rem;
+#user-navigation {
   display: flex;
   justify-content: left;
 }
+
+/* Drop down menu */
+#account-nav {
+    display: flex;
+    position: absolute;
+    top: 10vh;
+    right: 0vw;
+    flex-direction: column;
+    background: rgba(var(--rgb-background), .55);
+    border-radius: 0 0 .5em .5em;
+}
+
+
+#account-nav * {
+    align-self: center;
+    color: var(--hex-shadow-light);
+    margin: .25rem 0;
+}
+
+.dropdown .delimiter {
+    width: 80%;
+    height: 1px;
+    border-bottom: 1px solid;
+}
+
+.hidden {
+   opacity: 0;
+}
+
