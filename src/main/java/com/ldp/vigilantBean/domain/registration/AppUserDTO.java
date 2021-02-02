@@ -1,6 +1,8 @@
 package com.ldp.vigilantBean.domain.registration;
 
 
+import com.ldp.vigilantBean.validator.PatternExists;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,8 +22,8 @@ public class AppUserDTO implements Serializable {
     )
     private String email;
 
-    @Pattern(
-            regexp = ".*\\d",
+    @PatternExists(
+            regExp = "[0-9]",
             message = "validation.newUser.password.noDigits"
     )
     @Pattern(

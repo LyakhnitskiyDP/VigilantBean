@@ -48,7 +48,7 @@
                 <div class="form-input-field">
 
                     <form:input id="username" path="username"
-                                type="text" />
+                                type="text" autocomplete="off"/>
                 </div>
               </div>
 
@@ -68,7 +68,7 @@
                 <div class="form-input-field">
 
                     <form:input id="email" path="email"
-                                type="text" />
+                                type="text" autocomplete="off"/>
                 </div>
               </div>
 
@@ -88,7 +88,7 @@
                 <div class="form-input-field">
 
                     <form:input id="password" path="password"
-                                type="password" />
+                                type="password" autocomplete="off" />
                 </div>
               </div>
 
