@@ -46,7 +46,7 @@
 
     <section id="product-images">
 
-    <spring:url value="/resources/images/products/default.jpg" var="productImageURL" />
+    <spring:url value="/resources/images/products/${product.mainPicture.name}.${product.mainPicture.extension}" var="productImageURL" />
     <img src="${productImageURL}" alt="product" />
 
     </section>

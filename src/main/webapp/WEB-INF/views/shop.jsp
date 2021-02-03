@@ -55,7 +55,7 @@
         <spring:url value="/shop/product?productId=${product.productId}" var="productURL" />
         <div class="product-item" onclick="location.href = '${productURL}'">
 
-          <spring:url value="/resources/images/products/default.jpg" var="productImageURL" />
+          <spring:url value="/resources/images/products/${product.mainPicture.name}.${product.mainPicture.extension}" var="productImageURL" />
           <img src="${productImageURL}" alt="product" />
           <p class="product-name">${product.name}</p>
           <p class="product-description">${product.description}</p>

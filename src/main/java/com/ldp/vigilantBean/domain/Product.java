@@ -120,6 +120,16 @@ public class Product {
                 '}';
     }
 
+    public Picture getMainPicture() {
+
+        return this.pictures.stream()
+                            .sorted(
+                                    (p1, p2) -> p1.getName().compareTo(p2.getName())
+                            )
+                            .findFirst()
+                            .get();
+    }
+
     public long getProductId() {
         return productId;
     }
