@@ -49,7 +49,8 @@ $(document).ready(function() {
 
   <div id="account-nav">
 
-    <a href="#">Sign&nbsp;In</a>
+    <spring:url value="/login" var="loginURL" />
+    <a href="${loginURL}">Sign&nbsp;In</a>
 
     <spring:url value="/signUp" var="signUpURL" />
     <a href="${signUpURL}">Sign&nbsp;Up</a>

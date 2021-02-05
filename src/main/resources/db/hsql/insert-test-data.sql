@@ -71,8 +71,8 @@ INSERT INTO app_user (app_user_id, username, password, email)
     VALUES (1, 'cody', '$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG', 'HamsterGo2014@yandex.ru');
 
 INSERT INTO role (role_id, name)
-    VALUES (1, 'customer'),
-           (2, 'admin');
+    VALUES (1, 'ROLE_CUSTOMER'),
+           (2, 'ROLE_ADMIN');
 
 INSERT INTO user_role (app_user_id, role_id)
     VALUES (1, 1);

@@ -1,6 +1,7 @@
 package com.ldp.vigilantBean.repository.impl;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
+import com.ldp.vigilantBean.domain.appUser.Role;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.repository.AppUserAlterRepository;
 import org.apache.logging.log4j.*;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -35,6 +37,10 @@ public class AppUserAlterRepositoryImpl implements AppUserAlterRepository {
         try (Session session = sessionFactory.openSession()) {
 
             Transaction tx = session.beginTransaction();
+
+            Role customerRole = session.load(Role.class, 1L);
+
+            appUser.setRoles(List.of(customerRole));
 
             session.save(appUser);
 

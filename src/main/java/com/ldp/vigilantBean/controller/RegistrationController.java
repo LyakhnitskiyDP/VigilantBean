@@ -68,7 +68,7 @@ public class RegistrationController {
             HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "registration/registration";
         }
 
         Optional<AppUser> optUser =
@@ -93,7 +93,7 @@ public class RegistrationController {
     public String getRegistrationForm(Model model) {
 
         model.addAttribute("newUser", new AppUserDTO());
-        return "registration";
+        return "registration/registration";
     }
 
     @RequestMapping(value = "/registrationConfirm")
@@ -119,7 +119,7 @@ public class RegistrationController {
 
         model.addAttribute("appUserEnabled", enabled);
 
-        return "registrationFinish";
+        return "registration/registrationFinish";
     }
 
     @InitBinder
@@ -131,7 +131,7 @@ public class RegistrationController {
     @RequestMapping(value = "/confirmEmailPage")
     public String getEmailConfirmPage() {
 
-        return "confirmEmailPage";
+        return "registration/confirmEmailPage";
     }
 
 

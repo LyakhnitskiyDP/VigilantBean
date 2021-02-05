@@ -22,7 +22,7 @@ public class AppUser {
     @Column(name = "app_user_id")
     private Long appUserId;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
                joinColumns = @JoinColumn(name = "app_user_id"),
                inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -46,7 +46,8 @@ public class AppUser {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @Column(name = "not_locked")
+    @Column(name = "not_locked",
+            insertable = false)
     private boolean notLocked;
 
     @Override

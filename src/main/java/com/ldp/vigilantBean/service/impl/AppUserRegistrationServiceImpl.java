@@ -1,6 +1,7 @@
 package com.ldp.vigilantBean.service.impl;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
+import com.ldp.vigilantBean.domain.appUser.Role;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.repository.AppUserAlterRepository;
 import com.ldp.vigilantBean.service.AppUserRegistrationService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service

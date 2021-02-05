@@ -71,7 +71,7 @@ CREATE TABLE app_user (
 )
 
 CREATE TABLE role (
-    role_id INTEGER PRIMARY KEY,
+    role_id INTEGER IDENTITY PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
 )
 

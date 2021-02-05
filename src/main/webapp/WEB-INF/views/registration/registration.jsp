@@ -27,11 +27,10 @@
 
 <div class="wrapper">
 
-  <c:import url="includes/header.jsp" />
+  <c:import url="/WEB-INF/views/includes/header.jsp" />
 
   <section class="form-container">
 
-    <spring:url value="" var="registrationURL" />
     <form:form action="signUp" method="POST" modelAttribute="newUser">
 
         <fieldset>
@@ -100,7 +99,7 @@
 
             <div id="submit-button">
 
-                <input type="submit" value="Add" />
+                <input type="submit" value="Sign Up" />
 
             </div>
 
@@ -115,7 +114,7 @@
 
 </div>
 
-<c:import url='includes/footer.jsp' />
+<c:import url='/WEB-INF/views/includes/footer.jsp' />
 
 </body>
 </html>

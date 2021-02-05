@@ -1,9 +1,7 @@
 package com.ldp.vigilantBean.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("authenticationProviderService")
 public class AuthenticationProviderService implements AuthenticationProvider {
 
     private UserDetailsService userDetailsService;
@@ -37,6 +35,12 @@ public class AuthenticationProviderService implements AuthenticationProvider {
 
         UserDetails user = userDetailsService.loadUserByUsername(username);
 
+        if (!user.isEnabled())
+            throw new DisabledException("Account is disabled");
+
+        if (!user.isAccountNonLocked())
+            throw new LockedException("Account is locked");
+
         return checkPassword(user, password);
     }
 
@@ -59,4 +63,5 @@ public class AuthenticationProviderService implements AuthenticationProvider {
            throw new BadCredentialsException("Exception while checking password");
 
     }
+
 }

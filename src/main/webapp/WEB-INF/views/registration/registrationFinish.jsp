@@ -9,7 +9,7 @@
 
     <spring:url value="/resources/styles/rootStyle.css" var="rootStyle" />
     <spring:url value="/resources/styles/mainStyle.css" var="mainStyle" />
-    <spring:url value="/resources/styles/confirmEmailPageStyle.css" var="confirmEmailPageStyle" />
+    <spring:url value="/resources/styles/registrationFinishStyle.css" var="registrationFinishStyle" />
     <spring:url value="/resources/styles/includesStyles/headerStyle.css" var="headerStyle" />
     <spring:url value="/resources/styles/includesStyles/footerStyle.css" var="footerStyle" />
 
@@ -21,40 +21,29 @@
     <link rel="stylesheet" href="${headerStyle}" />
     <link rel="stylesheet" href="${footerStyle}" />
 
-    <link rel="stylesheet" href="${confirmEmailPageStyle}"
+    <link rel="stylesheet" href="${registrationFinishStyle}"
 </head>
 <body>
 
 <div class="wrapper">
 
-  <c:import url="includes/header.jsp" />
+  <c:import url="/WEB-INF/views/includes/header.jsp" />
 
   <main>
 
-    <div id="title">
+  <spring:url value="/resources/images/icons/check.svg" var="checkIconURL" />
+  <img src="${checkIconURL}" alt="Success icon" />
 
-        <spring:url value="/resources/images/icons/letter.svg" var="letterIconURL" />
-        <img src="${letterIconURL}" alt="LETTER" />
+  <h1><spring:message code="view.registration.success.title"/></h1>
 
-        <h1>
-            <spring:message code="view.emailConfirm.header" />
-        </h1>
-    </div>
-
-    <div id="description">
-
-        <p>
-          <spring:message code="view.emailConfirm.description" />
-        </p>
-
-    </div>
+  <p><spring:message code="view.registration.success.description" /><p>
 
   </main>
 
 
 </div>
 
-<c:import url='includes/footer.jsp' />
+<c:import url='/WEB-INF/views/includes/footer.jsp' />
 
 </body>
 </html>
