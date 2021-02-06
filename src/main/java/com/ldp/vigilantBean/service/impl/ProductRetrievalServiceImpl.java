@@ -67,7 +67,7 @@ public class ProductRetrievalServiceImpl implements ProductRetrievalService {
         return productRetrievalRepository.getProductById(id);
     }
 
-    private Pagination createPagination(int pageNumber) {
+    Pagination createPagination(int pageNumber) {
 
         int firstProductIndexOnPage =
                 ProductsUtil.getFirstProductIndex(pageNumber, numberOfProductsPerPage);
