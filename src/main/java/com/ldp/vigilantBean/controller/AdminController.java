@@ -12,11 +12,4 @@ public class AdminController {
         return "admin/admin";
     }
 
-    @GetMapping("/account")
-    public String getAccountPage() {
-
-        return "customer/customer";
-    }
-
-
 }

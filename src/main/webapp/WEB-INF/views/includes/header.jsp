@@ -59,8 +59,8 @@ $(document).ready(function() {
 
     <a href="#">Orders</a>
 
-    <spring:url value="/signUp" var="signUpURL" />
-    <a href="#">My&nbsp;Account</a>
+    <spring:url value="/account" var="accountURL" />
+    <a href="${accountURL}">My&nbsp;Account</a>
   </div>
 
   </div>
