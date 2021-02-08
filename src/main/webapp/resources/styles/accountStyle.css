@@ -1,0 +1,40 @@
+
+main {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    margin-top: 1em;
+}
+
+.hidden {
+    display: none;
+}
+
+.highlighted {
+    background: rgba(var(--rgb-main-bright), .5);
+    border-radius: .5rem;
+}
+
+/* Tabs */
+#tabs {
+    flex-grow: 1;
+    font-size: 1.5rem;
+    user-select: none;
+}
+
+#tabs .tab {
+    margin-bottom: .5em;
+    color: var(--hex-shadow-light);
+    cursor: pointer;
+    padding: .5rem;
+}
+
+#tabs .tab:hover {
+    color: var(--hex-main-light);
+}
+
+/* Tab content */
+#tab-content {
+    flex-grow: 3;
+    text-align: center;
+}
