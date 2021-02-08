@@ -87,15 +87,11 @@ select:hover {
   color: var(--hex-shadow-light)
 }
 
-#categories-area ul object {
-  width: .8rem;
+#categories-area ul .icon {
+  width: 1rem;
   padding-right: .25rem;
-  color: red;
 }
 
-#categories-area ul object svg path {
-  fill: currentcolor;
-}
 
 ul {
   list-style: none;

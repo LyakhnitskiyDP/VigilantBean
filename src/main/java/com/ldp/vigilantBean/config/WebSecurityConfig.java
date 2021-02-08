@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @EnableWebSecurity
 @Configuration
@@ -19,29 +20,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AuthenticationProvider authenticationProvider;
 
+    private UserDetailsService userDetailsService;
+
     public WebSecurityConfig(
             @Autowired
-            AuthenticationProvider authenticationProvider) {
+            AuthenticationProvider authenticationProvider,
+            @Autowired
+            UserDetailsService userDetailsService) {
+
         this.authenticationProvider = authenticationProvider;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                    .defaultSuccessUrl("/shop/sweets")
+                        .loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/account")
                     .and()
-                    .logout()
-                    .permitAll();
+                        .rememberMe()
+                        .key("rem-me-key")
+                        .userDetailsService(userDetailsService)
+                        .rememberMeParameter("remember")
+                        .rememberMeCookieName("rememberMeCookie")
+                        .tokenValiditySeconds(60 * 60 * 24 * 3)
+                    .and()
+                        .logout()
+                        .deleteCookies("JSESSIONID", "rememberMeCookie")
+                        .permitAll();
 
         httpSecurity.authorizeRequests()
-                    .antMatchers("/home/**").permitAll()
-                    .antMatchers("/shop/**").permitAll()
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/account/**").hasRole("CUSTOMER")
-                    .antMatchers("/cart/**").hasRole("CUSTOMER");
+                    .mvcMatchers("/admin").hasRole("ADMIN")
+                    .mvcMatchers("/account").hasRole("CUSTOMER")
+                    .mvcMatchers("/cart").hasRole("CUSTOMER")
+                    .anyRequest().permitAll();
+
 
         httpSecurity.csrf()
                     .disable();

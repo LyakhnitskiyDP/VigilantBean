@@ -67,8 +67,8 @@ INSERT INTO product_picture (picture_id, product_id)
            (10, 7),
            (11, 8);
 
-INSERT INTO app_user (app_user_id, username, password, email)
-    VALUES (1, 'cody', '$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG', 'HamsterGo2014@yandex.ru');
+INSERT INTO app_user (app_user_id, username, password, email, enabled)
+    VALUES (1, 'cody', '$e0801$Naq1GPMzFd9ipZVdjZvLB63lC3cVKf64u8yuocm0iAxdeJg7N7hXiJb2EHfTIOgVykM/ZdDp4KFKJcfpevP62Q==$6jTWTHsUXGr/23I2ILXM2qaRApTs09dvY6ysv9ibl7w=', 'HamsterGo2014@yandex.ru', true);
 
 INSERT INTO role (role_id, name)
     VALUES (1, 'ROLE_CUSTOMER'),

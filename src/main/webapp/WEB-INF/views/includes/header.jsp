@@ -58,6 +58,8 @@ $(document).ready(function() {
     <div class="delimiter"> </div>
 
     <a href="#">Orders</a>
+
+    <spring:url value="/signUp" var="signUpURL" />
     <a href="#">My&nbsp;Account</a>
   </div>
 

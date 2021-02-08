@@ -33,7 +33,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return appUser.getUsername();
+        return appUser.getEmail();
     }
 
     @Override

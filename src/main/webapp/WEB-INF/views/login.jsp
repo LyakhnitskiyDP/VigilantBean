@@ -21,6 +21,16 @@
     <link rel="stylesheet" href="${registrationStyle}" />
     <link rel="stylesheet" href="${headerStyle}" />
     <link rel="stylesheet" href="${footerStyle}" />
+
+    <style>
+
+        #remember {
+            width: 1.75em;
+            height: 1.75em;
+        }
+
+    </style>
+
 </head>
 <body>
 
@@ -50,7 +60,7 @@
 
                 <div class="input-group">
                   <label class="form-label" for="email">
-                    <spring:message code="view.registration.email.label" />
+                    <spring:message code="view.login.email.label" />
                   </label>
 
                   <div class="form-input-field">
@@ -66,7 +76,7 @@
 
                 <div class="input-group">
                   <label class="form-label" for="password">
-                    <spring:message code="view.registration.password.label" />
+                    <spring:message code="view.login.password.label" />
                   </label>
 
                   <div class="form-input-field">
@@ -74,6 +84,21 @@
                       <input id="password" name="password"
                              type="password" autocomplete="off" />
                   </div>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+
+              <div class="input-group">
+                <label id="checkbox-label" class="form-label" for="remember">
+                  <spring:message code="view.login.remember.label" />
+                </label>
+
+                <div class="form-input-field">
+
+                    <input id="remember" name="remember"
+                           type="checkbox" />
                 </div>
 
               </div>

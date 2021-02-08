@@ -76,27 +76,26 @@
         <spring:url value="/resources/images/icons/coffee-bean.svg" var="coffeeBeanIcon" />
 
         <li>
-          <object type="image/svg+xml" data="${coffeeBeanIcon}" class="icon">
-          </object>
+          <nobr>
+          <img src="${coffeeBeanIcon}" alt="coffee-bean" class="icon" />
 
           <spring:url value="/shop" var="categoryURL" />
 
           <a href="${categoryURL}" class="category-label">
           All products
           </a>
-          </span>
+          </nobr>
         </li>
 
         <c:forEach items="${categories}" var="category">
         <li>
-          <object type="image/svg+xml" data="${coffeeBeanIcon}" class="icon">
-          </object>
+          <nobr>
+          <img src="${coffeeBeanIcon}" alt="coffee-bean" class="icon">
           <spring:url value="/shop/${category.shortName}" var="categoryURL" />
-
           <a href="${categoryURL}" class="category-label">
           ${category.name}
           </a>
-          </span>
+          </nobr>
         </li>
         </c:forEach>
 
