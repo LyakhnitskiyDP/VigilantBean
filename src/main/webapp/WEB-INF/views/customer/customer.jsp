@@ -15,7 +15,7 @@
 
     <spring:url value="/resources/scripts/tabsScript.js" var="tabsScript"/>
 
-    <title>${product.name}</title>
+    <title>Account</title>
 
     <link rel="stylesheet" href="${rootStyle}" />
     <link rel="stylesheet" href="${mainStyle}" />

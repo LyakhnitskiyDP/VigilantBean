@@ -75,4 +75,4 @@ INSERT INTO role (role_id, name)
            (2, 'ROLE_ADMIN');
 
 INSERT INTO user_role (app_user_id, role_id)
-    VALUES (1, 1);
+    VALUES (1, 2);
