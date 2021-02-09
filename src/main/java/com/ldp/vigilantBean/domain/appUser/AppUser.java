@@ -10,7 +10,7 @@ import java.util.Objects;
 @NamedQueries({
         @NamedQuery(name = AppUser.GET_APP_USER_BY_EMAIL,
                     query = "from AppUser appUser " +
-                            "where appUser.email = :email")
+                            "where appUser.email = :email"),
 })
 public class AppUser {
 

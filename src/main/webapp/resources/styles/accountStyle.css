@@ -38,3 +38,13 @@ main {
     flex-grow: 3;
     text-align: center;
 }
+
+/* Account tab */
+#user-data {
+    text-align: left;
+}
+
+.field {
+    margin-bottom: .8em;
+}
+

@@ -37,19 +37,3 @@ form input[type=text], form input[type=password] {
 #submit-button {
     margin-top: 1em;
 }
-
-form input[type=submit] {
-    font-size: 1.5rem;
-    font-family: 'pacifico';
-    padding: 0 1rem;
-    border-radius: .3em;
-    color: var(--hex-shadow-light);
-    background: var(--hex-background);
-    border: 2px solid var(--hex-shadow-light);
-}
-
-form input[type=submit]:hover {
-    color: var(--hex-background);
-    background: var(--hex-shadow-light);
-    transition-duration: 0.4s;
-}

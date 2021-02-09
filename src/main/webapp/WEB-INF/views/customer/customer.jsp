@@ -46,7 +46,7 @@
     </div>
 
     <div class="tab" id="logoutTab">
-        <span class="tab-label">Logout</span>
+        <span class="tab-label"><spring:message code="view.account.logout.label" /></span>
     </div>
 
   </div>
@@ -54,15 +54,40 @@
   <div id="tab-content">
 
     <div id="myAccountTab-content">
-        <p>MyAccount</p>
+        <h2><spring:message code="view.account.myAccount.label" /></h2>
+
+        <div id="user-data">
+            <div class="field">
+                <span class="key"><spring:message code="view.account.myAccount.username.label" />: </span>
+                <span class="value">${user.username}</span>
+            </div>
+
+            <div class="field">
+                <span class="key"><spring:message code="view.account.myAccount.email.label" />: </span>
+                <span class="value">${user.email}</span>
+            </div>
+
+            <div class="field">
+                <span class="key"><spring:message code="view.account.myAccount.registrationDate.label" />: </span>
+                <span class="value">${user.registrationDate}</span>
+            </div>
+        </div>
     </div>
 
     <div id="myOrdersTab-content">
-        <p>MyOrders</p>
+        <h2><spring:message code="view.account.myOrders.label" /></h2>
+        <p><spring:message code="view.account.myOrders.description" /></p>
     </div>
 
     <div id="logoutTab-content">
-        <p>Logout</p>
+        <h2><spring:message code="view.account.logout.label" /></h2>
+
+        <p><spring:message code="view.account.logout.description" /></p>
+
+        <spring:url value="/logout" var="logoutURL"/>
+        <form action="${logoutURL}">
+            <input type="submit" value='<spring:message code="view.yes"/>'/>
+        </form>
     </div>
   </div>
 
