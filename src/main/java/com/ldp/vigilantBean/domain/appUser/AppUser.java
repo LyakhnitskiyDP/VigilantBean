@@ -40,7 +40,7 @@ public class AppUser {
     @Column(name = "registration_date",
             nullable = true,
             insertable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date registrationDate;
 
     @Column(name = "enabled")

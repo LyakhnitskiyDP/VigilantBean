@@ -8,9 +8,11 @@ import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AppUserRetrievalServiceImpl implements AppUserRetrievalService {
 
     private static final Logger log =
@@ -41,6 +43,7 @@ public class AppUserRetrievalServiceImpl implements AppUserRetrievalService {
 
            log.error("Data integrity violation: Email is not unique",
                      nonUniqueResultException);
+           return Optional.empty();
         }
 
     }

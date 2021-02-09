@@ -64,7 +64,7 @@
 
             <div class="field">
                 <span class="key"><spring:message code="view.account.myAccount.email.label" />: </span>
-                <span class="value">${user.email}</span>
+                <span class="value">${userEmail}</span>
             </div>
 
             <div class="field">

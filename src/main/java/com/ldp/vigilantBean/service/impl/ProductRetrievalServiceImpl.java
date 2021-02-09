@@ -5,7 +5,7 @@ import com.ldp.vigilantBean.repository.Pagination;
 import com.ldp.vigilantBean.repository.ProductRetrievalRepository;
 import com.ldp.vigilantBean.repository.impl.ProductPagination;
 import com.ldp.vigilantBean.service.ProductRetrievalService;
-import com.ldp.vigilantBean.utils.ProductsUtil;
+import com.ldp.vigilantBean.utils.PaginationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +70,7 @@ public class ProductRetrievalServiceImpl implements ProductRetrievalService {
     Pagination createPagination(int pageNumber) {
 
         int firstProductIndexOnPage =
-                ProductsUtil.getFirstProductIndex(pageNumber, numberOfProductsPerPage);
+                PaginationUtil.getFirstProductIndex(pageNumber, numberOfProductsPerPage);
 
         Pagination pagination =
                 new ProductPagination(firstProductIndexOnPage, numberOfProductsPerPage);

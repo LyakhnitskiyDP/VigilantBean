@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Collection;
 import java.util.List;
 
-public class ProductsUtilTest {
+public class PaginationUtilTest {
 
 
     @Nested
@@ -27,7 +25,7 @@ public class ProductsUtilTest {
                 int amountOfProducts = 4;
 
                 List<Integer> pageList =
-                        ProductsUtil.getPageList(amountOfProducts, productsPerPage);
+                        PaginationUtil.getPageList(amountOfProducts, productsPerPage);
 
                 Assertions.assertEquals(0, pageList.size());
             }
@@ -39,7 +37,7 @@ public class ProductsUtilTest {
                 int amountOfProducts = 13;
 
                 List<Integer> pageList =
-                        ProductsUtil.getPageList(amountOfProducts, productsPerPage);
+                        PaginationUtil.getPageList(amountOfProducts, productsPerPage);
                 List<Integer> expectedList =
                         List.of(1, 2);
 
@@ -53,7 +51,7 @@ public class ProductsUtilTest {
                 int amountOfProducts = 35;
 
                 List<Integer> pageList =
-                        ProductsUtil.getPageList(amountOfProducts, productsPerPage);
+                        PaginationUtil.getPageList(amountOfProducts, productsPerPage);
                 List<Integer> expectedList =
                         List.of(1, 2, 3, 4, 5);
 
@@ -83,7 +81,7 @@ public class ProductsUtilTest {
             int pageSize = 8;
 
             int firstProductIndex =
-                    ProductsUtil.getFirstProductIndex(pageNumber, pageSize);
+                    PaginationUtil.getFirstProductIndex(pageNumber, pageSize);
 
             Assertions.assertEquals(1, firstProductIndex);
         }
@@ -96,7 +94,7 @@ public class ProductsUtilTest {
             int pageSize = 7;
 
             int firstProductIndex =
-                    ProductsUtil.getFirstProductIndex(pageNumber, pageSize);
+                    PaginationUtil.getFirstProductIndex(pageNumber, pageSize);
 
             Assertions.assertEquals(8, firstProductIndex);
         }
@@ -110,7 +108,7 @@ public class ProductsUtilTest {
             int pageSize = 3;
 
             int firstProductIndex =
-                    ProductsUtil.getFirstProductIndex(pageNumber, pageSize);
+                    PaginationUtil.getFirstProductIndex(pageNumber, pageSize);
 
             Assertions.assertEquals(13, firstProductIndex);
         }

@@ -6,7 +6,7 @@ import com.ldp.vigilantBean.exception.CategoryNotFoundException;
 import com.ldp.vigilantBean.exception.ProductNotFoundException;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
 import com.ldp.vigilantBean.service.ProductRetrievalService;
-import com.ldp.vigilantBean.utils.ProductsUtil;
+import com.ldp.vigilantBean.utils.PaginationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +116,7 @@ public class ShopController {
     private void initPageListModel(Model model, int numberOfProducts) {
 
         List<Integer> pageList =
-                ProductsUtil.getPageList(numberOfProducts, numberOfProductsPerPage);
+                PaginationUtil.getPageList(numberOfProducts, numberOfProductsPerPage);
 
         model.addAttribute("pageList", pageList);
     }

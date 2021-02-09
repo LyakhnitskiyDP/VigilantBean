@@ -4,7 +4,7 @@ package com.ldp.vigilantBean.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsUtil {
+public class PaginationUtil {
 
     public static List<Integer> getPageList(Integer numberOfItems,
                                              Integer numberOfItemsPerPage) {
