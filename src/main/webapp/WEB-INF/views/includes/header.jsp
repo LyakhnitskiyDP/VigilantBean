@@ -5,10 +5,15 @@
 
 $(document).ready(function() {
 
-    $('#account-nav').toggleClass('hidden');
+
+    $('#account-nav').css('display', 'none');
 
     $('#userIcon').click(function() {
-        $('#account-nav').toggleClass('hidden');
+
+        if ($('#account-nav').css('display') == 'none') {
+            $('#account-nav').css('display', 'flex')
+        } else
+            $('#account-nav').css('display', 'none')
     });
 
 });
