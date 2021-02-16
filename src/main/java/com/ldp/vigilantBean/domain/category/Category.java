@@ -1,9 +1,12 @@
-package com.ldp.vigilantBean.domain;
+package com.ldp.vigilantBean.domain.category;
+
+import com.ldp.vigilantBean.domain.Picture;
+import lombok.Builder;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
+@Builder
 @Entity
 @NamedQueries({
         @NamedQuery(

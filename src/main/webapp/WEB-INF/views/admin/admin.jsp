@@ -94,6 +94,9 @@
     <div id="addProductTab-content">
         <h2><spring:message code="view.admin.addProduct.label" /></h2>
         <p><spring:message code="view.admin.addProduct.description" /></p>
+
+
+
     </div>
 
     <div id="editProductTab-content">
@@ -101,7 +104,54 @@
     </div>
 
     <div id="addCategoryTab-content">
-        <p>Impl</p>
+        <h2>Add new Category</h2>
+
+        <form:form modelAttribute="newCategory" action="api/admin/addCategory" method="POST">
+
+            <fieldset>
+
+                <div class="input-group" >
+                    <label class="form-label" for="category-name">
+                        Category name
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <form:input id="category-name" path="name"
+                                    type="text" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="category-name">
+                        Category name
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <form:input id="category-name" path="name"
+                                    type="text" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="input-group" />
+                    <label class="form-label" for="username">
+                        <spring:message code="view.registration.username.label" />
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <form:input id="username" path="username"
+                                    type="text" autocomplete="off"/>
+                    </div>
+                  </div>
+
+                </div>
+
+            </fieldset>
+
+        </form:form>
+
     </div>
 
     <div id="editCategoryTab-content">

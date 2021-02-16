@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.repository.impl;
 
-import com.ldp.vigilantBean.domain.Category;
+import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.repository.CategoryRetrievalRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

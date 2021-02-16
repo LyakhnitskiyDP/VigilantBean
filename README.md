@@ -3,6 +3,9 @@
 ---
 A web store built on Java platform.
 
+### UML diagram of business entities
+![UML diagram](VB_UML.svg)
+
 ### Technologies and frameworks used:
 * Spring
     * Spring MVC
