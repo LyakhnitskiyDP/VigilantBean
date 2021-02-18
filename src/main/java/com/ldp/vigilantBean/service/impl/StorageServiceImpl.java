@@ -3,18 +3,22 @@ package com.ldp.vigilantBean.service.impl;
 import com.ldp.vigilantBean.service.StorageService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 
+@Service
 public class StorageServiceImpl implements StorageService {
 
     private static final Logger log =
             LogManager.getLogger(StorageServiceImpl.class.getName());
 
     @Override
-    public boolean store(MultipartFile file, String path, String fileName) {
+    public boolean store(MultipartFile file,
+                         String path,
+                         String fileName) {
 
         if (file == null || file.isEmpty()) return false;
 

@@ -49,6 +49,7 @@ public class NewUserValidator implements Validator {
 
         AppUserDTO user = (AppUserDTO) target;
 
+
         checkEmail(user, errors);
     }
 

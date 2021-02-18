@@ -1,18 +1,48 @@
 package com.ldp.vigilantBean.domain.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ldp.vigilantBean.utils.StringUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.*;
 import java.util.Objects;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 public class CategoryDTO {
 
+    @NotBlank(message = "validation.newCategory.nameNotPresent")
+    @NotNull(message = "validation.newCategory.nameNotPresent")
+    @Length(min = 2, max = 16, message = "validation.newCategory.nameOutOfRange")
     private String name;
 
     private String shortName;
 
+    @NotBlank(message = "validation.newCategory.descriptionNotPresent")
+    @NotNull(message = "validation.newCategory.descriptionNotPresent")
+    @Length(min = 10, max = 200, message = "validation.newCategory.descriptionOutOfRange")
     private String description;
 
+    @NotNull(message = "validation.newCategory.photoNotPresent")
+    @JsonIgnore
     private MultipartFile picture;
+
+    @JsonIgnore
+    private String rootFilePath;
+
+    public void initShortName() {
+
+        if (this.name != null)
+            this.shortName = StringUtil.getSmallerVersion(name);
+
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -59,5 +89,13 @@ public class CategoryDTO {
 
     public void setPicture(MultipartFile picture) {
         this.picture = picture;
+    }
+
+    public String getRootFilePath() {
+        return rootFilePath;
+    }
+
+    public void setRootFilePath(String rootFilePath) {
+        this.rootFilePath = rootFilePath;
     }
 }
