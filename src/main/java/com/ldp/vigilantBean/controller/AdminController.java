@@ -11,6 +11,7 @@ import com.ldp.vigilantBean.utils.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -37,6 +38,8 @@ public class AdminController {
     private CategoryAlterService categoryAlterService;
     private CategoryRetrievalService categoryRetrievalService;
     private javax.validation.Validator validator;
+
+    private MessageSource messageSource;
 
 
     public AdminController(
@@ -92,32 +95,36 @@ public class AdminController {
                                              .build();
         categoryDTO.initShortName();
 
-        FormProcessingResponse formResponse;
+        FormProcessingResponse formResponse =
+                FormProcessingResponse.builder()
+                                      .locale(request.getLocale())
+                                      .messageSource(this.messageSource)
+                                      .build();
 
         Set<ConstraintViolation<CategoryDTO>> violations =
                 validator.validate(categoryDTO);
         if (violations.size() > 0) {
 
-            formResponse =
-                    new FormProcessingResponse(
+            formResponse.setErrorCodes(
                             violations.stream()
                                       .map(ConstraintViolation::getMessage)
                                       .collect(Collectors.toList())
-                    );
+                         );
+            formResponse.setInternationalizedErrors();
 
             return new ResponseEntity<>(formResponse, HttpStatus.BAD_REQUEST);
         }
 
         if (categoryRetrievalService.getCategoryByName(categoryDTO.getName()).isPresent()) {
 
-           formResponse =
-                   new FormProcessingResponse(
+           formResponse.setErrorCodes(
                            "validation.newCategory.categoryNameExists"
                    );
+           formResponse.setInternationalizedErrors();
 
            return new ResponseEntity<>(formResponse, HttpStatus.BAD_REQUEST);
         }
-        
+
         Optional<Category> category =
                 categoryAlterService.addNewCategory(categoryDTO);
 
@@ -126,6 +133,11 @@ public class AdminController {
         else
             return new ResponseEntity<FormProcessingResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
 
+    }
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
 }

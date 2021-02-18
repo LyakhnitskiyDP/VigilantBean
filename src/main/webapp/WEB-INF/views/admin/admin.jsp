@@ -53,6 +53,16 @@
                success: function(data) {
                 alert('sent');
                 console.log(data);
+               },
+               error: function(data) {
+
+                let errors = '';
+                $.each(data.responseJSON.errorCodes, function( i, error) {
+                    errors += "<p>" + error + "</p>";
+                });
+
+                $('#newCategoryErrorPane').html(errors);
+
                }
              });
 
