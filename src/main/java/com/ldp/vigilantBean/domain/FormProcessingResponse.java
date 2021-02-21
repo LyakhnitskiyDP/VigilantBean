@@ -3,20 +3,24 @@ package com.ldp.vigilantBean.domain;
 import lombok.*;
 import org.springframework.context.MessageSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Setter
-@Getter
+
 public class FormProcessingResponse {
 
     private List<String> errorCodes;
+
     private Locale locale;
+
     private MessageSource messageSource;
+
+    public FormProcessingResponse() {
+
+        this.errorCodes = new ArrayList<>();
+    }
 
     public void setInternationalizedErrors() {
 
@@ -25,15 +29,49 @@ public class FormProcessingResponse {
                                     .collect(Collectors.toList());
     }
 
-    public void setErrorCodes(String errorCode) {
-
-        this.errorCodes = List.of(errorCode);
-    }
-
     public void setErrorCodes(List<String> errorCodes) {
         this.errorCodes = errorCodes;
     }
 
+    public void addErrorCodes(List<String> errorCodes) {
+
+        if (this.errorCodes == null || this.errorCodes.isEmpty())
+            this.errorCodes = errorCodes;
+        else
+            errorCodes.addAll(errorCodes);
+    }
+
+    public void addErrorCode(String errorCode) {
+
+        if (this.errorCodes == null || this.errorCodes.isEmpty())
+            this.errorCodes = List.of(errorCode);
+        else
+            errorCodes.add(errorCode);
+    }
 
 
+    public boolean hasErrors() {
+        return !errorCodes.isEmpty();
+    }
+
+
+    public List<String> getErrorCodes() {
+        return errorCodes;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public MessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 }

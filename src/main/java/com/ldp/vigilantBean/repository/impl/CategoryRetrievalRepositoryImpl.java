@@ -4,6 +4,7 @@ import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.repository.CategoryRetrievalRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class CategoryRetrievalRepositoryImpl implements CategoryRetrievalReposit
         } catch (NoResultException noResultException) {
 
             log.info("Attempting to access non-existing category: " + categoryName);
+
+            return Optional.empty();
+        } catch (NonUniqueResultException nonUniqueResultException) {
+
+            log.error("Categories with same name exist" + categoryName);
 
             return Optional.empty();
         }

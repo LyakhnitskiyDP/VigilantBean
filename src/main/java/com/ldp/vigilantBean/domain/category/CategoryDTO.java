@@ -18,15 +18,11 @@ import java.util.Objects;
 @Builder
 public class CategoryDTO {
 
-    @NotBlank(message = "validation.newCategory.nameNotPresent")
-    @NotNull(message = "validation.newCategory.nameNotPresent")
     @Length(min = 2, max = 16, message = "validation.newCategory.nameOutOfRange")
     private String name;
 
     private String shortName;
 
-    @NotBlank(message = "validation.newCategory.descriptionNotPresent")
-    @NotNull(message = "validation.newCategory.descriptionNotPresent")
     @Length(min = 10, max = 200, message = "validation.newCategory.descriptionOutOfRange")
     private String description;
 

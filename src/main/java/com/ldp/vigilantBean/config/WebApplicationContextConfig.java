@@ -100,7 +100,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return jsonView;
     }
 
-    @Bean
+    @Bean(name = "beanValidator")
     public javax.validation.Validator validator() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         return factory.getValidator();

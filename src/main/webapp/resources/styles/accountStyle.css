@@ -100,3 +100,10 @@ textarea {
     background: var(--hex-shadow-light);
 }
 
+.validation-error {
+    color: var(--hex-main-bright);
+}
+
+.success {
+    color: var(--hex-success);
+}

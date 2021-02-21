@@ -8,6 +8,7 @@ import com.ldp.vigilantBean.service.AppUserRetrievalService;
 import com.ldp.vigilantBean.service.CategoryAlterService;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
 import com.ldp.vigilantBean.utils.StringUtil;
+import com.ldp.vigilantBean.validator.NewCategoryValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,14 +40,13 @@ public class AdminController {
     private AppUserRetrievalService appUserRetrievalService;
     private CategoryAlterService categoryAlterService;
     private CategoryRetrievalService categoryRetrievalService;
-    private javax.validation.Validator validator;
+
+    private NewCategoryValidator newCategoryValidator;
 
     private MessageSource messageSource;
 
 
     public AdminController(
-            @Autowired
-            javax.validation.Validator validator,
             @Autowired
             CategoryAlterService categoryAlterService,
             @Autowired
@@ -55,7 +57,6 @@ public class AdminController {
         this.appUserRetrievalService = appUserRetrievalService;
         this.categoryAlterService = categoryAlterService;
         this.categoryRetrievalService = categoryRetrievalService;
-        this.validator = validator;
     }
 
     @GetMapping
@@ -84,60 +85,64 @@ public class AdminController {
 
     @PostMapping("/addCategory")
     public ResponseEntity<FormProcessingResponse> processNewCategory(
-            @RequestParam(value = "file") MultipartFile file,
-            HttpServletRequest request) {
+            MultipartHttpServletRequest request) {
 
-        CategoryDTO categoryDTO = CategoryDTO.builder()
-                                             .name(request.getParameter("newCategoryName"))
-                                             .description(request.getParameter("newCategoryDescription"))
-                                             .picture(file)
-                                             .rootFilePath(request.getSession().getServletContext().getRealPath("/"))
-                                             .build();
-        categoryDTO.initShortName();
+        CategoryDTO categoryDTO =
+                extractCategoryDTO(request);
 
         FormProcessingResponse formResponse =
-                FormProcessingResponse.builder()
-                                      .locale(request.getLocale())
-                                      .messageSource(this.messageSource)
-                                      .build();
+                initFormProcessingResponse(request.getLocale());
 
-        Set<ConstraintViolation<CategoryDTO>> violations =
-                validator.validate(categoryDTO);
-        if (violations.size() > 0) {
+        newCategoryValidator.validate(categoryDTO, formResponse);
+        formResponse.setInternationalizedErrors();
 
-            formResponse.setErrorCodes(
-                            violations.stream()
-                                      .map(ConstraintViolation::getMessage)
-                                      .collect(Collectors.toList())
-                         );
-            formResponse.setInternationalizedErrors();
-
+        if (formResponse.hasErrors())
             return new ResponseEntity<>(formResponse, HttpStatus.BAD_REQUEST);
-        }
-
-        if (categoryRetrievalService.getCategoryByName(categoryDTO.getName()).isPresent()) {
-
-           formResponse.setErrorCodes(
-                           "validation.newCategory.categoryNameExists"
-                   );
-           formResponse.setInternationalizedErrors();
-
-           return new ResponseEntity<>(formResponse, HttpStatus.BAD_REQUEST);
-        }
 
         Optional<Category> category =
                 categoryAlterService.addNewCategory(categoryDTO);
 
         if (category.isPresent())
             return new ResponseEntity<FormProcessingResponse>(HttpStatus.OK);
-        else
+        else {
+            log.error("Exception while saving validated category");
             return new ResponseEntity<FormProcessingResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
+    }
+
+    private CategoryDTO extractCategoryDTO(MultipartHttpServletRequest request) {
+
+       CategoryDTO categoryDTO = CategoryDTO.builder()
+                                            .name(request.getParameter("newCategoryName"))
+                                            .description(request.getParameter("newCategoryDescription"))
+                                            .picture(request.getFile("categoryPhoto"))
+                                            .rootFilePath(request.getSession().getServletContext().getRealPath("/"))
+                                            .build();
+       categoryDTO.initShortName();
+
+       return categoryDTO;
+    }
+
+    private FormProcessingResponse initFormProcessingResponse(Locale locale) {
+
+        FormProcessingResponse response = new FormProcessingResponse();
+        response.setLocale(locale);
+        response.setMessageSource(this.messageSource);
+
+        return response;
     }
 
     @Autowired
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
+
+
+    @Autowired
+    public void setNewCategoryValidator(NewCategoryValidator validator) {
+        this.newCategoryValidator = validator;
+    }
+
 
 }

@@ -41,6 +41,7 @@
             var formData = new FormData(form);
             var url = $(this).attr('action');
             var method = $(this).attr('method');
+            var errorPane = $('.error-pane', form);
 
             $.ajax({
                type: method,
@@ -51,29 +52,35 @@
                contentType: false,
                cache: false,
                success: function(data) {
-                alert('sent');
-                console.log(data);
+                errorPane.html("<p class='success'>" + getSpringMessage(url) + "</p>")
+                form.reset();
                },
                error: function(data) {
 
                 let errors = '';
                 $.each(data.responseJSON.errorCodes, function( i, error) {
-                    errors += "<p>" + error + "</p>";
+                    errors += "<p class='validation-error'>" + error + "</p>";
                 });
 
-                $('#newCategoryErrorPane').html(errors);
-
+                errorPane.html(errors);
                }
              });
 
         });
 
-        $('#category-photo-upload-button').click(function() {
+        $('#category-photo-upload-button').click(function(e) {
 
+            e.preventDefault();
             $('#newCategoryPhoto')[0].click()
         });
 
     });
+
+    function getSpringMessage(url) {
+
+        if (url === 'admin/addCategory')
+            return "<spring:message code='view.admin.addCategory.success' />";
+    }
 
 
     </script>
@@ -153,17 +160,17 @@
         <p>TODO: implement it</p>
     </div>
 
-    <%-- Add new Category facility --%>
+    <%-- Add new Category --%>
     <div id="addCategoryTab-content">
         <h2>Add new Category</h2>
-
-        <div class="error-pane"
-             id="newCategoryErrorPane"></div>
 
         <form action="admin/addCategory"
               method="POST"
               enctype="multipart/form-data"
               class="ajaxForm">
+
+            <div class="error-pane"
+                 id="newCategoryErrorPane"></div>
 
             <fieldset>
 
@@ -198,7 +205,7 @@
 
                     <div class="form-input-field">
 
-                        <input class="file-input" id="newCategoryPhoto" name="file"
+                        <input name="categoryPhoto" class="file-input" id="newCategoryPhoto"
                                 type="file"/>
 
                         <button class="file-upload-button"
@@ -210,7 +217,7 @@
 
                 <div class="input-group" >
 
-                    <input type="submit" value="Add" /.
+                    <input type="submit" value="Add" />
 
                 </div>
 

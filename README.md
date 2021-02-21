@@ -24,8 +24,28 @@ A web store built on Java platform.
   
 * Product management
     * Paginated listing of Products
-    * Adding/Editing new Products (In progress)
     * Grouping products by Categories (Many to many)
+    * Adding new Products (In progress)
+    * Adding new Categories
+  
+### Demo
+
+---
+#### Main page
+![slide_1](showcase/1.jpg)
+
+#### Registration
+![slide_2](showcase/2.jpg)
+![slide_3](showcase/3.jpg)
+![slide_4](showcase/4.jpg)
+![slide_5](showcase/5.jpg)
+![slide_6](showcase/6.jpg)
+![slide_7](showcase/7.jpg)
+
+#### Adding new category (admin)
+![slide_8](showcase/8.jpg)
+![slide_9](showcase/9.jpg)
+
   
 ### How to set up
 1. Supply hibernate configuration properties in
