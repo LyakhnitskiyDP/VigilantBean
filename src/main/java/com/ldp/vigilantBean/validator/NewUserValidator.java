@@ -4,6 +4,7 @@ package com.ldp.vigilantBean.validator;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.repository.AppUserRetrievalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -22,6 +23,7 @@ public class NewUserValidator implements Validator {
             @Autowired
             AppUserRetrievalRepository appUserRetrievalRepository,
             @Autowired
+            @Qualifier("beanValidator")
             javax.validation.Validator validator) {
 
         this.appUserRetrievalRepository = appUserRetrievalRepository;
@@ -48,6 +50,7 @@ public class NewUserValidator implements Validator {
         }
 
         AppUserDTO user = (AppUserDTO) target;
+
 
         checkEmail(user, errors);
     }

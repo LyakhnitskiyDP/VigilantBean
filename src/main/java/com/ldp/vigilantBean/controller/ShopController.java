@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.controller;
 
-import com.ldp.vigilantBean.domain.Category;
+import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.domain.Product;
 import com.ldp.vigilantBean.exception.CategoryNotFoundException;
 import com.ldp.vigilantBean.exception.ProductNotFoundException;

@@ -52,3 +52,58 @@ main {
     color: var(--hex-shadow-light);
 }
 
+/* Forms */
+fieldset {
+    border: none;
+}
+
+.input-group {
+    margin: 1em 0;
+    width: 100%;
+}
+
+.form-label {
+    color: var(--hex-shadow-light);
+}
+
+.field-input {
+    width: 100%;
+    padding: .35rem;
+    font-family: 'pacifico';
+    font-size: 1rem;
+    text-align: center;
+}
+
+.file-input {
+   display: none;
+}
+
+.file-upload-button {
+    background: none;
+    outline: none;
+    margin-top: .5em;
+    border: none;
+    font-size: 1rem;
+    color: var(--hex-shadow-light);
+    border: 2px solid var(--hex-shadow-light);
+    border-radius: .35rem;
+    padding: .35rem .5rem;
+}
+
+textarea {
+    resize: vertical;
+    width: 100%;
+    height: 4rem;
+    padding: .35rem;
+    font-size: 1rem;
+    font-family: 'pacifico';
+    background: var(--hex-shadow-light);
+}
+
+.validation-error {
+    color: var(--hex-main-bright);
+}
+
+.success {
+    color: var(--hex-success);
+}

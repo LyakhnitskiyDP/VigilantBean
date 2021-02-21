@@ -1,8 +1,10 @@
-package com.ldp.vigilantBean.domain;
+package com.ldp.vigilantBean.domain.category;
+
+import com.ldp.vigilantBean.domain.Picture;
+import lombok.Builder;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @NamedQueries({
@@ -25,7 +27,7 @@ public class Category {
 
     @Id
     @Column(name = "category_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long categoryId;
 
     @Column(name = "name")
@@ -37,7 +39,7 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "category_picture",
                joinColumns = @JoinColumn(name = "category_id"),
                inverseJoinColumns = @JoinColumn(name = "picture_id")
@@ -46,6 +48,14 @@ public class Category {
 
     public Category() {
 
+    }
+
+    @Builder
+    public Category(String name, String shortName, String description, Picture picture) {
+        this.name = name;
+        this.shortName = shortName;
+        this.description = description;
+        this.picture = picture;
     }
 
     @Override

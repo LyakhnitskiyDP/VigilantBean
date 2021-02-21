@@ -13,7 +13,6 @@
     <spring:url value="/resources/styles/includesStyles/headerStyle.css" var="headerStyle" />
     <spring:url value="/resources/styles/includesStyles/footerStyle.css" var="footerStyle" />
 
-    <spring:url value="/resources/scripts/tabsScript.js" var="tabsScript"/>
 
     <title>Admit page</title>
 
@@ -24,7 +23,67 @@
     <link rel="stylesheet" href="${footerStyle}" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <spring:url value="/resources/scripts/tabsScript.js" var="tabsScript"/>
     <script type="text/javascript" src="${tabsScript}"></script>
+
+    <script>
+    $(document).ready(function() {
+
+        $(".ajaxForm").submit(function(e) {
+
+            e.preventDefault();
+
+            var form = $(this)[0];
+            var formData = new FormData(form);
+            var url = $(this).attr('action');
+            var method = $(this).attr('method');
+            var errorPane = $('.error-pane', form);
+
+            $.ajax({
+               type: method,
+               url: url,
+               data: formData,
+               enctype: 'multipart/form-data',
+               processData: false,
+               contentType: false,
+               cache: false,
+               success: function(data) {
+                errorPane.html("<p class='success'>" + getSpringMessage(url) + "</p>")
+                form.reset();
+               },
+               error: function(data) {
+
+                let errors = '';
+                $.each(data.responseJSON.errorCodes, function( i, error) {
+                    errors += "<p class='validation-error'>" + error + "</p>";
+                });
+
+                errorPane.html(errors);
+               }
+             });
+
+        });
+
+        $('#category-photo-upload-button').click(function(e) {
+
+            e.preventDefault();
+            $('#newCategoryPhoto')[0].click()
+        });
+
+    });
+
+    function getSpringMessage(url) {
+
+        if (url === 'admin/addCategory')
+            return "<spring:message code='view.admin.addCategory.success' />";
+    }
+
+
+    </script>
 
 </head>
 <body>
@@ -94,14 +153,78 @@
     <div id="addProductTab-content">
         <h2><spring:message code="view.admin.addProduct.label" /></h2>
         <p><spring:message code="view.admin.addProduct.description" /></p>
+
     </div>
 
     <div id="editProductTab-content">
         <p>TODO: implement it</p>
     </div>
 
+    <%-- Add new Category --%>
     <div id="addCategoryTab-content">
-        <p>Impl</p>
+        <h2>Add new Category</h2>
+
+        <form action="admin/addCategory"
+              method="POST"
+              enctype="multipart/form-data"
+              class="ajaxForm">
+
+            <div class="error-pane"
+                 id="newCategoryErrorPane"></div>
+
+            <fieldset>
+
+                <div class="input-group" >
+                    <label class="form-label" for="category-name">
+                        Category name
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input id="category-name" class="field-input" name="newCategoryName"
+                               type="text" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="category-name">
+                        Category description
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <textarea id="category-name" name="newCategoryDescription"
+                                autocomplete="off"></textarea>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="username">
+                        Photo
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input name="categoryPhoto" class="file-input" id="newCategoryPhoto"
+                                type="file"/>
+
+                        <button class="file-upload-button"
+                                id="category-photo-upload-button">
+                                Choose category photo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+
+                    <input type="submit" value="Add" />
+
+                </div>
+
+            </fieldset>
+
+        </form>
+
     </div>
 
     <div id="editCategoryTab-content">

@@ -1,5 +1,7 @@
 package com.ldp.vigilantBean.domain;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -10,7 +12,7 @@ public class Picture {
 
     @Id
     @Column(name = "picture_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pictureId;
 
     @Column(name = "name")
@@ -21,6 +23,16 @@ public class Picture {
 
     @Column(name = "relative_path")
     private String relativePath;
+
+    @Builder
+    public Picture(String name, String extension, String relativePath) {
+        this.name = name;
+        this.extension = extension;
+        this.relativePath = relativePath;
+    }
+
+    public Picture() {
+    }
 
     public String getFullName() {
         return this.name + "." + this.extension;

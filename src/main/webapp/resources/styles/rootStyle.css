@@ -19,6 +19,10 @@
   --rgb-background: 18, 16, 19;
   --hex-background: #121013;
 
+  /* Successful operation */
+  --rgb-success: 153 255 153;
+  --hex-success: #99ff99;
+
   /* Font */
   font-size: calc(1rem + .5vmax);
   font-family: pacifico;

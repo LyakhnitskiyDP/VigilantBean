@@ -57,9 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .mvcMatchers("/cart").hasRole("CUSTOMER")
                     .anyRequest().permitAll();
 
-
-        httpSecurity.csrf()
-                    .disable();
+        httpSecurity.csrf().disable();
 
     }
 

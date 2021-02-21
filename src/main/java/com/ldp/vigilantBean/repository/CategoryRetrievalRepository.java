@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.repository;
 
-import com.ldp.vigilantBean.domain.Category;
+import com.ldp.vigilantBean.domain.category.Category;
 
 import java.util.List;
 import java.util.Optional;

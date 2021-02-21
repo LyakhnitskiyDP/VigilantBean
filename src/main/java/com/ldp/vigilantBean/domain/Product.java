@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.domain;
 
-import jdk.jfr.Name;
+import com.ldp.vigilantBean.domain.category.Category;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

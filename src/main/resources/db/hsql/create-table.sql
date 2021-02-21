@@ -13,7 +13,7 @@ DROP TABLE product IF EXISTS;
 DROP TABLE category IF EXISTS;
 
 CREATE TABLE category (
-    category_id INTEGER PRIMARY KEY,
+    category_id INTEGER IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     short_name VARCHAR(100) NOT NULL,
     description VARCHAR(300) NOT NULL
@@ -42,7 +42,7 @@ CREATE TABLE product_category (
 )
 
 CREATE TABLE picture (
-    picture_id INTEGER PRIMARY KEY,
+    picture_id INTEGER IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     extension VARCHAR(10) NOT NULL,
     relative_path VARCHAR(100) NOT NULl

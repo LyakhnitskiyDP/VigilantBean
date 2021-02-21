@@ -1,6 +1,18 @@
 package com.ldp.vigilantBean.utils;
 
+import org.springframework.util.StringUtils;
+
 public class StringUtil {
+
+
+    public static String getSmallerVersion(String string) {
+
+        String shortString = "";
+        shortString = string.replace(" ", "");
+        shortString = StringUtils.uncapitalize(shortString);
+
+        return shortString;
+    }
 
     public static String partiallyHideEmail(String email) {
 
@@ -23,9 +35,6 @@ public class StringUtil {
                 ((int) Math.floor((double) part.length() * hiddenPortion));
 
         int numberOfUnchangedSymbols = part.length() - numberOfHiddenSymbols;
-
-        System.out.println("Number of Hidden symbols: " + numberOfHiddenSymbols);
-        System.out.println("Number of unchanged symbols: " + numberOfUnchangedSymbols);
 
         StringBuilder stringBuilder = new StringBuilder();
 

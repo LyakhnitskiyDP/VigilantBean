@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.service.impl;
 
-import com.ldp.vigilantBean.domain.Category;
+import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.repository.CategoryRetrievalRepository;
 import com.ldp.vigilantBean.repository.impl.CategoryRetrievalRepositoryImpl;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
