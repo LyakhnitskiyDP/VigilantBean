@@ -43,7 +43,7 @@ public class NewCategoryValidator {
 
         checkForNameUniqueness(categoryDTO, response);
 
-        checkForPicturePresence(categoryDTO, response);
+        checkPicture(categoryDTO, response);
     }
 
     private void checkForConstraintViolations
@@ -75,7 +75,7 @@ public class NewCategoryValidator {
         }
     }
 
-    private void checkForPicturePresence
+    private void checkPicture
             (CategoryDTO categoryDTO, FormProcessingResponse response) {
 
         if (categoryDTO.getPicture() == null || categoryDTO.getPicture().isEmpty()) {
@@ -83,7 +83,17 @@ public class NewCategoryValidator {
             response.addErrorCode(
                     "validation.newCategory.categoryPictureIsAbsent"
             );
+            return;
         }
+
+        if (!categoryDTO.getPicture().getContentType().startsWith("image")) {
+
+            response.addErrorCode(
+                    "validation.newCategory.categoryPictureIsInvalid"
+            );
+
+        }
+
     }
 
 }

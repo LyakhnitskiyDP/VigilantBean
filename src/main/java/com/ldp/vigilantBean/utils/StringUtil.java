@@ -2,7 +2,33 @@ package com.ldp.vigilantBean.utils;
 
 import org.springframework.util.StringUtils;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Random;
+
 public class StringUtil {
+
+    private StringUtil() {}
+
+    public static String generateStringOfSize(int size) {
+
+        StringBuilder builder = new StringBuilder(size);
+        Random random = new Random();
+
+        int lowBoundary = 97;
+        int highBoundary = 122;
+
+        for (int i = 0; i < size; i++) {
+
+           builder.append(
+                   (char)
+                   (lowBoundary + (int) (random.nextFloat() * (highBoundary - lowBoundary)))
+           );
+
+        }
+
+        return builder.toString();
+    }
 
 
     public static String getSmallerVersion(String string) {
