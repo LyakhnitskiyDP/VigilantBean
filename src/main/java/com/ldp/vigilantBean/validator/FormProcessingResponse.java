@@ -1,6 +1,5 @@
-package com.ldp.vigilantBean.domain;
+package com.ldp.vigilantBean.validator;
 
-import lombok.*;
 import org.springframework.context.MessageSource;
 
 import java.util.ArrayList;
@@ -13,6 +12,8 @@ public class FormProcessingResponse {
 
     private List<String> errorCodes;
 
+    private String successCode;
+
     private Locale locale;
 
     private MessageSource messageSource;
@@ -22,11 +23,13 @@ public class FormProcessingResponse {
         this.errorCodes = new ArrayList<>();
     }
 
-    public void setInternationalizedErrors() {
+    public void externalizeMessages() {
 
         this.errorCodes = errorCodes.stream()
                                     .map(errorCode -> messageSource.getMessage(errorCode, null, locale))
                                     .collect(Collectors.toList());
+
+        this.successCode = messageSource.getMessage(successCode, null, locale);
     }
 
     public void setErrorCodes(List<String> errorCodes) {
@@ -73,5 +76,14 @@ public class FormProcessingResponse {
 
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
+    }
+
+
+    public String getSuccessCode() {
+        return successCode;
+    }
+
+    public void setSuccessCode(String successCode) {
+        this.successCode = successCode;
     }
 }

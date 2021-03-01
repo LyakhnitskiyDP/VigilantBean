@@ -1,6 +1,5 @@
 package com.ldp.vigilantBean.validator;
 
-import com.ldp.vigilantBean.domain.FormProcessingResponse;
 import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.domain.category.CategoryDTO;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
@@ -49,7 +48,8 @@ public class NewCategoryValidatorTest {
                 Validation.buildDefaultValidatorFactory().getValidator();
 
         this.newCategoryValidator =
-                new NewCategoryValidator(categoryRetrievalService, beanValidator);
+                new NewCategoryValidator(categoryRetrievalService);
+        this.newCategoryValidator.setBeanValidator(beanValidator);
 
         response = new FormProcessingResponse();
 

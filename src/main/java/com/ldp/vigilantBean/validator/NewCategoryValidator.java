@@ -1,6 +1,5 @@
 package com.ldp.vigilantBean.validator;
 
-import com.ldp.vigilantBean.domain.FormProcessingResponse;
 import com.ldp.vigilantBean.domain.category.CategoryDTO;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
 import org.apache.logging.log4j.LogManager;
@@ -9,56 +8,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.validation.ConstraintViolation;
-import java.util.Set;
-import java.util.stream.Collectors;
+import javax.validation.Validator;
 
 @Component
-public class NewCategoryValidator {
+public class NewCategoryValidator extends NewEntityValidator<CategoryDTO> {
 
     private static final Logger log =
             LogManager.getLogger(NewCategoryValidator.class.getName());
-
-    private javax.validation.Validator beanValidator;
 
     private CategoryRetrievalService categoryRetrievalService;
 
     public NewCategoryValidator(
             @Autowired
-            CategoryRetrievalService categoryRetrievalService,
-            @Autowired
-            @Qualifier("beanValidator")
-            javax.validation.Validator beanValidator) {
+            CategoryRetrievalService categoryRetrievalService) {
 
-        this.beanValidator = beanValidator;
         this.categoryRetrievalService = categoryRetrievalService;
     }
 
+    @Override
+    @Autowired
+    @Qualifier("beanValidator")
+    public void setBeanValidator(Validator beanValidator) {
 
+        super.beanValidator = beanValidator;
+    }
+
+    @Override
     public void validate
             (CategoryDTO categoryDTO,
              FormProcessingResponse response) {
 
-        checkForConstraintViolations(categoryDTO, response);
+        super.checkForConstraintViolations(categoryDTO, response);
 
         checkForNameUniqueness(categoryDTO, response);
 
         checkPicture(categoryDTO, response);
-    }
 
-    private void checkForConstraintViolations
-            (CategoryDTO categoryDTO, FormProcessingResponse response) {
-
-        Set<ConstraintViolation<CategoryDTO>> violations =
-                beanValidator.validate(categoryDTO);
-        if (violations.size() > 0) {
-
-            response.addErrorCodes(
-                    violations.stream()
-                            .map(ConstraintViolation::getMessage)
-                            .collect(Collectors.toList())
-            );
-        }
+        response.setSuccessCode("view.admin.addCategory.success");
     }
 
     private void checkForNameUniqueness

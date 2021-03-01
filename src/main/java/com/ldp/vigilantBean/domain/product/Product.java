@@ -1,5 +1,6 @@
-package com.ldp.vigilantBean.domain;
+package com.ldp.vigilantBean.domain.product;
 
+import com.ldp.vigilantBean.domain.Picture;
 import com.ldp.vigilantBean.domain.category.Category;
 
 import javax.persistence.*;
@@ -47,7 +48,7 @@ public class Product {
 
     @Id
     @Column(name = "product_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long productId;
 
     @Column(name = "name")
@@ -98,6 +99,8 @@ public class Product {
     public Product() {
 
     }
+
+
 
     @Override
     public boolean equals(Object o) {

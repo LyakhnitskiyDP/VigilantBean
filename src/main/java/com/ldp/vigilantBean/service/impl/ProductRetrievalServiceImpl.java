@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.service.impl;
 
-import com.ldp.vigilantBean.domain.Product;
+import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.repository.Pagination;
 import com.ldp.vigilantBean.repository.ProductRetrievalRepository;
 import com.ldp.vigilantBean.repository.impl.ProductPagination;

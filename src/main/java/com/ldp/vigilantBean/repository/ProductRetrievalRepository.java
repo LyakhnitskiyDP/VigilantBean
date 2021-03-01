@@ -1,7 +1,6 @@
 package com.ldp.vigilantBean.repository;
 
-import com.ldp.vigilantBean.domain.Product;
-import com.ldp.vigilantBean.repository.impl.ProductPagination;
+import com.ldp.vigilantBean.domain.product.Product;
 
 import java.util.List;
 import java.util.Optional;
