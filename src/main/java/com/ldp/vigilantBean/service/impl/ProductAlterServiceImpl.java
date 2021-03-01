@@ -1,5 +1,6 @@
 package com.ldp.vigilantBean.service.impl;
 
+import com.ldp.vigilantBean.domain.Picture;
 import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.domain.product.ProductDTO;
@@ -13,6 +14,7 @@ import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -61,7 +63,12 @@ public class ProductAlterServiceImpl implements ProductAlterService {
         productAlterRepository.addNewProduct(product);
 
         //Create picture objects
+        /*
+        Picture primaryPicture = Picture.builder()
+                                        .name(product.getProductId() + "_")
+                                        .extension(StringUtils.getFilenameExtension(productDTO.getPrimaryPicture().getOriginalFilename()))
 
+         */
 
         //Save pictures on a disc
 

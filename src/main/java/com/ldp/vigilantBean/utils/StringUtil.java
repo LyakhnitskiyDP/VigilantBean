@@ -4,6 +4,7 @@ import org.springframework.util.StringUtils;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Random;
 
 public class StringUtil {
@@ -71,5 +72,20 @@ public class StringUtil {
             stringBuilder.append("*");
 
         return stringBuilder.toString().substring(0, part.length());
+    }
+
+    public static String getRelativePath(String...sequenceOfFolders) {
+
+        String delimiter = System.getProperty("file.separator");
+
+        StringBuilder sb = new StringBuilder();
+
+        Arrays.stream(sequenceOfFolders)
+              .forEach( (folder) ->
+                      sb.append(delimiter)
+                        .append(folder)
+              );
+
+        return sb.toString();
     }
 }
