@@ -8,6 +8,9 @@ import com.ldp.vigilantBean.repository.ProductAlterRepository;
 import com.ldp.vigilantBean.repository.impl.ProductAlterRepositoryImpl;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
 import com.ldp.vigilantBean.service.ProductAlterService;
+import com.ldp.vigilantBean.service.StorageService;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +20,26 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Log4j2
 public class ProductAlterServiceImpl implements ProductAlterService {
 
     private ProductAlterRepository productAlterRepository;
 
     private CategoryRetrievalRepository categoryRetrievalRepository;
 
+    private StorageService storageService;
+
     public ProductAlterServiceImpl(
             @Autowired
             CategoryRetrievalRepository categoryRetrievalRepository,
+            @Autowired
+            StorageService storageService,
             @Autowired
             ProductAlterRepository productAlterRepository) {
 
        this.productAlterRepository = productAlterRepository;
        this.categoryRetrievalRepository = categoryRetrievalRepository;
+       this.storageService = storageService;
     }
 
     @Override
@@ -41,15 +50,18 @@ public class ProductAlterServiceImpl implements ProductAlterService {
         List<Category> productCategories =
                 categoryRetrievalRepository.getCategoriesByNameInBatch(productDTO.getCategoryNames());
 
-        if (productCategories.isEmpty())
+        if (productCategories.isEmpty()) {
+            log.error("Supplied categories for a new Product are not found");
             return Optional.empty();
+        }
 
         product.setCategories(new HashSet<>(productCategories));
 
-        //Save the product for ID
+        //Save the product for product's ID
         productAlterRepository.addNewProduct(product);
 
         //Create picture objects
+
 
         //Save pictures on a disc
 

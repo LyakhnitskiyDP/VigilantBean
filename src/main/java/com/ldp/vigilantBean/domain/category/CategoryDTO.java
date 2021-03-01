@@ -30,9 +30,6 @@ public class CategoryDTO {
     @JsonIgnore
     private MultipartFile picture;
 
-    @JsonIgnore
-    private String rootFilePath;
-
     public void initShortName() {
 
         if (this.name != null)
@@ -87,11 +84,4 @@ public class CategoryDTO {
         this.picture = picture;
     }
 
-    public String getRootFilePath() {
-        return rootFilePath;
-    }
-
-    public void setRootFilePath(String rootFilePath) {
-        this.rootFilePath = rootFilePath;
-    }
 }

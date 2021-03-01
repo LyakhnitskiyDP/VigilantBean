@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.ServletContext;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,8 @@ public class CategoryAlterServiceImpl implements CategoryAlterService {
 
     private CategoryAlterRepository categoryAlterRepository;
     private StorageService storageService;
+
+    private ServletContext context;
 
     public CategoryAlterServiceImpl(
             @Autowired
@@ -27,6 +30,11 @@ public class CategoryAlterServiceImpl implements CategoryAlterService {
         this.categoryAlterRepository = categoryAlterRepository;
     }
 
+    @Autowired
+    public void setContext(ServletContext servletContext) {
+        this.context = servletContext;
+    }
+
     @Override
     public Optional<Category> addNewCategory(CategoryDTO categoryDTO) {
 
@@ -34,14 +42,14 @@ public class CategoryAlterServiceImpl implements CategoryAlterService {
 
         storageService.store(
                 categoryDTO.getPicture(),
-                categoryDTO.getRootFilePath() + getRelativePathToPictures(),
+                context.getRealPath("/") + getRelativePathToCategoryPictures(),
                 categoryDTO.getShortName() + "." + getPictureExtension(categoryDTO)
         );
 
         Picture categoryPicture = Picture.builder()
                                          .name(categoryDTO.getShortName())
                                          .extension(getPictureExtension(categoryDTO))
-                                         .relativePath(getRelativePathToPictures())
+                                         .relativePath(getRelativePathToCategoryPictures())
                                          .build();
 
         category.setPicture(categoryPicture);
@@ -59,7 +67,7 @@ public class CategoryAlterServiceImpl implements CategoryAlterService {
 
     }
 
-    private String getRelativePathToPictures() {
+    private String getRelativePathToCategoryPictures() {
 
         String delimiter = System.getProperty("file.separator");
 

@@ -96,9 +96,9 @@ public class AdminController {
 
         ProductDTO productDTO =
                 extractProductDTO(request);
-        FormProcessingResponse response =
-                initFormProcessingResponse(request.getLocale());
 
+        FormProcessingResponse response =
+                new FormProcessingResponse(request.getLocale(), this.messageSource);
         response.setSuccessCode("view.admin.addProduct.success");
 
         newProductValidator.validate(productDTO, response);
@@ -161,7 +161,7 @@ public class AdminController {
                 extractCategoryDTO(request);
 
         FormProcessingResponse formResponse =
-                initFormProcessingResponse(request.getLocale());
+                new FormProcessingResponse(request.getLocale(), this.messageSource);
 
         newCategoryValidator.validate(categoryDTO, formResponse);
         formResponse.externalizeMessages();
@@ -187,20 +187,10 @@ public class AdminController {
                                                 .name(request.getParameter("newCategoryName"))
                                                 .description(request.getParameter("newCategoryDescription"))
                                                 .picture(request.getFile("categoryPhoto"))
-                                                .rootFilePath(request.getSession().getServletContext().getRealPath("/"))
                                             .build();
        categoryDTO.initShortName();
 
        return categoryDTO;
-    }
-
-    private FormProcessingResponse initFormProcessingResponse(Locale locale) {
-
-        FormProcessingResponse response = new FormProcessingResponse();
-        response.setLocale(locale);
-        response.setMessageSource(this.messageSource);
-
-        return response;
     }
 
     @Autowired

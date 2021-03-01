@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class FormProcessingResponse {
 
-    private List<String> errorCodes;
+    private List<String> errorCodes = new ArrayList<>();
 
     private String successCode;
 
@@ -20,7 +20,11 @@ public class FormProcessingResponse {
 
     public FormProcessingResponse() {
 
-        this.errorCodes = new ArrayList<>();
+    }
+
+    public FormProcessingResponse(Locale locale, MessageSource messageSource) {
+        this.locale = locale;
+        this.messageSource = messageSource;
     }
 
     public void externalizeMessages() {
