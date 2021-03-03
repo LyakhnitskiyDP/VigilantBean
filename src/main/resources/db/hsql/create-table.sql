@@ -20,7 +20,7 @@ CREATE TABLE category (
 )
 
 CREATE TABLE product (
-    product_id INTEGER PRIMARY KEY,
+    product_id INTEGER IDENTITY PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     description VARCHAR(1000) NOT NULL,
     quantity_per_unit INT NOT NULL,

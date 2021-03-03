@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,10 +46,34 @@ public class CategoryRetrievalRepositoryImpl implements CategoryRetrievalReposit
             return Optional.empty();
         } catch (NonUniqueResultException nonUniqueResultException) {
 
-            log.error("Categories with same name exist" + categoryName);
+            log.error("Categories with same name exist " + categoryName);
 
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Category> getCategoriesByNameInBatch(Collection<String> categoryNames) {
+
+        List<Category> categories;
+        try (Session session = sessionFactory.openSession()) {
+
+            session.getTransaction().begin();
+
+            categories = session.createQuery("from Category c where c.name in (:names)", Category.class)
+                                               .setParameterList("names", categoryNames)
+                                               .list();
+
+            session.getTransaction().commit();
+        }
+
+        if (categoryNames.size() != categories.size()) {
+
+            log.error("Different number of element in category names and persisted categories");
+
+            return List.of();
+        } else
+            return categories;
     }
 
     @Override

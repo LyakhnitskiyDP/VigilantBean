@@ -26,6 +26,7 @@ form input[type=submit] {
     color: var(--hex-shadow-light);
     background: var(--hex-background);
     border: 2px solid var(--hex-shadow-light);
+    cursor: pointer;
 }
 
 form input[type=submit]:hover {

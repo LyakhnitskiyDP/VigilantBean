@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Picture {
+public class Picture implements Comparable<Picture> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +32,11 @@ public class Picture {
     }
 
     public Picture() {
+    }
+
+    @Override
+    public int compareTo(Picture o) {
+        return this.name.compareTo(o.getName());
     }
 
     public String getFullName() {
@@ -81,5 +86,15 @@ public class Picture {
 
     public void setRelativePath(String relativePath) {
         this.relativePath = relativePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "pictureId=" + pictureId +
+                ", name='" + name + '\'' +
+                ", extension='" + extension + '\'' +
+                ", relativePath='" + relativePath + '\'' +
+                '}';
     }
 }

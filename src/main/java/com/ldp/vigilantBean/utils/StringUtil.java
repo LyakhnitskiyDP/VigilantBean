@@ -2,7 +2,39 @@ package com.ldp.vigilantBean.utils;
 
 import org.springframework.util.StringUtils;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Random;
+
 public class StringUtil {
+
+    private StringUtil() {}
+
+    /**
+     * Generated random String object of specified size
+     * @param size Size of generated String.
+     * @return random string.
+     */
+    public static String generateRandomStringOfSize(int size) {
+
+        StringBuilder builder = new StringBuilder(size);
+        Random random = new Random();
+
+        int lowBoundary = 97;
+        int highBoundary = 122;
+
+        for (int i = 0; i < size; i++) {
+
+           builder.append(
+                   (char)
+                   (lowBoundary + (int) (random.nextFloat() * (highBoundary - lowBoundary)))
+           );
+
+        }
+
+        return builder.toString();
+    }
 
 
     public static String getSmallerVersion(String string) {
@@ -14,6 +46,11 @@ public class StringUtil {
         return shortString;
     }
 
+    /**
+     * Partially hides Email address by replacing some characters with asterisks
+     * @param email Email address to be hidden
+     * @return Hidden Email address
+     */
     public static String partiallyHideEmail(String email) {
 
         String[] emailParts = email.split("@");
@@ -45,5 +82,26 @@ public class StringUtil {
             stringBuilder.append("*");
 
         return stringBuilder.toString().substring(0, part.length());
+    }
+
+    /**
+     * Assembles sequential folder names to get a relative path.
+     * EXAMPLE: ["home", "documents", "tmp"] -> home/documents/tmp
+     * @param sequenceOfFolders Array of folders
+     * @return Relative path.
+     */
+    public static String getRelativePath(String...sequenceOfFolders) {
+
+        String delimiter = System.getProperty("file.separator");
+
+        StringBuilder sb = new StringBuilder();
+
+        Arrays.stream(sequenceOfFolders)
+              .forEach( (folder) ->
+                      sb.append(delimiter)
+                        .append(folder)
+              );
+
+        return sb.toString();
     }
 }

@@ -6,6 +6,11 @@ import java.util.Date;
 
 public class ChronoUtil {
 
+    /**
+     * Converts java.util.Date to LocalDateTime with system time Zone.
+     * @param date A date to be converted to LocalDateTime.
+     * @return Converted LocalDateTime date.
+     */
     public static LocalDateTime convertToLocalDateTime(Date date) {
 
         return date.toInstant()
@@ -13,6 +18,11 @@ public class ChronoUtil {
                    .toLocalDateTime();
     }
 
+    /**
+     * Converts LocalDateTime to java.util.Date with system time Zone.
+     * @param localDateTime A date to be converted to java.util.Date.
+     * @return Converted java.util.Date date.
+     */
     public static Date convertToDate(LocalDateTime localDateTime) {
 
         return Date.from(

@@ -1,22 +1,18 @@
 package com.ldp.vigilantBean.repository.impl;
 
-import com.ldp.vigilantBean.domain.Product;
+import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.repository.Pagination;
 import com.ldp.vigilantBean.repository.ProductRetrievalRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 

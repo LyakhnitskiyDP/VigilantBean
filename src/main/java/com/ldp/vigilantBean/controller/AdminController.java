@@ -1,14 +1,20 @@
 package com.ldp.vigilantBean.controller;
 
-import com.ldp.vigilantBean.domain.FormProcessingResponse;
+import com.ldp.vigilantBean.domain.product.Product;
+import com.ldp.vigilantBean.repository.AppUserAlterRepository;
+import com.ldp.vigilantBean.repository.ProductAlterRepository;
+import com.ldp.vigilantBean.service.ProductAlterService;
+import com.ldp.vigilantBean.validator.FormProcessingResponse;
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.domain.category.CategoryDTO;
+import com.ldp.vigilantBean.domain.product.ProductDTO;
 import com.ldp.vigilantBean.service.AppUserRetrievalService;
 import com.ldp.vigilantBean.service.CategoryAlterService;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
 import com.ldp.vigilantBean.utils.StringUtil;
 import com.ldp.vigilantBean.validator.NewCategoryValidator;
+import com.ldp.vigilantBean.validator.NewProductValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +25,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,26 +37,23 @@ public class AdminController {
     private static final Logger log =
             LogManager.getLogger(AdminController.class.getName());
 
+    private ProductController productController;
+
+    private CategoryController categoryController;
+
     private AppUserRetrievalService appUserRetrievalService;
-    private CategoryAlterService categoryAlterService;
-    private CategoryRetrievalService categoryRetrievalService;
-
-    private NewCategoryValidator newCategoryValidator;
-
-    private MessageSource messageSource;
-
 
     public AdminController(
             @Autowired
-            CategoryAlterService categoryAlterService,
+            AppUserRetrievalService appUserRetrievalService,
             @Autowired
-            CategoryRetrievalService categoryRetrievalService,
+            ProductController productController,
             @Autowired
-            AppUserRetrievalService appUserRetrievalService) {
+            CategoryController categoryController) {
 
+        this.productController = productController;
+        this.categoryController = categoryController;
         this.appUserRetrievalService = appUserRetrievalService;
-        this.categoryAlterService = categoryAlterService;
-        this.categoryRetrievalService = categoryRetrievalService;
     }
 
     @GetMapping
@@ -73,76 +70,31 @@ public class AdminController {
         }
 
         AppUser user = optUser.get();
-
         model.addAttribute("user", user)
-                .addAttribute("userEmail",
-                        StringUtil.partiallyHideEmail(
-                                user.getEmail()
-                        ));
+             .addAttribute("userEmail", hideUserEmail(user));
 
         return "admin/admin";
+    }
+
+    @PostMapping("/addProduct")
+    public ResponseEntity<FormProcessingResponse> processNewProduct(
+            MultipartHttpServletRequest request) {
+
+       return productController.processNewProduct(request);
     }
 
     @PostMapping("/addCategory")
     public ResponseEntity<FormProcessingResponse> processNewCategory(
             MultipartHttpServletRequest request) {
 
-        CategoryDTO categoryDTO =
-                extractCategoryDTO(request);
-
-        FormProcessingResponse formResponse =
-                initFormProcessingResponse(request.getLocale());
-
-        newCategoryValidator.validate(categoryDTO, formResponse);
-        formResponse.setInternationalizedErrors();
-
-        if (formResponse.hasErrors())
-            return new ResponseEntity<>(formResponse, HttpStatus.BAD_REQUEST);
-
-        Optional<Category> category =
-                categoryAlterService.addNewCategory(categoryDTO);
-
-        if (category.isPresent())
-            return new ResponseEntity<FormProcessingResponse>(HttpStatus.OK);
-        else {
-            log.error("Exception while saving validated category");
-            return new ResponseEntity<FormProcessingResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+        return categoryController.processNewCategory(request);
     }
 
-    private CategoryDTO extractCategoryDTO(MultipartHttpServletRequest request) {
+    private String hideUserEmail(AppUser user) {
 
-       CategoryDTO categoryDTO = CategoryDTO.builder()
-                                            .name(request.getParameter("newCategoryName"))
-                                            .description(request.getParameter("newCategoryDescription"))
-                                            .picture(request.getFile("categoryPhoto"))
-                                            .rootFilePath(request.getSession().getServletContext().getRealPath("/"))
-                                            .build();
-       categoryDTO.initShortName();
-
-       return categoryDTO;
+        return StringUtil.partiallyHideEmail(
+                user.getEmail()
+               );
     }
-
-    private FormProcessingResponse initFormProcessingResponse(Locale locale) {
-
-        FormProcessingResponse response = new FormProcessingResponse();
-        response.setLocale(locale);
-        response.setMessageSource(this.messageSource);
-
-        return response;
-    }
-
-    @Autowired
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
-
-    @Autowired
-    public void setNewCategoryValidator(NewCategoryValidator validator) {
-        this.newCategoryValidator = validator;
-    }
-
 
 }

@@ -1,5 +1,6 @@
-package com.ldp.vigilantBean.domain;
+package com.ldp.vigilantBean.domain.product;
 
+import com.ldp.vigilantBean.domain.Picture;
 import com.ldp.vigilantBean.domain.category.Category;
 
 import javax.persistence.*;
@@ -47,7 +48,7 @@ public class Product {
 
     @Id
     @Column(name = "product_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long productId;
 
     @Column(name = "name")
@@ -68,7 +69,9 @@ public class Product {
                inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,
+               cascade = CascadeType.ALL,
+               orphanRemoval = true)
     @JoinTable(name = "product_picture",
                joinColumns = @JoinColumn(name = "product_id"),
                inverseJoinColumns = @JoinColumn(name = "picture_id"))
@@ -98,6 +101,7 @@ public class Product {
     public Product() {
 
     }
+
 
     @Override
     public boolean equals(Object o) {

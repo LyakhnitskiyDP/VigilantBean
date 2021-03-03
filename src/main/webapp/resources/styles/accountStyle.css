@@ -67,6 +67,7 @@ fieldset {
 }
 
 .field-input {
+    background: var(--hex-shadow-light);
     width: 100%;
     padding: .35rem;
     font-family: 'pacifico';
@@ -76,6 +77,25 @@ fieldset {
 
 .file-input {
    display: none;
+}
+
+input[type=number] {
+    width: 40%;
+}
+
+#categories-input-field {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-category {
+    margin: .5em 0;
+}
+
+.product-category input[type=checkbox] {
+    width: 1rem;
+    height: 1rem;
 }
 
 .file-upload-button {
@@ -102,6 +122,11 @@ textarea {
 
 .validation-error {
     color: var(--hex-main-bright);
+}
+
+.photo-preview img {
+    width: 50%;
+    border: 2px solid var(--hex-main-bright);
 }
 
 .success {

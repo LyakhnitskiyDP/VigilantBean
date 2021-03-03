@@ -30,60 +30,8 @@
     <spring:url value="/resources/scripts/tabsScript.js" var="tabsScript"/>
     <script type="text/javascript" src="${tabsScript}"></script>
 
-    <script>
-    $(document).ready(function() {
-
-        $(".ajaxForm").submit(function(e) {
-
-            e.preventDefault();
-
-            var form = $(this)[0];
-            var formData = new FormData(form);
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var errorPane = $('.error-pane', form);
-
-            $.ajax({
-               type: method,
-               url: url,
-               data: formData,
-               enctype: 'multipart/form-data',
-               processData: false,
-               contentType: false,
-               cache: false,
-               success: function(data) {
-                errorPane.html("<p class='success'>" + getSpringMessage(url) + "</p>")
-                form.reset();
-               },
-               error: function(data) {
-
-                let errors = '';
-                $.each(data.responseJSON.errorCodes, function( i, error) {
-                    errors += "<p class='validation-error'>" + error + "</p>";
-                });
-
-                errorPane.html(errors);
-               }
-             });
-
-        });
-
-        $('#category-photo-upload-button').click(function(e) {
-
-            e.preventDefault();
-            $('#newCategoryPhoto')[0].click()
-        });
-
-    });
-
-    function getSpringMessage(url) {
-
-        if (url === 'admin/addCategory')
-            return "<spring:message code='view.admin.addCategory.success' />";
-    }
-
-
-    </script>
+    <spring:url value="/resources/scripts/adminPageScript.js" var="adminPageScript"/>
+    <script type="text/javascript" src="${adminPageScript}"></script>
 
 </head>
 <body>
@@ -100,7 +48,7 @@
         <span class="tab-label"><spring:message code="view.admin.account.label" /></span>
     </div>
 
-    <div class="tab" id="addProductTab">
+    <div class="tab" id="addProductTab" onClick="refreshCategories(event)">
         <span class="tab-label"><spring:message code="view.admin.addProduct.label" /></span>
     </div>
 
@@ -116,7 +64,6 @@
         <span class="tab-label"><spring:message code="view.admin.editCategory.label" /></span>
     </div>
 
-
     <div class="tab" id="applyDiscountTab">
         <span class="tab-label"><spring:message code="view.admin.applyDiscount.label" /></span>
     </div>
@@ -126,6 +73,7 @@
     </div>
 
   </div>
+
 
   <div id="tab-content">
 
@@ -153,6 +101,195 @@
     <div id="addProductTab-content">
         <h2><spring:message code="view.admin.addProduct.label" /></h2>
         <p><spring:message code="view.admin.addProduct.description" /></p>
+
+        <form action="admin/addProduct"
+              method="POST"
+              enctype="multipart/form-data"
+              class="ajaxForm">
+
+            <div class="error-pane"
+                 id="newProductErrorPane"></div>
+
+            <fieldset>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-name">
+                        Product name
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input id="product-name" class="field-input" name="newProductName"
+                               type="text" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-description">
+                        Product description
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <textarea id="product-description" name="newProductDescription"
+                                autocomplete="off"></textarea>
+                    </div>
+                </div>
+
+                <div class="input-group" id="category-selector">
+
+                    <label class="form-label" >
+                        Categories
+
+                    </label>
+
+                    <div class="form-input-field" id="categories-input-field">
+
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-quantityPerUnit">
+                        Quantity per unit
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input id="product-quantityPerUnit" class="field-input" name="newProductQuantityPerUnit"
+                               type="number" min="1" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-quantityPerUnit">
+                       Units in stock
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input id="product-quantityPerUnit" class="field-input" name="newProductUnitsInStock"
+                               type="number" min="1" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-unitWeight">
+                       Unit weight in grams
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input id="product-unitWeight" class="field-input" name="newProductUnitWeight"
+                               type="number" min="1"  autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-unitPrice">
+                      Unit price in US dollars
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input id="product-unitPrice" class="field-input" name="newProductUnitPrice"
+                               type="number" min="0" autocomplete="off"/>
+                    </div>
+                </div>
+
+
+
+                 <div class="input-group" >
+                    <label class="form-label" for="product-origins">
+                       Origins
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <textarea id="product-origins" name="newProductOrigins"
+                                autocomplete="off"></textarea>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-manufacturer">
+                        Product manufacturer
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input type="text" id="product-manufacturer" class="field-input"
+                               name="newProductManufacturer"
+                               autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-ingredients">
+                        Product ingredients
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <textarea id="product-ingredients" name="newProductIngredients"
+                                autocomplete="off"></textarea>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="product-allergyInformation">
+                        Product allergy information
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <textarea id="product-description" name="newProductAllergyInformation"
+                                autocomplete="off"></textarea>
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <label class="form-label" for="newProductMainPhoto">
+                        Main Photo
+                    </label>
+
+                    <div class="form-input-field">
+
+                        <input name="newProductMainPhoto" class="file-input" id="newProductMainPhoto"
+                                type="file"/>
+
+                        <button class="file-upload-button"
+                                id="product-main-photo-upload-button">
+                                Choose main photo
+                        </button>
+                    </div>
+                </div>
+
+                 <div class="input-group" >
+                     <label class="form-label" for="newProductSecondaryPhotos">
+                         Secondary Photos (optional)
+                     </label>
+
+                     <div class="form-input-field">
+
+                         <input name="newProductSecondaryPhotos" class="file-input" id="newProductSecondaryPhotos"
+                                 type="file" multiple/>
+
+                         <button class="file-upload-button"
+                                 id="product-secondary-photos-upload-button">
+                                 Choose secondary photos
+                         </button>
+                     </div>
+                 </div>
+
+                <div class="input-group" >
+
+                    <input type="submit" value="Add" />
+
+                </div>
+
+            </fieldset>
+
+        </form>
 
     </div>
 
@@ -187,32 +324,38 @@
                 </div>
 
                 <div class="input-group" >
-                    <label class="form-label" for="category-name">
+                    <label class="form-label" for="category-description">
                         Category description
                     </label>
 
                     <div class="form-input-field">
 
-                        <textarea id="category-name" name="newCategoryDescription"
+                        <textarea id="category-description" name="newCategoryDescription"
                                 autocomplete="off"></textarea>
                     </div>
                 </div>
 
                 <div class="input-group" >
-                    <label class="form-label" for="username">
+                    <label class="form-label" for="newCategoryPhoto">
                         Photo
                     </label>
 
                     <div class="form-input-field">
 
                         <input name="categoryPhoto" class="file-input" id="newCategoryPhoto"
-                                type="file"/>
+                                type="file" onchange="previewCategoryImage();"/>
 
                         <button class="file-upload-button"
                                 id="category-photo-upload-button">
                                 Choose category photo
                         </button>
                     </div>
+                </div>
+
+                <div class="photo-preview">
+
+                    <img id="newCategory-photoPreview">
+
                 </div>
 
                 <div class="input-group" >
