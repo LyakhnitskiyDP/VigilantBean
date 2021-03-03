@@ -5,6 +5,7 @@ import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.domain.category.CategoryDTO;
 import com.ldp.vigilantBean.repository.CategoryAlterRepository;
 import com.ldp.vigilantBean.service.*;
+import com.ldp.vigilantBean.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -69,9 +70,7 @@ public class CategoryAlterServiceImpl implements CategoryAlterService {
 
     private String getRelativePathToCategoryPictures() {
 
-        String delimiter = System.getProperty("file.separator");
-
-        return delimiter + "resources" + delimiter + "images" + delimiter + "categories";
+        return StringUtil.getRelativePath("resources", "images", "categories");
     }
 
     private String getPictureExtension(CategoryDTO categoryDTO) {

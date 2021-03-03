@@ -8,4 +8,6 @@ public interface ProductAlterRepository {
 
     Optional<Product> addNewProduct(Product product);
 
+    Optional<Product> updateProduct(Product product);
+
 }

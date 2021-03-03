@@ -69,7 +69,9 @@ public class Product {
                inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,
+               cascade = CascadeType.ALL,
+               orphanRemoval = true)
     @JoinTable(name = "product_picture",
                joinColumns = @JoinColumn(name = "product_id"),
                inverseJoinColumns = @JoinColumn(name = "picture_id"))
