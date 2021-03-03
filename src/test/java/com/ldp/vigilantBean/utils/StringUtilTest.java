@@ -35,10 +35,10 @@ public class StringUtilTest {
         public void stringsShouldBeOfCorrespondingSize() {
 
             Map<String, Integer> generatedStrings = Map.of(
-                    StringUtil.generateStringOfSize(1), 1,
-                    StringUtil.generateStringOfSize(16), 16,
-                    StringUtil.generateStringOfSize(128), 128,
-                    StringUtil.generateStringOfSize(333),333
+                    StringUtil.generateRandomStringOfSize(1), 1,
+                    StringUtil.generateRandomStringOfSize(16), 16,
+                    StringUtil.generateRandomStringOfSize(128), 128,
+                    StringUtil.generateRandomStringOfSize(333),333
             );
 
 

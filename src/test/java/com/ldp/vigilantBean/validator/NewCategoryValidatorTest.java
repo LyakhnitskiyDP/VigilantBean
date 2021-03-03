@@ -114,7 +114,7 @@ public class NewCategoryValidatorTest {
     @DisplayName("Should invalidate categoryDTO with invalid descriptions")
     public void shouldInvalidateCategoryDTOWithInvalidDescription() {
 
-        String longCategoryDesc = StringUtil.generateStringOfSize(220);
+        String longCategoryDesc = StringUtil.generateRandomStringOfSize(220);
 
         CategoryDTO categoryDTO = this.validCategoryDTO;
         categoryDTO.setDescription(longCategoryDesc);

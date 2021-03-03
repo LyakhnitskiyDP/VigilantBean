@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.ldp.vigilantBean.controller.entityExtractor.ParamExtractor.*;
+
 /**
  *
  * Class for extracting ProductDTO object, setting main fields, categories and pictures.
@@ -23,13 +25,13 @@ public class ProductDTOExtractor implements EntityExtractor<ProductDTO> {
                                             .name(request.getParameter("newProductName"))
                                             .description(request.getParameter("newProductDescription"))
                                             .ingredients(request.getParameter("newProductIngredients"))
-                                            .quantityPerUnit(request.getParameter("newProductQuantityPerUnit").isEmpty() ? 0 : Integer.parseInt(request.getParameter("newProductQuantityPerUnit")))
-                                            .unitWeight((request.getParameter("newProductUnitWeight").isEmpty() ? 0L : Long.parseLong(request.getParameter("newProductUnitWeight"))))
+                                            .quantityPerUnit(safelyExtractInteger(request, "newProductQuantityPerUnit"))
+                                            .unitWeight(safelyExtractLong(request, "newProductUnitWeight"))
                                             .manufacturer(request.getParameter("newProductManufacturer"))
                                             .allergyInformation(request.getParameter("newProductAllergyInformation"))
                                             .origins(request.getParameter("newProductOrigins"))
-                                            .unitsInStock(request.getParameter("newProductUnitsInStock").isEmpty() ? 0L : Long.parseLong(request.getParameter("newProductUnitsInStock")))
-                                            .unitPrice(request.getParameter("newProductUnitPrice").isEmpty() ? BigDecimal.ZERO : BigDecimal.valueOf(Long.parseLong(request.getParameter("newProductUnitPrice"))))
+                                            .unitsInStock(safelyExtractLong(request, "newProductUnitsInStock"))
+                                            .unitPrice(safelyExtractBigDecimal(request, "newProductUnitPrice"))
                                           .build();
 
         productDTO.setCategoryNames(
