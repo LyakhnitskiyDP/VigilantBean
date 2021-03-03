@@ -37,34 +37,23 @@ public class AdminController {
     private static final Logger log =
             LogManager.getLogger(AdminController.class.getName());
 
+    private ProductController productController;
+
+    private CategoryController categoryController;
+
     private AppUserRetrievalService appUserRetrievalService;
-    private CategoryAlterService categoryAlterService;
-    private CategoryRetrievalService categoryRetrievalService;
-    private ProductAlterService productAlterService;
-
-    private NewCategoryValidator newCategoryValidator;
-    private NewProductValidator newProductValidator;
-
-    private MessageSource messageSource;
-
 
     public AdminController(
             @Autowired
-            CategoryAlterService categoryAlterService,
+            AppUserRetrievalService appUserRetrievalService,
             @Autowired
-            CategoryRetrievalService categoryRetrievalService,
+            ProductController productController,
             @Autowired
-            NewProductValidator newProductValidator,
-            @Autowired
-            ProductAlterService productAlterService,
-            @Autowired
-            AppUserRetrievalService appUserRetrievalService) {
+            CategoryController categoryController) {
 
+        this.productController = productController;
+        this.categoryController = categoryController;
         this.appUserRetrievalService = appUserRetrievalService;
-        this.categoryAlterService = categoryAlterService;
-        this.categoryRetrievalService = categoryRetrievalService;
-        this.newProductValidator = newProductValidator;
-        this.productAlterService = productAlterService;
     }
 
     @GetMapping
@@ -82,10 +71,7 @@ public class AdminController {
 
         AppUser user = optUser.get();
         model.addAttribute("user", user)
-             .addAttribute("userEmail",
-                           StringUtil.partiallyHideEmail(
-                                user.getEmail()
-                        ));
+             .addAttribute("userEmail", hideUserEmail(user));
 
         return "admin/admin";
     }
@@ -94,115 +80,21 @@ public class AdminController {
     public ResponseEntity<FormProcessingResponse> processNewProduct(
             MultipartHttpServletRequest request) {
 
-        ProductDTO productDTO =
-                extractProductDTO(request);
-
-        FormProcessingResponse response =
-                new FormProcessingResponse(request.getLocale(), this.messageSource);
-        response.setSuccessCode("view.admin.addProduct.success");
-
-        newProductValidator.validate(productDTO, response);
-        response.externalizeMessages();
-
-        if (response.hasErrors())
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-
-        Optional<Product> savedProduct =
-                productAlterService.addNewProduct(productDTO);
-
-        if (savedProduct.isPresent())
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    private ProductDTO extractProductDTO(MultipartHttpServletRequest request) {
-
-
-        ProductDTO productDTO = ProductDTO.builder()
-                                              .name(request.getParameter("newProductName"))
-                                              .description(request.getParameter("newProductDescription"))
-                                              .ingredients(request.getParameter("newProductIngredients"))
-                                              .quantityPerUnit(request.getParameter("newProductQuantityPerUnit").isEmpty() ? 0 : Integer.parseInt(request.getParameter("newProductQuantityPerUnit")))
-                                              .unitWeight((request.getParameter("newProductUnitWeight").isEmpty() ? 0L : Long.parseLong(request.getParameter("newProductUnitWeight"))))
-                                              .manufacturer(request.getParameter("newProductManufacturer"))
-                                              .allergyInformation(request.getParameter("newProductAllergyInformation"))
-                                              .origins(request.getParameter("newProductOrigins"))
-                                              .unitsInStock(request.getParameter("newProductUnitsInStock").isEmpty() ? 0L : Long.parseLong(request.getParameter("newProductUnitsInStock")))
-                                              .unitPrice(request.getParameter("newProductUnitPrice").isEmpty() ? BigDecimal.ZERO : BigDecimal.valueOf(Long.parseLong(request.getParameter("newProductUnitPrice"))))
-                                          .build();
-
-        Set<String> categoryNames = new HashSet<>();
-        request.getParameterNames().asIterator().forEachRemaining(
-                (parameterName) -> {
-                    if (parameterName.startsWith("category_"))
-                        categoryNames.add(request.getParameter(parameterName));
-                }
-        );
-        productDTO.setCategoryNames(categoryNames);
-
-        productDTO.setPrimaryPicture(
-                request.getFile("newProductMainPhoto")
-        );
-
-        productDTO.setSecondaryPictures(
-                request.getFiles("newProductSecondaryPhotos")
-        );
-
-
-        return productDTO;
+       return productController.processNewProduct(request);
     }
 
     @PostMapping("/addCategory")
     public ResponseEntity<FormProcessingResponse> processNewCategory(
             MultipartHttpServletRequest request) {
 
-        CategoryDTO categoryDTO =
-                extractCategoryDTO(request);
-
-        FormProcessingResponse formResponse =
-                new FormProcessingResponse(request.getLocale(), this.messageSource);
-
-        newCategoryValidator.validate(categoryDTO, formResponse);
-        formResponse.externalizeMessages();
-
-        if (formResponse.hasErrors())
-            return new ResponseEntity<>(formResponse, HttpStatus.BAD_REQUEST);
-
-        Optional<Category> category =
-                categoryAlterService.addNewCategory(categoryDTO);
-
-        if (category.isPresent())
-            return new ResponseEntity<FormProcessingResponse>(formResponse, HttpStatus.OK);
-        else {
-            log.error("Exception while saving validated category");
-            return new ResponseEntity<FormProcessingResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+        return categoryController.processNewCategory(request);
     }
 
-    private CategoryDTO extractCategoryDTO(MultipartHttpServletRequest request) {
+    private String hideUserEmail(AppUser user) {
 
-       CategoryDTO categoryDTO = CategoryDTO.builder()
-                                                .name(request.getParameter("newCategoryName"))
-                                                .description(request.getParameter("newCategoryDescription"))
-                                                .picture(request.getFile("categoryPhoto"))
-                                            .build();
-       categoryDTO.initShortName();
-
-       return categoryDTO;
+        return StringUtil.partiallyHideEmail(
+                user.getEmail()
+               );
     }
-
-    @Autowired
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
-
-    @Autowired
-    public void setNewCategoryValidator(NewCategoryValidator validator) {
-        this.newCategoryValidator = validator;
-    }
-
 
 }

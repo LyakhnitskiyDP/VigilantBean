@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/category")
-public class CategoryController {
+public class CategoryRestController {
 
     private final CategoryRetrievalService categoryRetrievalService;
 
-    public CategoryController(
+    public CategoryRestController(
             @Autowired
             CategoryRetrievalService categoryRetrievalService) {
 
