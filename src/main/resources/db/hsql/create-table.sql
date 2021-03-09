@@ -88,4 +88,23 @@ CREATE TABLE verification_token (
     expiry_date TIMESTAMP DEFAULT NOW()
 )
 
+CREATE TABLE cart (
+    cart_id INTEGER IDENTITY PRIMARY KEY,
+    discount INTEGER NOT NULL CHECK (discount > 0 AND discount < 100)
+)
+
+CREATE TABLE cart_item (
+    cart_id INTEGER FOREIGN KEY REFERENCES cart (cart_id),
+    product_id INTEGER FOREIGN KEY REFERENCES product (product_id),
+    quantity INTEGER NOT NULL CHECK (quantity > 0)
+)
+
+CREATE TABLE order (
+   order_id INTEGER IDENTITY PRIMARY KEY,
+   customer_id INTEGER FOREIGN KEY REFERENCES app_user (app_user_id),
+   cart_id INTEGER FOREIGN KEY REFERENCES cart (cart_id),
+   date_of_creation TIMESTAMP DEFAULT NOW(),
+   date_of_arrival TIMESTAMP
+)
+
 
