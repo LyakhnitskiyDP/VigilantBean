@@ -1,7 +1,7 @@
 
 INSERT INTO category (category_id, name, short_name, description)
     VALUES (1, 'Coffee', 'coffee', 'Best coffee in the world'),
-           (2, 'Diary Products', 'diaryProducts', 'Diary products related to coffee'),
+           (2, 'Dairy Products', 'diaryProducts', 'Diary products related to coffee'),
            (3, 'Sweets', 'sweets', 'Best sweets in the world');
 
 INSERT INTO product (product_id,

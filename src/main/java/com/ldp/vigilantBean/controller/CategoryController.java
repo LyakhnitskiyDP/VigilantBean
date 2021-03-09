@@ -1,6 +1,6 @@
 package com.ldp.vigilantBean.controller;
 
-import com.ldp.vigilantBean.controller.entityExtractor.CategoryDTOExtractor;
+import com.ldp.vigilantBean.controller.extractor.CategoryDTOExtractor;
 import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.domain.category.CategoryDTO;
 import com.ldp.vigilantBean.service.CategoryAlterService;

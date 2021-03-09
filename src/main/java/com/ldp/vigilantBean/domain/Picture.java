@@ -48,12 +48,15 @@ public class Picture implements Comparable<Picture> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Picture picture = (Picture) o;
-        return Objects.equals(pictureId, picture.pictureId);
+        return Objects.equals(pictureId, picture.pictureId) &&
+                Objects.equals(name, picture.name) &&
+                Objects.equals(extension, picture.extension)
+                && Objects.equals(relativePath, picture.relativePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pictureId);
+        return Objects.hash(pictureId, name, extension, relativePath);
     }
 
     public Long getPictureId() {

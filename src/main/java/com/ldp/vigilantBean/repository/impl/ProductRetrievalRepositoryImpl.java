@@ -18,13 +18,11 @@ import java.util.Optional;
 
 @Repository
 @PropertySource("classpath:webappConfig.properties")
-public class ProductRetrievalRepositoryImpl implements ProductRetrievalRepository {
+class ProductRetrievalRepositoryImpl implements ProductRetrievalRepository {
 
     private static final Logger log =
             LogManager.getLogger(ProductRetrievalRepositoryImpl.class.getName());
 
-    @Value("${interface.numberOfProductsPerPage}")
-    private Integer numberOfProductsPerPage;
 
     private SessionFactory sessionFactory;
 
@@ -52,9 +50,9 @@ public class ProductRetrievalRepositoryImpl implements ProductRetrievalRepositor
         try (Session session = sessionFactory.openSession()) {
 
             return session.getNamedQuery(Product.GET_PRODUCTS_BY_CATEGORY)
-                          .setFirstResult(pagination.getFirstResultIndex() - 1)
-                          .setMaxResults(pagination.getMaxResults())
-                          .setParameter("category", category)
+                              .setFirstResult(pagination.getFirstResultIndex() - 1)
+                              .setMaxResults(pagination.getMaxResults())
+                              .setParameter("category", category)
                           .list();
 
         }
@@ -103,6 +101,31 @@ public class ProductRetrievalRepositoryImpl implements ProductRetrievalRepositor
 
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Product> getProductsBySearchKey(String searchKey, Pagination pagination) {
 
+        try (Session session = sessionFactory.openSession()) {
 
+           return
+           session.getNamedQuery(Product.GET_PRODUCTS_BY_SEARCH_KEY)
+                      .setFirstResult(pagination.getFirstResultIndex() - 1)
+                      .setMaxResults(pagination.getMaxResults())
+                      .setParameter("searchKey", searchKey)
+                  .list();
+        }
+    }
+
+    @Override
+    public Long getNumberOfProductsBySearchKey(String searchKey) {
+
+        try (Session session = sessionFactory.openSession()) {
+
+            return (Long)
+            session.getNamedQuery(Product.GET_NUMBER_OF_PRODUCTS_BY_SEARCH_KEY)
+                   .setParameter("searchKey", searchKey)
+                   .getSingleResult();
+        }
+
+    }
 }

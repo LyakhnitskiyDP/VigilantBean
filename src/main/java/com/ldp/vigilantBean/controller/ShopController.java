@@ -15,6 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -64,7 +65,28 @@ public class ShopController {
 
         List<Product> products =
                 productRetrievalService.getProductsByCategory(categoryName, pageNumber);
-        int numberOfProducts = productRetrievalService.getNumberOfProductsByCategory(categoryName).intValue();
+        int numberOfProducts =
+                productRetrievalService.getNumberOfProductsByCategory(categoryName).intValue();
+        model.addAttribute("products", products);
+
+        initCategoriesModel(model);
+        initPageListModel(model, numberOfProducts);
+
+        return "shop";
+    }
+
+    @RequestMapping("/search")
+    public String getWithSearchKey(@RequestParam(name = "searchKey") String searchKey,
+                                   @RequestParam(name = "page", defaultValue = "1") Integer pageNumber,
+                                   Model model) {
+
+        initHeaderModel(model);
+
+        List<Product> products =
+                productRetrievalService.getProductsBySearchKey(searchKey, pageNumber);
+        int numberOfProducts =
+                productRetrievalService.getNumberOfProductsBySearchKey(searchKey).intValue();
+
         model.addAttribute("products", products);
 
         initCategoriesModel(model);

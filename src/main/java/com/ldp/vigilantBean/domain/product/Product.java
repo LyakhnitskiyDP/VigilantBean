@@ -33,6 +33,15 @@ import java.util.Set;
         @NamedQuery(
                 name = Product.GET_PRODUCT_BY_ID,
                 query = "from Product p where p.productId = :productId"
+        ),
+        @NamedQuery(
+                name = Product.GET_PRODUCTS_BY_SEARCH_KEY,
+                query = "from Product p where lower(p.name) like CONCAT('%', :searchKey, '%')"
+        ),
+        @NamedQuery(
+                name = Product.GET_NUMBER_OF_PRODUCTS_BY_SEARCH_KEY,
+                query = "select count(distinct p) from Product p " +
+                        "where lower(p.name) like CONCAT('%', :searchKey, '%')"
         )
 })
 public class Product {
@@ -43,6 +52,8 @@ public class Product {
     public static final String GET_NUMBER_OF_PRODUCTS = "Product.getNumberOfProducts";
     public static final String GET_PRODUCTS_BY_CATEGORY = "Product.getProductsByCategory";
     public static final String GET_NUMBER_OF_PRODUCTS_BY_CATEGORY = "Product.getNumberOfProductsByCategory";
+    public static final String GET_PRODUCTS_BY_SEARCH_KEY = "Product.getProductsBySearchKey";
+    public static final String GET_NUMBER_OF_PRODUCTS_BY_SEARCH_KEY = "Product.getNumberOfProductsBySearchKey";
 
     public static final String GET_PRODUCT_BY_ID = "Product.getProductById";
 

@@ -5,8 +5,7 @@
 
 $(document).ready(function() {
 
-
-    $('#account-nav').css('display', 'none');
+    hideAccountNav();
 
     $('#userIcon').click(function() {
 
@@ -16,7 +15,49 @@ $(document).ready(function() {
             $('#account-nav').css('display', 'none')
     });
 
+    $('#loupeIcon').click(function() {
+
+        hideAccountNav();
+
+        hideUserNav();
+
+        showSearchBar();
+
+
+    });
+
+    $('#search-bar-close').click(function() {
+
+        hideSearchBar();
+
+        showAccountNav();
+    });
+
+    function hideAccountNav() {
+       $('#account-nav').css('display', 'none');
+    }
+
+    function showAccountNav() {
+        $('#user-navigation').css('display', 'flex');
+    }
+
+    function hideUserNav() {
+        $('#user-navigation').css('display', 'none');
+    }
+
+    function showSearchBar() {
+        $('#search-bar').css('display', 'block');
+    }
+
+    function hideSearchBar() {
+        $('#search-bar').css('display', 'none');
+    }
+
+
+
 });
+
+
 
 </script>
 
@@ -40,36 +81,50 @@ $(document).ready(function() {
     <img src="${logoURL}" alt="LOGO" />
 </div>
 
-<nav id="user-navigation">
+<div id="right-toolbar">
+    <nav id="user-navigation">
 
-  <spring:url value="/resources/images/icons/loupe.svg" var="loupeIconURL" />
-  <img src="${loupeIconURL}" />
+      <spring:url value="/resources/images/icons/loupe.svg" var="loupeIconURL" />
+      <img id="loupeIcon" src="${loupeIconURL}" />
 
-  <spring:url value="/resources/images/icons/shopping-cart.svg" var="cartIconURL" />
-  <img src="${cartIconURL}" />
+      <spring:url value="/resources/images/icons/shopping-cart.svg" var="cartIconURL" />
+      <img id="cartIcon" src="${cartIconURL}" />
 
-  <div class="dropdown">
-  <spring:url value="/resources/images/icons/user.svg" var="userIconURL" />
-  <img id="userIcon" src="${userIconURL}" />
+      <div class="dropdown">
+      <spring:url value="/resources/images/icons/user.svg" var="userIconURL" />
+      <img id="userIcon" src="${userIconURL}" />
 
-  <div id="account-nav">
+      <div id="account-nav">
 
-    <spring:url value="/login" var="loginURL" />
-    <a href="${loginURL}">Sign&nbsp;In</a>
+        <spring:url value="/login" var="loginURL" />
+        <a href="${loginURL}">Sign&nbsp;In</a>
 
-    <spring:url value="/signUp" var="signUpURL" />
-    <a href="${signUpURL}">Sign&nbsp;Up</a>
+        <spring:url value="/signUp" var="signUpURL" />
+        <a href="${signUpURL}">Sign&nbsp;Up</a>
 
-    <div class="delimiter"> </div>
+        <div class="delimiter"> </div>
 
-    <a href="#">Orders</a>
+        <spring:url value="/account" var="accountURL" />
+        <a href="${accountURL}">My&nbsp;Account</a>
+        </div>
 
-    <spring:url value="/account" var="accountURL" />
-    <a href="${accountURL}">My&nbsp;Account</a>
-  </div>
+      </div>
 
-  </div>
+    </nav>
 
-</nav>
+<div id="search-bar" class="hidden">
+    <spring:url value="/shop/search" var="searchURL" />
+    <form action="${searchURL}" id="search-form">
+        <spring:url value="/resources/images/icons/close.svg" var="closeImgUrl" />
+        <img id="search-bar-close" src="${closeImgUrl}" />
+        <input id="search-key-field" name="searchKey"
+         type="text" placeholder="Search for..." />
+        <button>
+            <span id="search-button-label">Search</span>
+        </button>
+    </form>
+</div>
+
+</div>
 
 </header>

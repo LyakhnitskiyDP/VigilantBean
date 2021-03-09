@@ -13,6 +13,9 @@ public interface ProductRetrievalService {
     List<Product> getProductsByCategory(String category, int pageNumber);
     Long getNumberOfProductsByCategory(String category);
 
+    List<Product> getProductsBySearchKey(String searchKey, int pageNumber);
+    Long getNumberOfProductsBySearchKey(String searchKey);
+
     Optional<Product> getProductById(Long id);
 
 }

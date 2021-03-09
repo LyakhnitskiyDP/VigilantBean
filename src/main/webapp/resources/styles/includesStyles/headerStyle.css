@@ -33,6 +33,11 @@ header .logo img {
 #user-navigation {
   display: flex;
   justify-content: left;
+  width: 100%;
+}
+
+#user-navigation > * {
+    width: 100%;
 }
 
 #user-navigation img {
@@ -65,5 +70,47 @@ header .logo img {
 
 .hidden {
    display: none;
+}
+
+/* Search bar */
+#search-bar {
+    width: 100%;
+}
+
+#search-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    justify-content: center;
+}
+
+#search-form button {
+    margin-left: .5em;
+    padding: .2em;
+}
+
+#search-bar-close {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    margin-right: .45em;
+    cursor: pointer;
+}
+
+#search-button-label {
+    font-size: 1rem;
+    color: var(--hex-main-bright);
+}
+
+#search-key-field {
+    font-size: 1.25rem;
+    width: 100%;
+    padding: .25rem;
+    font-family: 'pacifico';
+    background: var(--hex-main-dark);
+    border: none;
+    border-radius: .25rem;
+    color: var(--hex-shadow-light);
 }
 

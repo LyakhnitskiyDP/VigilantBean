@@ -98,18 +98,6 @@ input[type=number] {
     height: 1rem;
 }
 
-.file-upload-button {
-    background: none;
-    outline: none;
-    margin-top: .5em;
-    border: none;
-    font-size: 1rem;
-    color: var(--hex-shadow-light);
-    border: 2px solid var(--hex-shadow-light);
-    border-radius: .35rem;
-    padding: .35rem .5rem;
-}
-
 textarea {
     resize: vertical;
     width: 100%;
@@ -126,9 +114,19 @@ textarea {
 
 .photo-preview img {
     width: 50%;
-    border: 2px solid var(--hex-main-bright);
 }
 
 .success {
     color: var(--hex-success);
+}
+
+#secondaryPicturesPreview {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#secondaryPicturesPreview > * {
+   width: 20%;
 }

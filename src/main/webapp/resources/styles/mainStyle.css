@@ -18,7 +18,8 @@ footer {
   color: var(--hex-main-bright);
 }
 
-form input[type=submit] {
+form input[type=submit],
+button {
     font-size: 1.5rem;
     font-family: 'pacifico';
     padding: 0 1rem;
@@ -29,7 +30,8 @@ form input[type=submit] {
     cursor: pointer;
 }
 
-form input[type=submit]:hover {
+form input[type=submit]:hover,
+button:hover {
     color: var(--hex-background);
     background: var(--hex-shadow-light);
     transition-duration: 0.4s;

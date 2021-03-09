@@ -16,10 +16,7 @@ public class AppUserDTO implements Serializable {
     )
     private String username;
 
-    @Pattern(
-            regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,5}$",
-            message = "validation.newUser.email.isNotValid"
-    )
+    @Email(message = "validation.newUser.email.isNotValid")
     private String email;
 
     @PatternExists(

@@ -47,4 +47,11 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 
         return verificationTokenRepository.get(token);
     }
+
+    public void setTokenExpirationInMinutes(int tokenExpirationInMinutes) {
+        if (tokenExpirationInMinutes > 1)
+            this.tokenExpirationInMinutes = tokenExpirationInMinutes;
+        else
+            throw new IllegalArgumentException("0 or negative number number of minutes of token expiration time");
+    }
 }

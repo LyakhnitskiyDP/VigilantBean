@@ -1,4 +1,4 @@
-package com.ldp.vigilantBean.controller.entityExtractor;
+package com.ldp.vigilantBean.controller.extractor;
 
 import com.ldp.vigilantBean.domain.category.CategoryDTO;
 import org.junit.jupiter.api.Assertions;

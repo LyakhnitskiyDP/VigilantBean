@@ -13,5 +13,8 @@ public interface ProductRetrievalRepository {
     List<Product> getProductsByCategory(String category, Pagination pagination);
     Long getNumberOfProductsByCategory(String category);
 
+    List<Product> getProductsBySearchKey(String searchKey, Pagination pagination);
+    Long getNumberOfProductsBySearchKey(String searchKey);
+
     Optional<Product> getProductById(Long id);
 }

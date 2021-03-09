@@ -1,15 +1,13 @@
-package com.ldp.vigilantBean.controller.entityExtractor;
+package com.ldp.vigilantBean.controller.extractor;
 
-import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.domain.product.ProductDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.ldp.vigilantBean.controller.entityExtractor.ParamExtractor.*;
+import static com.ldp.vigilantBean.controller.extractor.ParamExtractor.*;
 
 /**
  *

@@ -1,4 +1,4 @@
-package com.ldp.vigilantBean.controller.entityExtractor;
+package com.ldp.vigilantBean.controller.extractor;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;

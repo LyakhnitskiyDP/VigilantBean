@@ -40,6 +40,8 @@
 
 
     <div id="product-area">
+
+      <%--
       <label id="sort-by-label">Sort by
         <select name="sort_by_attribute">
           <option value="newest">Newest</option>
@@ -47,6 +49,7 @@
           <option value="biggest_discount">Biggest discount</option>
         </select>
       </label>
+      --%>
 
       <div class="product-showcase">
 

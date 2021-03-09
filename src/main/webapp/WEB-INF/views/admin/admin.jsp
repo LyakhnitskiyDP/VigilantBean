@@ -23,9 +23,6 @@
     <link rel="stylesheet" href="${footerStyle}" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <spring:url value="/resources/scripts/tabsScript.js" var="tabsScript"/>
     <script type="text/javascript" src="${tabsScript}"></script>
@@ -140,7 +137,6 @@
 
                     <label class="form-label" >
                         Categories
-
                     </label>
 
                     <div class="form-input-field" id="categories-input-field">
@@ -254,14 +250,21 @@
 
                     <div class="form-input-field">
 
-                        <input name="newProductMainPhoto" class="file-input" id="newProductMainPhoto"
-                                type="file"/>
+                        <input name="newProductMainPhoto" class="file-input"
+                               id="newProductMainPhoto"
+                               type="file" onchange="previewProductMainImage();" />
 
                         <button class="file-upload-button"
                                 id="product-main-photo-upload-button">
                                 Choose main photo
                         </button>
                     </div>
+                </div>
+
+                <div class="photo-preview">
+
+                    <img id="newProduct-mainPhotoPreview">
+
                 </div>
 
                  <div class="input-group" >
@@ -271,14 +274,22 @@
 
                      <div class="form-input-field">
 
-                         <input name="newProductSecondaryPhotos" class="file-input" id="newProductSecondaryPhotos"
-                                 type="file" multiple/>
+                         <input name="newProductSecondaryPhotos" class="file-input"
+                                id="newProductSecondaryPhotos"
+                                onchange="previewProductSecondaryImages(event);"
+                                type="file" multiple/>
 
-                         <button class="file-upload-button"
+                         <button
+                                 onClick="selectProductSecondaryImages(event);"
                                  id="product-secondary-photos-upload-button">
                                  Choose secondary photos
                          </button>
                      </div>
+                 </div>
+
+                 <div class="photo-preview" id="secondaryPicturesPreview">
+
+
                  </div>
 
                 <div class="input-group" >

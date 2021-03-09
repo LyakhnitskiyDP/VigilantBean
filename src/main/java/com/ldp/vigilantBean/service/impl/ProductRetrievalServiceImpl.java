@@ -63,6 +63,24 @@ public class ProductRetrievalServiceImpl implements ProductRetrievalService {
     }
 
     @Override
+    public List<Product> getProductsBySearchKey(String searchKey, int pageNumber) {
+
+        Pagination pagination = createPagination(pageNumber);
+
+        return productRetrievalRepository.getProductsBySearchKey(
+                searchKey.toLowerCase(),
+                pagination
+        );
+    }
+
+    @Override
+    public Long getNumberOfProductsBySearchKey(String searchKey) {
+        return productRetrievalRepository.getNumberOfProductsBySearchKey(
+                searchKey.toLowerCase()
+        );
+    }
+
+    @Override
     public Optional<Product> getProductById(Long id) {
         return productRetrievalRepository.getProductById(id);
     }

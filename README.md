@@ -29,6 +29,7 @@ A web store built on Java platform.
 * Hibernate ORM
 * Hibernate Validator
 * JUnit5
+* AssertJ  
 * Mockito
 
 <a name="features"></a>
@@ -40,6 +41,7 @@ A web store built on Java platform.
   
 * Product management
     * Paginated listing of Products
+    * Product search  
     * Grouping products by Categories (Many to many)
     * Adding new Products
     * Adding new Categories
@@ -51,6 +53,11 @@ A web store built on Java platform.
 <a name="showcaseMainPage"></a>
 #### Main page
 ![slide_1](showcase/1.jpg)
+
+<a name="showcaseProductSearch"></a>
+#### Product search
+![slide_13](showcase/13.png)
+![slide_14](showcase/14.png)
 
 <a name="showcaseRegistration"></a>
 #### Registration

@@ -1,4 +1,4 @@
-package com.ldp.vigilantBean.controller.entityExtractor;
+package com.ldp.vigilantBean.controller.extractor;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 

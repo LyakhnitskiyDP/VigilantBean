@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -21,6 +22,30 @@
     <link rel="stylesheet" href="${productStyle}" />
     <link rel="stylesheet" href="${headerStyle}" />
     <link rel="stylesheet" href="${footerStyle}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+
+            $('.secondaryImage').click(function(e) {
+
+                const mainImage = $('#mainImage');
+                console.log("Main image" + mainImage);
+                const mainImageSrc = mainImage.attr('src');
+                console.log("maing image src" + mainImageSrc);
+
+                const targetSrc = e.target.src;
+                console.log("target src " + targetSrc);
+
+                mainImage.attr('src', targetSrc);
+            });
+
+        });
+
+    </script>
+
 </head>
 <body>
 
@@ -46,8 +71,21 @@
 
     <section id="product-images">
 
-    <spring:url value="/resources/images/products/${product.mainPicture.name}.${product.mainPicture.extension}" var="productImageURL" />
-    <img src="${productImageURL}" alt="product" />
+        <spring:url value="/resources/images/products/${product.mainPicture.name}.${product.mainPicture.extension}"
+                    var="productImageURL" />
+        <img id="mainImage" src="${productImageURL}" alt="product" />
+
+        <c:if test="${fn:length(product.pictures) > 1}">
+        <div id="secondary-pictures">
+
+            <c:forEach items="${product.pictures}" var="secondaryImage">
+             <spring:url value="/resources/images/products/${secondaryImage.name}.${secondaryImage.extension}"
+                         var="secondaryImageURL" />
+             <img class="secondaryImage" src="${secondaryImageURL}" alt="productSecondaryPicture" />
+            </c:forEach>
+
+        </div>
+        </c:if>
 
     </section>
 
@@ -67,6 +105,7 @@
 
         <p class="product-detail" id="product-weight">
             <span class="product-detail-label">Weight: </span>${product.unitWeight}
+            <span class="product-detail-label">g</span>
         </p>
 
         <p class="product-detail" id="product-origins">

@@ -43,6 +43,12 @@ $(document).ready(function() {
         $('#newCategoryPhoto')[0].click()
     });
 
+    $('#product-main-photo-upload-button').click(function(e) {
+        e.preventDefault();
+        $('#newProductMainPhoto')[0].click();
+    });
+
+
 });
 
 function refreshCategories() {
@@ -73,11 +79,54 @@ function getSpringMessage(url) {
 }
 
 function previewCategoryImage() {
-    let fileReader = new FileReader();
+    const fileReader = new FileReader();
     fileReader.readAsDataURL(document.getElementById("newCategoryPhoto").files[0]);
 
     fileReader.onload = function(event) {
-        document.getElementById("newCategory-photoPreview").src = event.target.result;
+        $("#newCategory-photoPreview").attr("src", event.target.result);
+        $("#newCategory-photoPreview").css("border", "2px solid var(--hex-shadow-light)");
     };
 }
+
+function previewProductMainImage() {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(document.getElementById("newProductMainPhoto").files[0]);
+
+    fileReader.onload = function(event) {
+        $("#newProduct-mainPhotoPreview").attr("src", event.target.result);
+        $("#newProduct-mainPhotoPreview").css("border", "2px solid var(--hex-shadow-light)");
+    };
+}
+
+function previewProductSecondaryImages() {
+
+    const previewDiv = document.querySelector('#secondaryPicturesPreview');
+    const files = document.querySelector('#newProductSecondaryPhotos').files;
+
+    function displayPreview(file) {
+
+        const fileReader = new FileReader();
+
+        fileReader.addEventListener("load", function() {
+
+            const image = new Image();
+            image.title = file.name;
+            image.src = this.result;
+            previewDiv.appendChild( image );
+        }, false);
+
+        fileReader.readAsDataURL( file );
+
+    }
+
+    if (files)
+        [].forEach.call(files, displayPreview);
+
+}
+
+function selectProductSecondaryImages(event) {
+    event.preventDefault();
+    $('#newProductSecondaryPhotos')[0].click();
+}
+
 

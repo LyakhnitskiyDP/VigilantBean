@@ -56,54 +56,17 @@ public class ProductAlterServiceImpl implements ProductAlterService {
 
         Product product = extractProduct(productDTO);
 
-        List<Category> productCategories =
-                categoryRetrievalRepository.getCategoriesByNameInBatch(
-                        productDTO.getCategoryNames()
-                );
-
-        if (productCategories.isEmpty()) {
-            log.error("Supplied categories for a new Product are not found");
-            return Optional.empty();
-        }
-
-        product.setCategories(new HashSet<>(productCategories));
-
-        //Save the product for product's ID
-        productAlterRepository.addNewProduct(product);
-
-        //Create picture objects
-        Picture primaryPicture = Picture.builder()
-                                            .name(product.getProductId() + "_1")
-                                            .extension(StringUtils.getFilenameExtension(productDTO.getPrimaryPicture().getOriginalFilename()))
-                                            .relativePath(getRelativePathToProductFolder())
-                                        .build();
-        storageService.store(
-                productDTO.getPrimaryPicture(),
-                context.getRealPath("/") + primaryPicture.getRelativePath(),
-                primaryPicture.getName() + "." + primaryPicture.getExtension()
+        product.setCategories(
+                getProductCategories(productDTO)
         );
 
-        List<Picture> secondaryPictures = new ArrayList<>();
+        // Save the product for product's ID,
+        // product ID is needed while picture initialization
+        productAlterRepository.addNewProduct(product);
 
-        int secondaryPictureCount = 2;
-        for (MultipartFile secondaryPictureFile : productDTO.getSecondaryPictures()) {
-
-            Picture secondaryPicture = Picture.builder()
-                                                .name(product.getProductId() + "_" + secondaryPictureCount++)
-                                                .extension(StringUtils.getFilenameExtension(productDTO.getPrimaryPicture().getOriginalFilename()))
-                                                .relativePath(getRelativePathToProductFolder())
-                                              .build();
-            storageService.store(
-                    secondaryPictureFile,
-                    context.getRealPath("/") + secondaryPicture.getRelativePath(),
-                    secondaryPicture.getName() + "." + secondaryPicture.getExtension()
-            );
-        }
-
-        secondaryPictures.add(primaryPicture);
-        product.setPictures(new HashSet<>(secondaryPictures));
-
-        productAlterRepository.updateProduct(product);
+        product.setPictures(
+                saveProductPictures(productDTO, product.getProductId())
+        );
 
         return productAlterRepository.updateProduct(product);
     }
@@ -124,6 +87,61 @@ public class ProductAlterServiceImpl implements ProductAlterService {
         product.setAllergyInformation(productDTO.getAllergyInformation());
 
         return product;
+    }
+
+    private Set<Category> getProductCategories(ProductDTO productDTO) {
+
+        List<Category> productCategories =
+                categoryRetrievalRepository.getCategoriesByNameInBatch(
+                        productDTO.getCategoryNames()
+                );
+
+        if (productCategories.isEmpty()) {
+            log.error("Supplied categories for a new Product are not found");
+            return Set.of();
+        }
+
+        return new HashSet<>(productCategories);
+    }
+
+    private Set<Picture> saveProductPictures(ProductDTO productDTO, Long productId) {
+
+        List<Picture> pictures = new ArrayList<>();
+
+        //Create picture objects
+        Picture primaryPicture = Picture.builder()
+                .name(productId + "_1")
+                .extension(StringUtils.getFilenameExtension(productDTO.getPrimaryPicture().getOriginalFilename()))
+                .relativePath(getRelativePathToProductFolder())
+                .build();
+
+        storageService.store(
+                productDTO.getPrimaryPicture(),
+                context.getRealPath("/") + primaryPicture.getRelativePath(),
+                primaryPicture.getName() + "." + primaryPicture.getExtension()
+        );
+
+
+        int secondaryPictureCount = 2;
+        for (MultipartFile secondaryPictureFile : productDTO.getSecondaryPictures()) {
+
+            Picture secondaryPicture = Picture.builder()
+                    .name(productId + "_" + secondaryPictureCount++)
+                    .extension(StringUtils.getFilenameExtension(productDTO.getPrimaryPicture().getOriginalFilename()))
+                    .relativePath(getRelativePathToProductFolder())
+                    .build();
+            storageService.store(
+                    secondaryPictureFile,
+                    context.getRealPath("/") + secondaryPicture.getRelativePath(),
+                    secondaryPicture.getName() + "." + secondaryPicture.getExtension()
+            );
+
+            pictures.add(secondaryPicture);
+        }
+
+        pictures.add(primaryPicture);
+
+        return new HashSet<>(pictures);
     }
 
     private String getRelativePathToProductFolder() {
