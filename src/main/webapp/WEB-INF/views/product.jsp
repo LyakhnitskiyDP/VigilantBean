@@ -25,26 +25,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script>
-
-        $(document).ready(function() {
-
-            $('.secondaryImage').click(function(e) {
-
-                const mainImage = $('#mainImage');
-                console.log("Main image" + mainImage);
-                const mainImageSrc = mainImage.attr('src');
-                console.log("maing image src" + mainImageSrc);
-
-                const targetSrc = e.target.src;
-                console.log("target src " + targetSrc);
-
-                mainImage.attr('src', targetSrc);
-            });
-
-        });
-
-    </script>
+   <spring:url value="/resources/scripts/productPageScript.js" var="productPageScript"/>
+   <script type="text/javascript" src="${productPageScript}"></script>
 
 </head>
 <body>
@@ -99,7 +81,20 @@
             <span class="product-detail-label">Quantity per order: </span>${product.quantityPerUnit}
         </p>
 
-        <!-- TODO add ability to add to the cart -->
+        <spring:url value="/api/cart/addProduct"  var="addProductURL" />
+        <form action="${addProductURL}" method="PUT" id="add-product">
+
+            <input type="number"  value="1" name="quantity" id="numberToAdd" />
+            <input type="hidden" name="productId" value="${product.productId}" id="productIdToAdd" />
+
+            <input type="submit" id="addProduct" value="Add to Cart" />
+        </form>
+
+        <div id="addProductPopUp" class="popUp">
+
+
+
+        </div>
 
         <p class="product-detail" id="product-description">${product.description}</p>
 

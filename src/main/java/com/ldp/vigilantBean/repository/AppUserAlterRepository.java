@@ -9,6 +9,8 @@ public interface AppUserAlterRepository {
 
     Optional<AppUser> registerUser(AppUser appUser);
 
+    Optional<AppUser> updateUser(AppUser appUser);
+
     boolean enableUser(AppUser appUser);
 
 }

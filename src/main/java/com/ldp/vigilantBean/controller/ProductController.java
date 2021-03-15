@@ -4,7 +4,7 @@ import com.ldp.vigilantBean.controller.extractor.ProductDTOExtractor;
 import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.domain.product.ProductDTO;
 import com.ldp.vigilantBean.service.ProductAlterService;
-import com.ldp.vigilantBean.validator.FormProcessingResponse;
+import com.ldp.vigilantBean.validator.EntityProcessingResponse;
 import com.ldp.vigilantBean.validator.NewProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -50,13 +50,13 @@ public class ProductController {
         this.messageSource = messageSource;
     }
 
-    public ResponseEntity<FormProcessingResponse> processNewProduct(
+    public ResponseEntity<EntityProcessingResponse> processNewProduct(
             MultipartHttpServletRequest request) {
 
         ProductDTO productDTO =
                 productDTOExtractor.extractEntity(request);
 
-        FormProcessingResponse response =
+        EntityProcessingResponse response =
                 initFormProcessingResponse(request.getLocale());
 
         productValidator.validate(productDTO, response);
@@ -74,10 +74,10 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private FormProcessingResponse initFormProcessingResponse(Locale locale) {
+    private EntityProcessingResponse initFormProcessingResponse(Locale locale) {
 
-        FormProcessingResponse response =
-                new FormProcessingResponse(locale, this.messageSource);
+        EntityProcessingResponse response =
+                new EntityProcessingResponse(locale, this.messageSource);
         response.setSuccessCode("view.admin.addProduct.success");
 
         return response;

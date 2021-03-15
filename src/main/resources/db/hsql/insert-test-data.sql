@@ -76,3 +76,6 @@ INSERT INTO role (role_id, name)
 
 INSERT INTO user_role (app_user_id, role_id)
     VALUES (1, 2);
+
+INSERT INTO cart (cart_id)
+    VALUES (1);

@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.validation.Validator;
-
 @Component
 public class NewProductValidator extends NewEntityValidator <ProductDTO> {
 
@@ -15,30 +13,23 @@ public class NewProductValidator extends NewEntityValidator <ProductDTO> {
 
     public NewProductValidator(
             @Autowired
-            ProductRetrievalService productRetrievalService) {
-
+            ProductRetrievalService productRetrievalService,
+            @Autowired
+            @Qualifier("beanValidator")
+            javax.validation.Validator validator) {
+       super(validator);
        this.productRetrievalService = productRetrievalService;
     }
 
     @Override
-    @Autowired
-    @Qualifier("beanValidator")
-    protected void setBeanValidator(Validator validator) {
+    protected void validateConsistency(ProductDTO entity, EntityProcessingResponse response) {
 
-        super.beanValidator = validator;
-    }
-
-    @Override
-    public void validate(ProductDTO productDTO, FormProcessingResponse response) {
-
-        super.checkForConstraintViolations(productDTO, response);
-        checkPictures(productDTO, response);
-
+        checkPictures(entity, response);
     }
 
     private void checkPictures(
             ProductDTO productDTO,
-            FormProcessingResponse response) {
+            EntityProcessingResponse response) {
 
         if (productDTO.getPrimaryPicture() == null || productDTO.getPrimaryPicture().isEmpty()) {
 

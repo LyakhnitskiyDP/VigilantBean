@@ -1,11 +1,10 @@
-package com.ldp.vigilantBean.service;
+package com.ldp.vigilantBean.service.impl;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.repository.AppUserAlterRepository;
-import com.ldp.vigilantBean.service.impl.AppUserRegistrationServiceImpl;
+import com.ldp.vigilantBean.service.AppUserAlterService;
+import com.ldp.vigilantBean.service.impl.AppUserAlterServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -13,9 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-public class AppUserRegistrationServiceImplTest {
+public class AppUserAlterServiceImplTest {
 
-    private AppUserRegistrationService appUserRegistrationService;
+    private AppUserAlterService appUserAlterService;
 
     private PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
 
@@ -30,7 +29,7 @@ public class AppUserRegistrationServiceImplTest {
                .thenAnswer();
          */
 
-        appUserRegistrationService = new AppUserRegistrationServiceImpl(
+        appUserAlterService = new AppUserAlterServiceImpl(
                 appUserAlterRepository,
                 passwordEncoder
         );

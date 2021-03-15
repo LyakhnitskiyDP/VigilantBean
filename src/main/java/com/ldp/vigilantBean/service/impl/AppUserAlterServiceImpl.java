@@ -1,24 +1,23 @@
 package com.ldp.vigilantBean.service.impl;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
-import com.ldp.vigilantBean.domain.appUser.Role;
+import com.ldp.vigilantBean.domain.order.Cart;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.repository.AppUserAlterRepository;
-import com.ldp.vigilantBean.service.AppUserRegistrationService;
+import com.ldp.vigilantBean.service.AppUserAlterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AppUserRegistrationServiceImpl implements AppUserRegistrationService {
+class AppUserAlterServiceImpl implements AppUserAlterService {
 
     private AppUserAlterRepository appUserAlterRepository;
     private PasswordEncoder passwordEncoder;
 
-    public AppUserRegistrationServiceImpl(
+    public AppUserAlterServiceImpl(
             @Autowired
             AppUserAlterRepository appUserAlterRepository,
             @Autowired
@@ -35,6 +34,7 @@ public class AppUserRegistrationServiceImpl implements AppUserRegistrationServic
 
         user.setEmail(appUserDTO.getEmail());
         user.setUsername(appUserDTO.getUsername());
+        user.setCart(new Cart());
         user.setPassword(
                 passwordEncoder.encode(appUserDTO.getPassword())
         );
@@ -46,5 +46,11 @@ public class AppUserRegistrationServiceImpl implements AppUserRegistrationServic
     public boolean enableUser(AppUser appUser) {
 
         return appUserAlterRepository.enableUser(appUser);
+    }
+
+    @Override
+    public Optional<AppUser> updateUser(AppUser appUser) {
+
+        return appUserAlterRepository.updateUser(appUser);
     }
 }

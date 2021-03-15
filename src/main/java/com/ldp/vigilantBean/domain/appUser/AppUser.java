@@ -1,15 +1,16 @@
 package com.ldp.vigilantBean.domain.appUser;
 
+import com.ldp.vigilantBean.domain.order.Cart;
+
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "app_user")
 @NamedQueries({
         @NamedQuery(name = AppUser.GET_APP_USER_BY_EMAIL,
                     query = "from AppUser appUser " +
+                            "inner join fetch appUser.cart " +
                             "where appUser.email = :email"),
 })
 public class AppUser {
@@ -27,6 +28,10 @@ public class AppUser {
                joinColumns = @JoinColumn(name = "app_user_id"),
                inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "app_user_id")
+    private Cart cart;
 
     @Column(name = "username")
     private String username;
@@ -125,5 +130,29 @@ public class AppUser {
 
     public void setNotLocked(boolean notLocked) {
         this.notLocked = notLocked;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        cart.setCartId(this.appUserId);
+        this.cart = cart;
+    }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "appUserId=" + appUserId +
+                ", roles=" + roles +
+                ", cart=" + cart +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", enabled=" + enabled +
+                ", notLocked=" + notLocked +
+                '}';
     }
 }

@@ -4,7 +4,7 @@ import com.ldp.vigilantBean.controller.extractor.CategoryDTOExtractor;
 import com.ldp.vigilantBean.domain.category.Category;
 import com.ldp.vigilantBean.domain.category.CategoryDTO;
 import com.ldp.vigilantBean.service.CategoryAlterService;
-import com.ldp.vigilantBean.validator.FormProcessingResponse;
+import com.ldp.vigilantBean.validator.EntityProcessingResponse;
 import com.ldp.vigilantBean.validator.NewCategoryValidator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +47,13 @@ public class CategoryController {
         this.messageSource = messageSource;
     }
 
-    public ResponseEntity<FormProcessingResponse> processNewCategory(
+    public ResponseEntity<EntityProcessingResponse> processNewCategory(
             MultipartHttpServletRequest request) {
 
         CategoryDTO categoryDTO =
                 categoryDTOExtractor.extractEntity(request);
 
-        FormProcessingResponse formResponse =
+        EntityProcessingResponse formResponse =
                 initFormProcessingResponse(request.getLocale());
 
         categoryValidator.validate(categoryDTO, formResponse);
@@ -67,17 +67,17 @@ public class CategoryController {
                 categoryAlterService.addNewCategory(categoryDTO);
 
         if (category.isPresent())
-            return new ResponseEntity<FormProcessingResponse>(formResponse, HttpStatus.OK);
+            return new ResponseEntity<EntityProcessingResponse>(formResponse, HttpStatus.OK);
         else {
             log.error("Exception while saving validated category");
-            return new ResponseEntity<FormProcessingResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<EntityProcessingResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    private FormProcessingResponse initFormProcessingResponse(Locale locale) {
+    private EntityProcessingResponse initFormProcessingResponse(Locale locale) {
 
-        FormProcessingResponse response =
-                new FormProcessingResponse(locale, this.messageSource);
+        EntityProcessingResponse response =
+                new EntityProcessingResponse(locale, this.messageSource);
         response.setSuccessCode("view.admin.addCategory.success");
 
         return response;

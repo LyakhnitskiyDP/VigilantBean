@@ -5,6 +5,7 @@ import com.ldp.vigilantBean.domain.appUser.Role;
 import com.ldp.vigilantBean.domain.registration.AppUserDTO;
 import com.ldp.vigilantBean.repository.AppUserAlterRepository;
 import org.apache.logging.log4j.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -83,5 +84,26 @@ public class AppUserAlterRepositoryImpl implements AppUserAlterRepository {
             return true;
         }
 
+    }
+
+    @Override
+    public Optional<AppUser> updateUser(AppUser appUser) {
+
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+
+            tx = session.getTransaction();
+            tx.begin();
+
+            session.merge(appUser);
+
+            tx.commit();
+            return Optional.of(appUser);
+        } catch (HibernateException hibernateException) {
+
+            log.error("Cannon update app user", hibernateException);
+            if (tx != null) tx.rollback();
+            return Optional.empty();
+        }
     }
 }

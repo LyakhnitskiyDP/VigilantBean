@@ -6,7 +6,7 @@ import com.ldp.vigilantBean.domain.registration.OnRegistrationEvent;
 import com.ldp.vigilantBean.domain.registration.VerificationToken;
 import com.ldp.vigilantBean.exception.InternalRegistrationException;
 import com.ldp.vigilantBean.exception.InvalidVerificationToken;
-import com.ldp.vigilantBean.service.AppUserRegistrationService;
+import com.ldp.vigilantBean.service.AppUserAlterService;
 import com.ldp.vigilantBean.service.VerificationTokenService;
 import com.ldp.vigilantBean.validator.NewUserValidator;
 
@@ -37,7 +37,7 @@ public class RegistrationController {
 
     private final NewUserValidator newUserValidator;
 
-    private final AppUserRegistrationService registrationService;
+    private final AppUserAlterService registrationService;
 
     private final ApplicationEventPublisher eventPublisher;
 
@@ -47,7 +47,7 @@ public class RegistrationController {
             @Autowired
             NewUserValidator newUserValidator,
             @Autowired
-            AppUserRegistrationService registrationService,
+                    AppUserAlterService registrationService,
             @Autowired
             VerificationTokenService verificationTokenService,
             @Autowired
