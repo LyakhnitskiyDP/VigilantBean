@@ -1,8 +1,12 @@
 DROP TABLE verification_token IF EXISTS;
 
+DROP TABLE app_order IF EXISTS;
 DROP TABLE user_role IF EXISTS;
 DROP TABLE role IF EXISTS;
 DROP TABLE app_user IF EXISTS;
+
+DROP TABLE cart_item IF EXISTS;
+DROP TABLE cart IF EXISTS;
 
 DROP TABLE product_picture IF EXISTS;
 DROP TABLE category_picture IF EXISTS;
@@ -11,6 +15,8 @@ DROP TABLE picture IF EXISTS;
 DROP TABLE product_category IF EXISTS;
 DROP TABLE product IF EXISTS;
 DROP TABLE category IF EXISTS;
+
+
 
 CREATE TABLE category (
     category_id INTEGER IDENTITY PRIMARY KEY,
@@ -86,6 +92,26 @@ CREATE TABLE verification_token (
     app_user_id INTEGER FOREIGN KEY REFERENCES app_user (app_user_id),
     token VARCHAR(512) NOT NULL,
     expiry_date TIMESTAMP DEFAULT NOW()
+)
+
+CREATE TABLE cart (
+    cart_id INTEGER IDENTITY PRIMARY KEY,
+    discount INTEGER
+)
+
+CREATE TABLE cart_item (
+    cart_item_id INTEGER IDENTITY PRIMARY KEY,
+    cart_id INTEGER FOREIGN KEY REFERENCES cart (cart_id),
+    product_id INTEGER FOREIGN KEY REFERENCES product (product_id),
+    quantity INTEGER NOT NULL CHECK (quantity > 0)
+)
+
+CREATE TABLE app_order (
+   app_order_id INTEGER IDENTITY PRIMARY KEY,
+   customer_id INTEGER FOREIGN KEY REFERENCES app_user (app_user_id),
+   cart_id INTEGER FOREIGN KEY REFERENCES cart (cart_id),
+   date_of_creation TIMESTAMP DEFAULT NOW(),
+   date_of_arrival TIMESTAMP
 )
 
 

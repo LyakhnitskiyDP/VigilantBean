@@ -1,17 +1,34 @@
 package com.ldp.vigilantBean.validator;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Template Pattern implementation for organized validation of entities.
+ * Process:
+ * 1. Check for constraint violations (javax.validation)
+ * 2. Custom validation (May use checking consistency with a DB, etc.)
+ * @param <E> Entity class to validate
+ */
 public abstract class NewEntityValidator <E> {
 
     protected javax.validation.Validator beanValidator;
 
-    public abstract void validate(E entity, FormProcessingResponse response);
+    public NewEntityValidator(Validator validator) {
+        this.beanValidator = validator;
+    }
+
+    public final void validate(E entity, EntityProcessingResponse response) {
+
+        checkForConstraintViolations(entity, response);
+
+        validateConsistency(entity, response);
+    }
 
     protected void checkForConstraintViolations
-            (E entity, FormProcessingResponse response) {
+            (E entity, EntityProcessingResponse response) {
 
         Set<ConstraintViolation<E>> violations =
                 beanValidator.validate(entity);
@@ -26,6 +43,5 @@ public abstract class NewEntityValidator <E> {
         }
     }
 
-    protected abstract void setBeanValidator(javax.validation.Validator validator);
-
+    protected abstract void validateConsistency(E entity, EntityProcessingResponse response);
 }

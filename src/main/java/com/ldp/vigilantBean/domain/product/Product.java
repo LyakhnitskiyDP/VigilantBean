@@ -1,5 +1,6 @@
 package com.ldp.vigilantBean.domain.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ldp.vigilantBean.domain.Picture;
 import com.ldp.vigilantBean.domain.category.Category;
 
@@ -78,6 +79,7 @@ public class Product {
     @JoinTable(name = "product_category",
                joinColumns = @JoinColumn(name = "product_id"),
                inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonIgnore
     private Set<Category> categories;
 
     @OneToMany(fetch = FetchType.EAGER,

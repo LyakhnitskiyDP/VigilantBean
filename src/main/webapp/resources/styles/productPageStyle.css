@@ -30,6 +30,7 @@ main {
 #product-showcase {
     display: flex;
     align-items: flex-start;
+    margin-bottom: 1em;
 }
 
 #product-showcase > section {
@@ -76,6 +77,53 @@ main {
     color: var(--hex-shadow-light);
 }
 
+#add-product {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+#numberToAdd {
+    font-size: 1rem;
+    padding: .25em;
+    text-align: center;
+    width: 4rem;
+    margin-right: 1em;
+}
+
+/* Add Product Pop Up */
+#addProductPopUp {
+    width: 100%;
+    padding-top: 1em;
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: fit-content;
+    display: none;
+}
+
+#addProductPopUpContent {
+    text-align: center;
+    background: rgba(var(--rgb-success), 0.75);
+    width: fit-content;
+    margin: auto;
+    padding: .5em;
+    border-radius: 1em;
+    color: var(--hex-background);
+    display: flex;
+    align-items: center;
+}
+
+.closePopUp {
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding-bottom: .1rem;
+}
+
+.closePopUp:hover {
+    color: var(--hex-main-bright);
+}
 
 
 

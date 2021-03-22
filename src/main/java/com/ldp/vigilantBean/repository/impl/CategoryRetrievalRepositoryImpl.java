@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class CategoryRetrievalRepositoryImpl implements CategoryRetrievalRepository {
+class CategoryRetrievalRepositoryImpl implements CategoryRetrievalRepository {
 
     private static final Logger log =
             LogManager.getLogger(CategoryRetrievalRepositoryImpl.class.getName());

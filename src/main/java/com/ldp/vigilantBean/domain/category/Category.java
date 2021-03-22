@@ -15,7 +15,7 @@ import java.util.Objects;
         @NamedQuery(
                 name = Category.GET_CATEGORY_BY_NAME,
                 query = "from Category c " +
-                        "where c.shortName = :categoryName"
+                        "where c.name = :categoryName or c.shortName = :categoryName"
         )
 })
 public class Category {
@@ -39,7 +39,8 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,
+              cascade = CascadeType.ALL)
     @JoinTable(name = "category_picture",
                joinColumns = @JoinColumn(name = "category_id"),
                inverseJoinColumns = @JoinColumn(name = "picture_id")

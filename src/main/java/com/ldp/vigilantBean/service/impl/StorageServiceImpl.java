@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-public class StorageServiceImpl implements StorageService {
+class StorageServiceImpl implements StorageService {
 
     private static final Logger log =
             LogManager.getLogger(StorageServiceImpl.class.getName());

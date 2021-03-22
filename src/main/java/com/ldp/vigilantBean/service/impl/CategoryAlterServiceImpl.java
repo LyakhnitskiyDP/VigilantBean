@@ -14,7 +14,7 @@ import javax.servlet.ServletContext;
 import java.util.Optional;
 
 @Service
-public class CategoryAlterServiceImpl implements CategoryAlterService {
+class CategoryAlterServiceImpl implements CategoryAlterService {
 
     private CategoryAlterRepository categoryAlterRepository;
     private StorageService storageService;

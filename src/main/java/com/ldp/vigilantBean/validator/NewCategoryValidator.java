@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.validation.Validator;
-
 @Component
 public class NewCategoryValidator extends NewEntityValidator<CategoryDTO> {
 
@@ -20,25 +18,19 @@ public class NewCategoryValidator extends NewEntityValidator<CategoryDTO> {
 
     public NewCategoryValidator(
             @Autowired
+            @Qualifier("beanValidator")
+            javax.validation.Validator validator,
+            @Autowired
             CategoryRetrievalService categoryRetrievalService) {
 
+        super(validator);
         this.categoryRetrievalService = categoryRetrievalService;
     }
 
     @Override
-    @Autowired
-    @Qualifier("beanValidator")
-    public void setBeanValidator(Validator beanValidator) {
-
-        super.beanValidator = beanValidator;
-    }
-
-    @Override
-    public void validate
+    protected void validateConsistency
             (CategoryDTO categoryDTO,
-             FormProcessingResponse response) {
-
-        super.checkForConstraintViolations(categoryDTO, response);
+             EntityProcessingResponse response) {
 
         checkForNameUniqueness(categoryDTO, response);
 
@@ -48,7 +40,7 @@ public class NewCategoryValidator extends NewEntityValidator<CategoryDTO> {
     }
 
     private void checkForNameUniqueness
-            (CategoryDTO categoryDTO, FormProcessingResponse response) {
+            (CategoryDTO categoryDTO, EntityProcessingResponse response) {
 
         log.info("Check category name: " + categoryDTO.getName());
 
@@ -62,7 +54,7 @@ public class NewCategoryValidator extends NewEntityValidator<CategoryDTO> {
     }
 
     private void checkPicture
-            (CategoryDTO categoryDTO, FormProcessingResponse response) {
+            (CategoryDTO categoryDTO, EntityProcessingResponse response) {
 
         if (categoryDTO.getPicture() == null || categoryDTO.getPicture().isEmpty()) {
 

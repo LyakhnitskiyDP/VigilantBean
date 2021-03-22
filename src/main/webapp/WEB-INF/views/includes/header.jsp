@@ -7,6 +7,8 @@ $(document).ready(function() {
 
     hideAccountNav();
 
+    refreshProductCounter();
+
     $('#userIcon').click(function() {
 
         if ($('#account-nav').css('display') == 'none') {
@@ -54,8 +56,21 @@ $(document).ready(function() {
     }
 
 
-
 });
+
+function refreshProductCounter() {
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/vigilantBean/api/cart/getProductCount',
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(data) {
+        }
+    });
+
+}
 
 
 
@@ -87,8 +102,11 @@ $(document).ready(function() {
       <spring:url value="/resources/images/icons/loupe.svg" var="loupeIconURL" />
       <img id="loupeIcon" src="${loupeIconURL}" />
 
+      <spring:url value="/cart" var="cartURL" />
+      <a href="${cartURL}">
       <spring:url value="/resources/images/icons/shopping-cart.svg" var="cartIconURL" />
       <img id="cartIcon" src="${cartIconURL}" />
+      </a>
 
       <div class="dropdown">
       <spring:url value="/resources/images/icons/user.svg" var="userIconURL" />

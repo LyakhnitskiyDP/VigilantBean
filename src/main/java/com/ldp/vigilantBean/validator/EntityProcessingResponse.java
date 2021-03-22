@@ -2,27 +2,23 @@ package com.ldp.vigilantBean.validator;
 
 import org.springframework.context.MessageSource;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
-
-public class FormProcessingResponse {
+/**
+ * Class wrapping a response of entity processing.
+ */
+public class EntityProcessingResponse {
 
     private List<String> errorCodes = new ArrayList<>();
-
     private String successCode;
 
     private Locale locale;
-
     private MessageSource messageSource;
 
-    public FormProcessingResponse() {
+    public EntityProcessingResponse(Locale locale,
+                                    MessageSource messageSource) {
 
-    }
-
-    public FormProcessingResponse(Locale locale, MessageSource messageSource) {
         this.locale = locale;
         this.messageSource = messageSource;
     }
@@ -42,18 +38,14 @@ public class FormProcessingResponse {
 
     public void addErrorCodes(List<String> errorCodes) {
 
-        if (this.errorCodes == null || this.errorCodes.isEmpty())
+        if (this.errorCodes.isEmpty())
             this.errorCodes = errorCodes;
         else
-            errorCodes.addAll(errorCodes);
+            this.errorCodes.addAll(errorCodes);
     }
 
     public void addErrorCode(String errorCode) {
-
-        if (this.errorCodes == null || this.errorCodes.isEmpty())
-            this.errorCodes = List.of(errorCode);
-        else
-            errorCodes.add(errorCode);
+        errorCodes.add(errorCode);
     }
 
 

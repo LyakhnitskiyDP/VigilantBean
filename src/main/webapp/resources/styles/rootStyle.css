@@ -20,7 +20,7 @@
   --hex-background: #121013;
 
   /* Successful operation */
-  --rgb-success: 153 255 153;
+  --rgb-success: 153, 255, 153;
   --hex-success: #99ff99;
 
   /* Font */

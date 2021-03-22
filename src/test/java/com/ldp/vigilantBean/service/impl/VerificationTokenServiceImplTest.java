@@ -1,9 +1,8 @@
-package com.ldp.vigilantBean.service;
+package com.ldp.vigilantBean.service.impl;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import com.ldp.vigilantBean.domain.registration.VerificationToken;
 import com.ldp.vigilantBean.repository.VerificationTokenRepository;
-import com.ldp.vigilantBean.service.impl.VerificationTokenServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -70,7 +69,7 @@ public class VerificationTokenServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw an IllegalArgumenException with invalid number of minutes")
+    @DisplayName("Should throw an IllegalArgumentException with invalid number of minutes")
     public void testSettingInvalidNumberOfMinutes() {
 
         Assertions.assertThrows(IllegalArgumentException.class,

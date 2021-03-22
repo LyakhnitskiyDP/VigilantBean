@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -22,14 +23,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
 
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
     public WebSecurityConfig(
             @Autowired
             AuthenticationProvider authenticationProvider,
+            @Autowired
+            AuthenticationSuccessHandler authenticationSuccessHandler,
             @Autowired
             UserDetailsService userDetailsService) {
 
         this.authenticationProvider = authenticationProvider;
         this.userDetailsService = userDetailsService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 
     @Override
@@ -37,8 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.formLogin()
                         .loginPage("/login")
+                        .successHandler(authenticationSuccessHandler)
                         .permitAll()
-                        .defaultSuccessUrl("/account")
                     .and()
                         .rememberMe()
                         .key("rem-me-key")
@@ -54,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests()
                     .mvcMatchers("/admin").hasRole("ADMIN")
                     .mvcMatchers("/customer").hasRole("CUSTOMER")
-                    .mvcMatchers("/cart").hasRole("CUSTOMER")
+                    .mvcMatchers("/cart").hasAnyRole("CUSTOMER", "ADMIN")
                     .anyRequest().permitAll();
 
         httpSecurity.csrf().disable();

@@ -1,25 +1,12 @@
 package com.ldp.vigilantBean.controller;
 
-import com.ldp.vigilantBean.domain.product.Product;
-import com.ldp.vigilantBean.repository.AppUserAlterRepository;
-import com.ldp.vigilantBean.repository.ProductAlterRepository;
-import com.ldp.vigilantBean.service.ProductAlterService;
-import com.ldp.vigilantBean.validator.FormProcessingResponse;
+import com.ldp.vigilantBean.validator.EntityProcessingResponse;
 import com.ldp.vigilantBean.domain.appUser.AppUser;
-import com.ldp.vigilantBean.domain.category.Category;
-import com.ldp.vigilantBean.domain.category.CategoryDTO;
-import com.ldp.vigilantBean.domain.product.ProductDTO;
 import com.ldp.vigilantBean.service.AppUserRetrievalService;
-import com.ldp.vigilantBean.service.CategoryAlterService;
-import com.ldp.vigilantBean.service.CategoryRetrievalService;
 import com.ldp.vigilantBean.utils.StringUtil;
-import com.ldp.vigilantBean.validator.NewCategoryValidator;
-import com.ldp.vigilantBean.validator.NewProductValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -27,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 @Controller
@@ -77,14 +63,14 @@ public class AdminController {
     }
 
     @PostMapping("/addProduct")
-    public ResponseEntity<FormProcessingResponse> processNewProduct(
+    public ResponseEntity<EntityProcessingResponse> processNewProduct(
             MultipartHttpServletRequest request) {
 
        return productController.processNewProduct(request);
     }
 
     @PostMapping("/addCategory")
-    public ResponseEntity<FormProcessingResponse> processNewCategory(
+    public ResponseEntity<EntityProcessingResponse> processNewCategory(
             MultipartHttpServletRequest request) {
 
         return categoryController.processNewCategory(request);

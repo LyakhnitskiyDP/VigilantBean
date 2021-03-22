@@ -13,7 +13,7 @@ import javax.persistence.Query;
 import java.util.Optional;
 
 @Repository
-public class VerificationTokenRepositoryImpl implements VerificationTokenRepository {
+class VerificationTokenRepositoryImpl implements VerificationTokenRepository {
 
     private SessionFactory sessionFactory;
 

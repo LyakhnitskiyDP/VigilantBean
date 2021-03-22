@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class CategoryAlterRepositoryImpl implements CategoryAlterRepository {
+class CategoryAlterRepositoryImpl implements CategoryAlterRepository {
 
     private static final Logger log =
             LogManager.getLogger(CategoryAlterRepositoryImpl.class.getName());

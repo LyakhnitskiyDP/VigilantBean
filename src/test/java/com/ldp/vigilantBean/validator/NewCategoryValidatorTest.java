@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
+import org.springframework.context.MessageSource;
 import org.springframework.mock.web.MockMultipartFile;
 
 import javax.validation.Validation;
+import java.util.Locale;
 import java.util.Optional;
 
 public class NewCategoryValidatorTest {
@@ -36,7 +38,7 @@ public class NewCategoryValidatorTest {
 
     private CategoryDTO validCategoryDTO;
 
-    private FormProcessingResponse response;
+    private EntityProcessingResponse response;
 
     @BeforeEach
     public void setUp() {
@@ -48,10 +50,12 @@ public class NewCategoryValidatorTest {
                 Validation.buildDefaultValidatorFactory().getValidator();
 
         this.newCategoryValidator =
-                new NewCategoryValidator(categoryRetrievalService);
-        this.newCategoryValidator.setBeanValidator(beanValidator);
+                new NewCategoryValidator(beanValidator, categoryRetrievalService);
 
-        response = new FormProcessingResponse();
+        response = new EntityProcessingResponse(
+                new Locale("en", "US"),
+                Mockito.mock(MessageSource.class)
+        );
 
         this.validCategoryDTO = new CategoryDTO();
         validCategoryDTO.setDescription("A proper description with length of permitted size");

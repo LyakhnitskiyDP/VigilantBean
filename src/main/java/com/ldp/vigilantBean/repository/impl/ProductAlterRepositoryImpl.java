@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class ProductAlterRepositoryImpl implements ProductAlterRepository {
+class ProductAlterRepositoryImpl implements ProductAlterRepository {
 
     private SessionFactory sessionFactory;
 
