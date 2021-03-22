@@ -96,7 +96,7 @@ CREATE TABLE verification_token (
 
 CREATE TABLE cart (
     cart_id INTEGER IDENTITY PRIMARY KEY,
-    discount INTEGER CHECK (discount > 0 AND discount < 100)
+    discount INTEGER
 )
 
 CREATE TABLE cart_item (

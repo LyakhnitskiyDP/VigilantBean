@@ -1,11 +1,13 @@
 package com.ldp.vigilantBean.domain.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ldp.vigilantBean.domain.appUser.AppUser;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -13,6 +15,7 @@ import java.util.Set;
 public class Cart {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private Long cartId;
 
@@ -26,7 +29,9 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     private AppUser appUser;
 
-    private Byte discount;
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    private Byte discount = 0;
 
     /**
      * Calculates sum of all Cart Items and applies a discount
@@ -44,12 +49,13 @@ public class Cart {
         BigDecimal grandTotalWithDiscount =
                 grandTotal.subtract( getDiscountValue(grandTotal) );
 
+
         return grandTotalWithDiscount;
     }
 
     private BigDecimal getDiscountValue(BigDecimal initialValue) {
 
-       return initialValue.multiply(BigDecimal.valueOf(((double) discount) / 100));
+       return initialValue.multiply(BigDecimal.valueOf(((double) (discount == null ? 0 : discount)) / 100));
     }
 
     public Cart() {
@@ -69,17 +75,42 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public boolean addCartItem(CartItem cartItem) {
+    public boolean addCartItem(CartItem cartItemToAdd) {
 
-        cartItem.setCart(this);
-        return cartItems.add(cartItem);
+        Optional<CartItem> optSameProductCartItem =
+                this.cartItems.stream()
+                              .filter(
+                                      cartItem ->
+                                              cartItem.getProduct().equals(cartItemToAdd.getProduct())
+                              )
+                              .findAny();
+
+        if (optSameProductCartItem.isPresent()) {
+
+            CartItem sameProductCartItem = optSameProductCartItem.get();
+
+            sameProductCartItem.setQuantity(
+                    sameProductCartItem.getQuantity() + cartItemToAdd.getQuantity()
+            );
+
+            return true;
+        } else {
+
+            cartItemToAdd.setCart(this);
+            return cartItems.add(cartItemToAdd);
+        }
     }
 
-    public Byte getDiscount() {
+    public boolean removeCartItem(CartItem cartItem) {
+
+        return cartItems.remove(cartItem);
+    }
+
+    public byte getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Byte discount) {
+    public void setDiscount(byte discount) {
 
         if (discount < 1 || discount > 99)
             throw new IllegalArgumentException("Invalid discount number");

@@ -1,14 +1,17 @@
 package com.ldp.vigilantBean.domain.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ldp.vigilantBean.domain.product.Product;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
-@EqualsAndHashCode
+@ToString
 @Table(name = "cart_item")
 public class CartItem {
 
@@ -25,6 +28,7 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "cart_id",
                 nullable = false)
+    @JsonIgnore
     private Cart cart;
 
     @Column(name = "quantity")
@@ -43,6 +47,19 @@ public class CartItem {
     public CartItem(Product product, Long quantity) {
         this.product = product;
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartItem cartItem = (CartItem) o;
+        return Objects.equals(cartItemId, cartItem.cartItemId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cartItemId);
     }
 
     public Long getCartItemId() {

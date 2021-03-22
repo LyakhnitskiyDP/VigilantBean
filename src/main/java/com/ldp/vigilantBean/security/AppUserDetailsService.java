@@ -34,7 +34,7 @@ public class AppUserDetailsService implements UserDetailsService {
         log.info("Trying to load user by name: " + email);
 
         Optional<AppUser> optUser =
-                appUserRetrievalRepository.getUserByEmail(email);
+                appUserRetrievalRepository.getAppUserByEmail(email);
 
         UserDetails userDetails =
                 new AppUserDetails(optUser.orElseThrow(

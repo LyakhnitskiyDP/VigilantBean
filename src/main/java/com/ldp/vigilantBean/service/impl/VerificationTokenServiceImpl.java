@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @PropertySource("classpath:webappConfig.properties")
-public class VerificationTokenServiceImpl implements VerificationTokenService {
+class VerificationTokenServiceImpl implements VerificationTokenService {
 
     private VerificationTokenRepository verificationTokenRepository;
 

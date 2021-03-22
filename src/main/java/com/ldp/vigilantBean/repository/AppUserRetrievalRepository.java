@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface AppUserRetrievalRepository {
 
-    Optional<AppUser> getUserByEmail(String email);
+    Optional<AppUser> getAppUserByEmail(String email);
 
 }

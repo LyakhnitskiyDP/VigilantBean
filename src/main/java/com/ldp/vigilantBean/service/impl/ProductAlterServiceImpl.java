@@ -6,7 +6,6 @@ import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.domain.product.ProductDTO;
 import com.ldp.vigilantBean.repository.CategoryRetrievalRepository;
 import com.ldp.vigilantBean.repository.ProductAlterRepository;
-import com.ldp.vigilantBean.repository.impl.ProductAlterRepositoryImpl;
 import com.ldp.vigilantBean.service.CategoryRetrievalService;
 import com.ldp.vigilantBean.service.ProductAlterService;
 import com.ldp.vigilantBean.service.StorageService;
@@ -23,7 +22,7 @@ import java.util.*;
 
 @Service
 @Log4j2
-public class ProductAlterServiceImpl implements ProductAlterService {
+class ProductAlterServiceImpl implements ProductAlterService {
 
     private ProductAlterRepository productAlterRepository;
 
@@ -61,7 +60,7 @@ public class ProductAlterServiceImpl implements ProductAlterService {
         );
 
         // Save the product for product's ID,
-        // product ID is needed while picture initialization
+        // product ID is needed for picture initialization
         productAlterRepository.addNewProduct(product);
 
         product.setPictures(

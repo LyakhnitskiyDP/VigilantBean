@@ -58,7 +58,7 @@ public class NewUserValidator implements Validator {
     private void checkEmail(AppUserDTO user, Errors errors) {
 
         String email = user.getEmail();
-        boolean isEmailPresent = appUserRetrievalRepository.getUserByEmail(email)
+        boolean isEmailPresent = appUserRetrievalRepository.getAppUserByEmail(email)
                                                            .isPresent();
 
         if (isEmailPresent)

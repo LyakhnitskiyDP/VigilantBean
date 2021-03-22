@@ -92,8 +92,6 @@
 
         <div id="addProductPopUp" class="popUp">
 
-
-
         </div>
 
         <p class="product-detail" id="product-description">${product.description}</p>
@@ -118,8 +116,6 @@
         <p class="product-detail" id="product-allergy_information">
             <span class="product-detail-label">Allergy information: </span>${product.allergyInformation}
         </p>
-
-
 
     </section>
 

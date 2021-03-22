@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class AppUserAlterRepositoryImpl implements AppUserAlterRepository {
+class AppUserAlterRepositoryImpl implements AppUserAlterRepository {
 
     private static final Logger log =
             LogManager.getLogger(AppUserAlterRepositoryImpl.class.getName());

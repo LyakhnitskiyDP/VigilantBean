@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Service
 @PropertySource("classpath:webappConfig.properties")
-public class ProductRetrievalServiceImpl implements ProductRetrievalService {
+class ProductRetrievalServiceImpl implements ProductRetrievalService {
 
     private static final Logger log =
             LogManager.getLogger(ProductRetrievalServiceImpl.class.getName());
