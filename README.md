@@ -10,9 +10,11 @@ A web store built on Java platform.
 3. [Features](#features)
 4. [Demo](#showcase)
     1. [Main Page](#showcaseMainPage)
-    2. [Registration](#showcaseRegistration)
-    3. [Adding new Category](#showcaseNewCategory)
-    4. [Adding new Product](#showcaseNewProduct)
+    2. [Searching for products](#showcaseProductSearch)   
+    3. [Registration](#showcaseRegistration)
+    4. [Adding products to cart](#)  
+    5. [Adding new Category](#showcaseNewCategory)
+    6. [Adding new Product](#showcaseNewProduct)
 5. [How to set up](#howToSetUp)    
 
 
@@ -24,9 +26,9 @@ A web store built on Java platform.
 ### Technologies and frameworks used:
 * Spring
     * Spring MVC
-    * Spring ORM
+    * Spring Core
     * Spring Security
-* Hibernate ORM
+* Hibernate
 * Hibernate Validator
 * JUnit5
 * AssertJ  
@@ -41,10 +43,11 @@ A web store built on Java platform.
   
 * Product management
     * Paginated listing of Products
-    * Product search  
+    * Product search
+    * Adding/Removing/Changing quantity of products in cart  
     * Grouping products by Categories (Many to many)
-    * Adding new Products
-    * Adding new Categories
+    * Adding new Products (admin)
+    * Adding new Categories (admin)
 
 <a name="showcase"></a>
 ### Demo
@@ -67,6 +70,11 @@ A web store built on Java platform.
 ![slide_5](showcase/5.jpg)
 ![slide_6](showcase/6.jpg)
 ![slide_7](showcase/7.jpg)
+
+<a name="showcaseAddingProductsToCart"></a>
+#### Adding products to cart
+![slide_13](showcase/15.png)
+![slide_14](showcase/16.png)
 
 <a name="showcaseNewCategory"></a>
 #### Adding new category (admin)

@@ -51,6 +51,12 @@ public class CartRestController {
          return optCart.get();
       else
           throw new AuthenticationCredentialsNotFoundException("User is not authenticated");
+   }
+
+   @GetMapping("/getProductCount")
+   public ResponseEntity<Long> getProductCount() {
+
+      return new ResponseEntity<Long>(3L, HttpStatus.OK);
 
    }
 

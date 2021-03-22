@@ -66,6 +66,11 @@ class CartServiceImpl implements CartService {
     }
 
     @Override
+    public Long getTotalNumberOfProductsInCart() {
+        return 3L;
+    }
+
+    @Override
     public Optional<CartItem> updateCartItemQuantity(
             Long cartItemId, Long quantity) {
 

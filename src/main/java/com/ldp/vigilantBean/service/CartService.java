@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface CartService {
 
+    Long getTotalNumberOfProductsInCart();
+
     boolean addCartItem(CartItemDTO cartItem)
             throws AuthenticationCredentialsNotFoundException;
 

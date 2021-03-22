@@ -7,6 +7,8 @@ $(document).ready(function() {
 
     hideAccountNav();
 
+    refreshProductCounter();
+
     $('#userIcon').click(function() {
 
         if ($('#account-nav').css('display') == 'none') {
@@ -54,8 +56,21 @@ $(document).ready(function() {
     }
 
 
-
 });
+
+function refreshProductCounter() {
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/vigilantBean/api/cart/getProductCount',
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(data) {
+        }
+    });
+
+}
 
 
 
