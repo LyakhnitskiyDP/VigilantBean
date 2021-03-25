@@ -44,6 +44,17 @@ header .logo img {
     cursor: pointer;
 }
 
+/* Cart */
+#cartClause {
+    display: flex;
+    justify-content: center;
+}
+
+#cartClause #productCount {
+    display: none;
+    padding-top: .1em;
+}
+
 /* Drop down menu */
 #account-nav {
     display: flex;

@@ -66,8 +66,16 @@ class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Long getTotalNumberOfProductsInCart() {
-        return 3L;
+    public Optional<Long> getTotalNumberOfProductsInCart() {
+
+        Optional<Cart> optCart = getCart();
+
+        return optCart.map(
+          cart -> cart.getCartItems()
+                      .stream()
+                      .mapToLong(CartItem::getQuantity)
+                      .sum()
+        );
     }
 
     @Override

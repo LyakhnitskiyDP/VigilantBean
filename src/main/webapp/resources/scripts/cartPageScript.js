@@ -4,12 +4,30 @@ $(document).ready(function() {
 
 });
 
+function queryCart(successCallback, failureCallback) {
+
+}
+
+function getCart() {
+    $.ajax({
+        type: 'GET',
+        url: 'api/cart/getCart',
+        success: function(cart) {
+            return cart;
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
 function refreshCart() {
     $.ajax({
         type: 'GET',
         url: 'api/cart/getCart',
         success: function(data) {
             initCartTable(data);
+            refreshProductCounter();
         },
         error: function(data) {
             console.log(data);
@@ -19,7 +37,7 @@ function refreshCart() {
 
 function initCartTable(cart) {
 
-    $('#grantTotalValue').html(cart.grandTotal ?? '0');
+    $('#grandTotalValue').html(cart.grandTotal ?? '0');
 
     initCartItems(cart.cartItems);
 
@@ -47,7 +65,7 @@ function initCartItems(cartItems) {
     function initItemRaw(cartItem) {
 
         return `
-             <tr>
+             <tr id="cartItem_${cartItem.cartItemId}">
                <td class="productName"><img src="resources/images/products/${cartItem.product.mainPicture.fullName}"/>
                <span>${cartItem.product.name}</span></td>
                <td>${cartItem.product.unitPrice}</td>
@@ -82,7 +100,8 @@ function initDiscardButton() {
             url: 'api/cart/removeCartItem',
             data: { cartItemId : cartItemId },
             success: function(data) {
-                refreshCart();
+                removeCartItemRaw(cartItemId);
+                refreshGrandTotal();
             },
             error: function(data) {
                 console.log(data);
@@ -90,6 +109,25 @@ function initDiscardButton() {
         });
 
     });
+
+    function removeCartItemRaw(cartItemId) {
+
+        const cartRowToRemove = $('#cart tbody #cartItem_' + cartItemId);
+        cartRowToRemove.hide('slow', function() {cartRowToRemove.remove()});
+    }
+}
+
+function refreshGrandTotal() {
+   $.ajax({
+           type: 'GET',
+           url: 'api/cart/getCart',
+           success: function(data) {
+                $('#grandTotalValue').html(data.grandTotal);
+           },
+           error: function(data) {
+               console.log(data);
+           }
+       });
 }
 
 function initQuantityCounter() {
