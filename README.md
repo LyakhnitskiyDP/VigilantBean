@@ -25,8 +25,8 @@ A web store built on Java platform.
 <a name="technologies"></a>
 ### Technologies and frameworks used:
 * Spring
-    * Spring MVC
     * Spring Core
+    * Spring MVC
     * Spring Security
 * Hibernate
 * Hibernate Validator
