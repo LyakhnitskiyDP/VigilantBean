@@ -1,4 +1,5 @@
 DROP TABLE verification_token IF EXISTS;
+DROP TABLE comment IF EXISTS;
 
 DROP TABLE app_order IF EXISTS;
 DROP TABLE user_role IF EXISTS;
@@ -112,6 +113,15 @@ CREATE TABLE app_order (
    cart_id INTEGER FOREIGN KEY REFERENCES cart (cart_id),
    date_of_creation TIMESTAMP DEFAULT NOW(),
    date_of_arrival TIMESTAMP
+)
+
+CREATE TABLE comment (
+    comment_id INTEGER IDENTITY PRIMARY KEY,
+    app_user_id INTEGER FOREIGN KEY REFERENCES app_user (app_user_id),
+    product_id INTEGER FOREIGN KEY REFERENCES product (product_id),
+    content VARCHAR(1000) NOT NULL,
+    stars INTEGER NOT NULL CHECK (stars >= 0 AND stars <= 10),
+    creation_date TIMESTAMP DEFAULT NOW()
 )
 
 
