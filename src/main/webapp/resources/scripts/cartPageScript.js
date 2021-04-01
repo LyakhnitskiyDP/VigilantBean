@@ -4,25 +4,33 @@ $(document).ready(function() {
 
 });
 
+function queryCart(successCallback, failureCallback) {
+
+   $.ajax({
+       type: 'GET',
+       url: 'api/cart/getCart',
+       success: function(cart) {
+            successCallback(cart);
+       },
+       error: function(error) {
+            failureCallback(error);
+       }
+   });
+}
+
 function refreshCart() {
-    $.ajax({
-        type: 'GET',
-        url: 'api/cart/getCart',
-        success: function(data) {
-            initCartTable(data);
-        },
-        error: function(data) {
-            console.log(data);
-        }
-    });
+
+    queryCart(
+        function(cart) { initCartTable(cart); refreshProductCounter(); },
+        function(error) { console.log(error) }
+    );
 }
 
 function initCartTable(cart) {
 
-    $('#grantTotalValue').html(cart.grandTotal ?? '0');
+    $('#grandTotalValue').html(cart.grandTotal ?? '0');
 
     initCartItems(cart.cartItems);
-
     if (cart.cartItems.length > 0) {
         initDiscardButton();
         initQuantityCounter();
@@ -32,7 +40,6 @@ function initCartTable(cart) {
 function initCartItems(cartItems) {
 
     const cartTableBody = $('#cartTableBody');
-
 
     cartTableBody.html('');
     if (cartItems.length < 1)
@@ -45,9 +52,8 @@ function initCartItems(cartItems) {
     }
 
     function initItemRaw(cartItem) {
-
         return `
-             <tr>
+             <tr id="cartItem_${cartItem.cartItemId}">
                <td class="productName"><img src="resources/images/products/${cartItem.product.mainPicture.fullName}"/>
                <span>${cartItem.product.name}</span></td>
                <td>${cartItem.product.unitPrice}</td>
@@ -82,7 +88,9 @@ function initDiscardButton() {
             url: 'api/cart/removeCartItem',
             data: { cartItemId : cartItemId },
             success: function(data) {
-                refreshCart();
+                removeCartItemRaw(cartItemId);
+                refreshGrandTotal();
+                refreshProductCounter();
             },
             error: function(data) {
                 console.log(data);
@@ -90,6 +98,20 @@ function initDiscardButton() {
         });
 
     });
+
+    function removeCartItemRaw(cartItemId) {
+
+        const cartRowToRemove = $('#cart tbody #cartItem_' + cartItemId);
+        cartRowToRemove.hide('slow', function() {cartRowToRemove.remove()});
+    }
+}
+
+function refreshGrandTotal() {
+
+   queryCart(
+        function(cart) { $('#grandTotalValue').html(cart.grandTotal); },
+        function(error) { console.log(error); }
+   );
 }
 
 function initQuantityCounter() {

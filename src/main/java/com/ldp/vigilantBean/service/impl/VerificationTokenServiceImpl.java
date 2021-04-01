@@ -38,7 +38,6 @@ class VerificationTokenServiceImpl implements VerificationTokenService {
         verificationToken.setToken(token);
         verificationToken.setAppUser(user);
 
-
         return verificationTokenRepository.create(verificationToken);
     }
 
@@ -54,4 +53,5 @@ class VerificationTokenServiceImpl implements VerificationTokenService {
         else
             throw new IllegalArgumentException("0 or negative number number of minutes of token expiration time");
     }
+
 }

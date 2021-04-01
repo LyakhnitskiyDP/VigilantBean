@@ -56,8 +56,12 @@ public class CartRestController {
    @GetMapping("/getProductCount")
    public ResponseEntity<Long> getProductCount() {
 
-      return new ResponseEntity<Long>(3L, HttpStatus.OK);
+      Optional<Long> optProductCount =
+              cartService.getTotalNumberOfProductsInCart();
 
+      return optProductCount
+              .map(productCount -> new ResponseEntity<>(productCount, HttpStatus.OK))
+              .orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
    }
 
    @PostMapping("/removeCartItem")

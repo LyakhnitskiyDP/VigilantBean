@@ -1,4 +1,6 @@
 
+var popUpTimerHandle;
+
 $(document).ready(function() {
 
     $('.secondaryImage').click(function(e) {
@@ -25,17 +27,19 @@ $(document).ready(function() {
             data: form.serialize(),
             success: function(data) {
                 initPopUp(data);
-                setTimeout(closePopUp, 2000);
+                popUpTimerHandle = setTimeout(closePopUp, 2000);
+                refreshProductCounter();
             },
             error: function(data) {
                 initPopUp(data.responseJSON);
-                setTimeout(closePopUp, 5000);
+                popUpTimerHandle = setTimeout(closePopUp, 5000);
             }
         });
     });
 
-    function closePopUp() {
+    function closePopUp(timerHandle) {
         $('#addProductPopUp').css('display', 'none');
+        clearTimeout(popUpTimerHandle);
     }
 
     function initPopUp(response) {

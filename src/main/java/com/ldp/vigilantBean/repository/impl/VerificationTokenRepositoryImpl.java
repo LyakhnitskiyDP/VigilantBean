@@ -45,7 +45,6 @@ class VerificationTokenRepositoryImpl implements VerificationTokenRepository {
 
         try (Session session = sessionFactory.openSession()) {
 
-
             Query query = session.getNamedQuery(VerificationToken.GET_BY_TOKEN)
                                  .setParameter("token", token);
 

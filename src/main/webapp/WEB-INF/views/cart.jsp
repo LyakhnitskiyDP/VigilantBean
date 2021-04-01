@@ -64,7 +64,7 @@
 
     <div id="grantTotal" class="clause">
         <p>Grant Total</span>
-        <span id="grantTotalValue"></span><span id="grantTotalCurrency">$</span>
+        <span id="grandTotalValue"></span><span id="grantTotalCurrency">$</span>
     </div>
 
     <div id="checkout-clause" class="clause">

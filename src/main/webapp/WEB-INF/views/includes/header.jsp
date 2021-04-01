@@ -63,14 +63,25 @@ function refreshProductCounter() {
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/vigilantBean/api/cart/getProductCount',
-        success: function(data) {
-            console.log(data);
+        success: function(count) {
+            displayProductCount(count);
         },
         error: function(data) {
+            console.log(data);
+            hideProductCount();
         }
     });
 
+    function displayProductCount(count) {
+       $('#productCount').css('display', 'block');
+       $('#productCount').html(count);
+    }
+
+    function hideProductCount() {
+        $('#productCount').css('display', 'none');
+    }
 }
+
 
 
 
@@ -103,9 +114,10 @@ function refreshProductCounter() {
       <img id="loupeIcon" src="${loupeIconURL}" />
 
       <spring:url value="/cart" var="cartURL" />
-      <a href="${cartURL}">
+      <a href="${cartURL}" id="cartClause">
       <spring:url value="/resources/images/icons/shopping-cart.svg" var="cartIconURL" />
       <img id="cartIcon" src="${cartIconURL}" />
+      <span id="productCount"></span>
       </a>
 
       <div class="dropdown">
