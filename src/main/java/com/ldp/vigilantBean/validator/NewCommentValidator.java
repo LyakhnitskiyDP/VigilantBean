@@ -5,10 +5,12 @@ import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.service.ProductRetrievalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import javax.validation.Validator;
 import java.util.Optional;
 
+@Component
 public class NewCommentValidator extends NewEntityValidator<CommentDTO> {
 
     private ProductRetrievalService productRetrievalService;

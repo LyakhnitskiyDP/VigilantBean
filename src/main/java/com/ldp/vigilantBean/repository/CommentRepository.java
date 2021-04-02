@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommentRepository {
 
-    boolean addComment(CommentDTO commentDTO);
+    boolean addComment(Comment comment);
 
     List<Comment> getComments(Long productId, Pagination pagination);
 }

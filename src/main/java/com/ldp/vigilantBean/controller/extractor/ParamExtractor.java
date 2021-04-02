@@ -42,9 +42,22 @@ public class ParamExtractor {
          return request.getParameter(paramName)
                        .isEmpty() ? 0 : Long.parseLong(request.getParameter(paramName));
 
-      } catch (NumberFormatException numberFormatException) {
+      } catch (NumberFormatException | NullPointerException exception) {
          return 0L;
       }
+   }
+
+   public static Byte safelyExtractByte(
+           HttpServletRequest request,
+           String paramName) {
+
+      try {
+         return request.getParameter(paramName)
+                       .isEmpty() ? 0 : Byte.parseByte(request.getParameter(paramName));
+      } catch (NumberFormatException | NullPointerException exception) {
+         return 0;
+      }
+
    }
 
    /**
