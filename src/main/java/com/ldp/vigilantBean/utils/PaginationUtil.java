@@ -30,7 +30,7 @@ public class PaginationUtil {
     }
 
     private static int getNumberOfPages(int numberOfItems,
-                                 int numberOfItemsPerPage) {
+                                        int numberOfItemsPerPage) {
 
         return (int) Math.ceil((double) numberOfItems / (double) numberOfItemsPerPage);
     }

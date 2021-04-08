@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -29,10 +30,9 @@ class CommentRepositoryImpl implements CommentRepository {
     @Override
     public boolean addComment(Comment comment) {
 
-       Transaction tx = null;
        try (Session session = sessionFactory.openSession()) {
 
-           tx = session.getTransaction();
+           Transaction tx = session.getTransaction();
            tx.begin();
 
            session.save(comment);
@@ -41,15 +41,39 @@ class CommentRepositoryImpl implements CommentRepository {
            return true;
        } catch (HibernateException hibernateException) {
 
-           tx.rollback();
            log.error("Error while saving a comment ", hibernateException);
            return false;
        }
-
     }
 
     @Override
+    @SuppressWarnings(value = "unchecked")
     public List<Comment> getComments(Long productId, Pagination pagination) {
-        return null;
+
+        try (Session session = sessionFactory.openSession()) {
+
+            List<Comment> comments = session.getNamedQuery(Comment.GET_ALL_COMMENTS)
+                                            .setParameter("productId", productId)
+                                            .setFirstResult(pagination.getFirstResultIndex() - 1)
+                                            .setMaxResults(pagination.getMaxResults())
+                                            .list();
+            return comments;
+        } catch (HibernateException hibernateException) {
+            log.error("Exception while querying comments", hibernateException);
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public Long getNumberOfComments(Long productId) {
+
+        try (Session session = sessionFactory.openSession()) {
+
+            return (Long) session.getNamedQuery(Comment.GET_NUMBER_OF_COMMENTS)
+                                 .setParameter("productId", productId)
+                                 .getSingleResult();
+
+        }
+
     }
 }

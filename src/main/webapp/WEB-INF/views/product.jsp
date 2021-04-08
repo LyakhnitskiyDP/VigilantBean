@@ -125,7 +125,7 @@
             <span class="product-detail-label">Allergy information: </span>${product.allergyInformation}
         </p>
 
-        <div id="comment-clause">
+        <div id="comment-clause" productId="${product.productId}">
 
         </div>
 

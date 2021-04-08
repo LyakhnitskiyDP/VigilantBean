@@ -1,13 +1,15 @@
 package com.ldp.vigilantBean.domain.comment;
 
 import com.ldp.vigilantBean.domain.appUser.AppUser;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 import javax.validation.constraints.*;
 
-@Value
+@Setter
+@Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentDTO {
 
     Long productId;

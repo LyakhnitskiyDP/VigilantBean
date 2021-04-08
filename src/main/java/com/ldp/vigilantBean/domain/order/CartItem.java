@@ -1,6 +1,8 @@
 package com.ldp.vigilantBean.domain.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ldp.vigilantBean.domain.product.Product;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

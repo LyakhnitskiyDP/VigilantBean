@@ -1,7 +1,9 @@
 package com.ldp.vigilantBean.controller.rest;
 
 import com.ldp.vigilantBean.controller.extractor.ParamExtractor;
+import com.ldp.vigilantBean.domain.comment.Comment;
 import com.ldp.vigilantBean.domain.comment.CommentDTO;
+import com.ldp.vigilantBean.repository.PaginatedEntities;
 import com.ldp.vigilantBean.service.CommentService;
 import com.ldp.vigilantBean.validator.EntityProcessingResponse;
 import com.ldp.vigilantBean.validator.NewCommentValidator;
@@ -10,12 +12,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-@RestController("/api/comment")
+@RestController
+@RequestMapping("api/comment")
 public class CommentRestController {
 
     private NewCommentValidator commentValidator;
@@ -34,9 +37,8 @@ public class CommentRestController {
 
     @PostMapping("/addComment")
     public ResponseEntity<EntityProcessingResponse> addComment(
-            HttpServletRequest request) {
+            @RequestBody CommentDTO commentDTO, HttpServletRequest request) {
 
-        CommentDTO commentDTO = extractCommentDTO(request);
         EntityProcessingResponse response = initEntityProcessingResponse(request);
 
         commentValidator.validate(commentDTO, response);
@@ -50,19 +52,19 @@ public class CommentRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private CommentDTO extractCommentDTO(HttpServletRequest request) {
-
-        return CommentDTO.builder()
-                            .productId(ParamExtractor.safelyExtractLong(request, "productId"))
-                            .content(request.getParameter("content"))
-                            .stars(ParamExtractor.safelyExtractByte(request, "stars"))
-                         .build();
-    }
-
     private EntityProcessingResponse initEntityProcessingResponse(
             HttpServletRequest request ) {
 
         return new EntityProcessingResponse(request.getLocale(), messageSource);
+    }
+
+    @GetMapping("/getComments")
+    public ResponseEntity<PaginatedEntities<Comment>> getComments(
+            @RequestParam("productId") Long productId,
+            @RequestParam("currentPage") Integer currentPage,
+            @RequestParam("commentsPerPage") Integer commentsPerPage) {
+
+        return new ResponseEntity<>(commentService.getComments(productId, currentPage, commentsPerPage), HttpStatus.OK);
     }
 
     @Autowired

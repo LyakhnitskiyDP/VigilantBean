@@ -3,7 +3,7 @@ package com.ldp.vigilantBean.service.impl;
 import com.ldp.vigilantBean.domain.product.Product;
 import com.ldp.vigilantBean.repository.Pagination;
 import com.ldp.vigilantBean.repository.ProductRetrievalRepository;
-import com.ldp.vigilantBean.repository.impl.ProductPagination;
+import com.ldp.vigilantBean.repository.impl.DefaultPagination;
 import com.ldp.vigilantBean.service.ProductRetrievalService;
 import com.ldp.vigilantBean.utils.PaginationUtil;
 import org.apache.logging.log4j.LogManager;
@@ -91,7 +91,7 @@ class ProductRetrievalServiceImpl implements ProductRetrievalService {
                 PaginationUtil.getFirstProductIndex(pageNumber, numberOfProductsPerPage);
 
         Pagination pagination =
-                new ProductPagination(firstProductIndexOnPage, numberOfProductsPerPage);
+                new DefaultPagination(firstProductIndexOnPage, numberOfProductsPerPage);
 
         return pagination;
     }

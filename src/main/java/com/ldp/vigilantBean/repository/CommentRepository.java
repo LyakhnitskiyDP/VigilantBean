@@ -10,4 +10,6 @@ public interface CommentRepository {
     boolean addComment(Comment comment);
 
     List<Comment> getComments(Long productId, Pagination pagination);
+
+    Long getNumberOfComments(Long productId);
 }
