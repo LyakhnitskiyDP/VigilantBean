@@ -8,12 +8,7 @@ class CommentSection extends React.Component {
             userIsAuthenticated: false,
         }
 
-        this.onCommentSubmit = this.onCommentSubmit.bind(this);
-    }
-
-    onCommentSubmit() {
-        console.log("In parent");
-        this.setState({});
+        this.productId = $('comment-clause').attr('productId');
     }
 
     render() {
@@ -24,15 +19,13 @@ class CommentSection extends React.Component {
             React.createElement(
                 AddComment,
                 {
-                    productId: $('#comment-clause').attr('productId'),
-                    onCommentSubmit: this.onCommentSubmit,
+                    productId: this.productId,
                 }
             ),
             React.createElement(
                 ExistingComments,
                 {
-                    productId: $('#comment-clause').attr('productId'),
-                    onCommentSubmit: this.onCommentSubmit,
+                    productId: this.productId,
                 }
             )
         );
@@ -55,6 +48,9 @@ class AddComment extends React.Component {
         this.handleCommentContentChange = this.handleCommentContentChange.bind(this);
         this.handleCommentStarsChange = this.handleCommentStarsChange.bind(this);
         this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+
+        this.handleStarsDecrease = this.handleStarsDecrease.bind(this);
+        this.handleStarsIncrease = this.handleStarsIncrease.bind(this);
     }
 
     componentDidMount() {
@@ -90,6 +86,26 @@ class AddComment extends React.Component {
 
         this.setState({
             stars: starsToSet,
+        });
+    }
+
+    handleStarsIncrease() {
+
+        this.setState((prevState) => {
+            const prevStars = prevState.stars;
+
+            if (prevStars >= 10) return { stars: 10 };
+            else return { stars: (prevStars + 1) };
+        });
+    }
+
+    handleStarsDecrease() {
+
+        this.setState((prevState) => {
+            const prevStars = prevState.stars;
+
+            if (prevStars <= 0) return { stars: 0 }
+            else return { stars: (prevStars - 1) }
         });
     }
 
@@ -147,23 +163,50 @@ class AddComment extends React.Component {
                          id: 'newCommentStarsClause'
                         },
                         React.createElement(
-                            'input',
+                            'div',
                             {
-                                type: 'number',
-                                min: '1',
-                                value: this.state.stars,
-                                max: '10',
-                                onChange: this.handleCommentStarsChange,
-                                value: this.state.stars,
-                                id: 'newCommentStars'
-                            }
-                        ),
-                        React.createElement(
-                            'span',
-                            {
-                                id: 'newCommentStarsDescription',
+                             id: 'starsInput',
                             },
-                            'stars'
+                            React.createElement(
+                                'div',
+                                {
+                                 style: {
+                                     height: '2em',
+                                     minWidth: '2em',
+                                     minHeight: '2em',
+                                     display: 'flex',
+                                 }
+                                },
+                                React.createElement(
+                                    'img',
+                                    {
+                                     src: 'http://localhost:8080/vigilantBean/resources/images/icons/left-pointing-triangle.svg',
+                                     onClick: this.handleStarsDecrease
+                                    }
+                                ),
+                            ),
+                            React.createElement(
+                                'input',
+                                {
+                                    type: 'number',
+                                    min: '1',
+                                    value: this.state.stars,
+                                    max: '10',
+                                    onChange: this.handleCommentStarsChange,
+                                    value: this.state.stars,
+                                    id: 'newCommentStars',
+                                    style: { color: getColor(this.state.stars) }
+                                }
+                            ),
+                            React.createElement(
+                                'img',
+                                {
+                                 src: 'http://localhost:8080/vigilantBean/resources/images/icons/left-pointing-triangle.svg',
+                                 className: 'starsButton',
+                                 onClick: this.handleStarsIncrease,
+                                 id: 'stars-down',
+                                }
+                            ),
                         )
                     ),
                     React.createElement(
@@ -189,6 +232,7 @@ class AddComment extends React.Component {
     }
 }
 
+/* Existing Comments sub-component */
 class ExistingComments extends React.Component {
 
     static defaultProps = {
@@ -205,7 +249,6 @@ class ExistingComments extends React.Component {
         }
 
         this.handlePageChange = this.handlePageChange.bind(this);
-        this.onCommentSubmit = this.props.onCommentSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -242,17 +285,7 @@ class ExistingComments extends React.Component {
        });
     }
 
-    getColor(stars) {
 
-        if (stars > 6)
-            return 'gold';
-
-        if (stars > 3)
-            return 'bisque';
-
-        return 'brown';
-
-    }
 
 
     render() {
@@ -289,7 +322,7 @@ class ExistingComments extends React.Component {
                                     'span',
                                     {
                                      className: 'commentUserStars',
-                                     style: { color: this.getColor(comment.stars) }
+                                     style: { color: getColor(comment.stars) }
                                     },
                                     comment.stars + '/10'
                                 )
@@ -342,6 +375,7 @@ class ExistingComments extends React.Component {
     }
 }
 
+/* Helper Functions */
 function parseNanos(nanos) {
     const date = new Date(nanos);
 
@@ -357,6 +391,18 @@ function parseNanos(nanos) {
 
         return timeUnit < 10 ? ('0' + timeUnit) : timeUnit;
     }
+}
+
+function getColor(stars) {
+
+    if (stars > 6)
+        return 'gold';
+
+    if (stars > 3)
+        return 'bisque';
+
+    return 'brown';
+
 }
 
 export default CommentSection;

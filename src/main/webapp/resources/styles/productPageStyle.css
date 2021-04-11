@@ -112,12 +112,58 @@ main {
 #addNewComment button {
     float: right;
     font-size: 1rem;
+    height: 2em;
 }
 
 #newCommentStarsClause {
     width: fit-content;
     float: left;
     display: flex;
+    align-items: center;
+}
+
+#starsInput {
+    display: flex;
+    align-items: center;
+}
+
+#newCommentStars {
+    background: none;
+    border: 0.1em solid var(--hex-main-bright);
+    border-radius: .5em;
+}
+
+#newCommentStarsClause img {
+    width: 2em;
+    cursor: pointer;
+}
+
+#newCommentStarsClause img:focus {
+    outline: none;
+    width: 1.75em;
+}
+
+#newCommentStarsClause img:hover {
+    width: 1.85em;
+}
+
+#newCommentStarsClause #stars-down {
+    transform: rotate(180deg);
+}
+
+#newCommentStarsClause input[type=number]::-webkit-outer-spin-button,
+#newCommentStarsClause input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#newCommentStarsClause input[type=number] {
+  -moz-appearance: textfield;
+  text-align: center;
+  padding: .25em;
+  font-size: 1.25rem;
+  border-radius: .2em;
+  width: 2.5rem;
 }
 
 .errorMessage {
