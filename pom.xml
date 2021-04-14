@@ -96,7 +96,18 @@
             <version>2.12.1</version>
         </dependency>
 
-
+        <!-- Jackson hibernate module for lazy fetching -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>2.12.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>javax.transaction-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- Hibernate -->
         <!-- Hibernate Core -->

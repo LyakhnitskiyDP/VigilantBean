@@ -5,11 +5,14 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.accept.ContentNegotiationManager;
@@ -47,6 +50,10 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
 
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
     }
 
     @Bean
@@ -108,10 +115,20 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     public ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
         return objectMapper;
+    }
+
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        for (HttpMessageConverter<?> converter : converters) {
+            if (converter instanceof org.springframework.http.converter.json.MappingJackson2HttpMessageConverter) {
+                ObjectMapper mapper = ((MappingJackson2HttpMessageConverter) converter).getObjectMapper();
+                mapper.registerModule(new Hibernate5Module());
+            }
+        }
     }
 
     @Bean(name = "beanValidator")

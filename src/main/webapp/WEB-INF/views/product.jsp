@@ -28,6 +28,14 @@
    <spring:url value="/resources/scripts/productPageScript.js" var="productPageScript"/>
    <script type="text/javascript" src="${productPageScript}"></script>
 
+   <spring:url value="/resources/scripts/react/react-dev-17.js" var="react"/>
+   <script type="text/javascript" src="${react}"></script>
+
+   <spring:url value="/resources/scripts/react/react-dom-dev-17.js" var="reactDom"/>
+   <script type="text/javascript" src="${reactDom}"></script>
+
+   <spring:url value="/resources/scripts/react/InjectCommentSection.js" var="commentSectionScript"/>
+   <script type="module" src="${commentSectionScript}"></script>
 </head>
 <body>
 
@@ -116,6 +124,10 @@
         <p class="product-detail" id="product-allergy_information">
             <span class="product-detail-label">Allergy information: </span>${product.allergyInformation}
         </p>
+
+        <div id="comment-clause" productId="${product.productId}">
+
+        </div>
 
     </section>
 

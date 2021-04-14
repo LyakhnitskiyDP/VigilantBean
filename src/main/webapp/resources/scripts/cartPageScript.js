@@ -56,7 +56,7 @@ function initCartItems(cartItems) {
              <tr id="cartItem_${cartItem.cartItemId}">
                <td class="productName"><img src="resources/images/products/${cartItem.product.mainPicture.fullName}"/>
                <span>${cartItem.product.name}</span></td>
-               <td>${cartItem.product.unitPrice}</td>
+               <td>${cartItem.product.unitPrice}$</td>
                <td>
                  <form>
                    <input class="quantityCounter" type="number" min="1" max="9999"
@@ -65,7 +65,7 @@ function initCartItems(cartItems) {
                    <span class="discard">&times;</span>
                  </form>
                </td>
-               <td>${cartItem.total}</td>
+               <td>${cartItem.total}$</td>
              </tr>
         `;
     }

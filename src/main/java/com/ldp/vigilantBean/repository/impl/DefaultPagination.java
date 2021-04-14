@@ -2,15 +2,15 @@ package com.ldp.vigilantBean.repository.impl;
 
 import com.ldp.vigilantBean.repository.Pagination;
 
-public class ProductPagination implements Pagination {
+public class DefaultPagination implements Pagination {
 
     private int firstResultIndex = 0;
-    private int amountOfProductsPerFetch = 0;
+    private int amountOfItemsPerFetch = 0;
 
-    public ProductPagination(int firstResultIndex,
-                             int amountOfProductsPerFetch) {
+    public DefaultPagination(int firstResultIndex,
+                             int amountOfItemsPerFetch) {
         this.firstResultIndex = firstResultIndex;
-        this.amountOfProductsPerFetch = amountOfProductsPerFetch;
+        this.amountOfItemsPerFetch = amountOfItemsPerFetch;
     }
 
 
@@ -21,6 +21,6 @@ public class ProductPagination implements Pagination {
 
     @Override
     public int getMaxResults() {
-        return amountOfProductsPerFetch;
+        return amountOfItemsPerFetch;
     }
 }

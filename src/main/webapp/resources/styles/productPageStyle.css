@@ -91,6 +91,130 @@ main {
     margin-right: 1em;
 }
 
+/* Comments Section */
+#newCommentContent {
+    padding: 0.4em;
+    font-size: 1rem;
+    font-family: pacifico;
+    margin: 0px;
+    min-height: 4rem;
+    width: 100%;
+    resize: vertical;
+    display: inline-block;
+}
+
+#addNewComment {
+    display: inline-table;
+    margin-bottom: 1em;
+    width: 100%;
+}
+
+#addNewComment button {
+    float: right;
+    font-size: 1rem;
+    height: 2em;
+}
+
+#newCommentStarsClause {
+    width: fit-content;
+    float: left;
+    display: flex;
+    align-items: center;
+}
+
+#starsInput {
+    display: flex;
+    align-items: center;
+}
+
+#newCommentStars {
+    background: none;
+    border: 0.1em solid var(--hex-main-bright);
+    border-radius: .5em;
+}
+
+#newCommentStarsClause img {
+    width: 2em;
+    cursor: pointer;
+}
+
+#newCommentStarsClause img:focus {
+    outline: none;
+    width: 1.75em;
+}
+
+#newCommentStarsClause img:hover {
+    width: 1.85em;
+}
+
+#newCommentStarsClause #stars-down {
+    transform: rotate(180deg);
+}
+
+#newCommentStarsClause input[type=number]::-webkit-outer-spin-button,
+#newCommentStarsClause input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#newCommentStarsClause input[type=number] {
+  -moz-appearance: textfield;
+  text-align: center;
+  padding: .25em;
+  font-size: 1.25rem;
+  border-radius: .2em;
+  width: 2.5rem;
+}
+
+.errorMessage {
+    border: .2em solid var(--hex-main-bright);
+    padding: .3em;
+    border-radius: .5em;
+}
+
+.comment {
+    margin-bottom: .75em;
+}
+
+.commentHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentFooter {
+    text-align: right;
+    font-size: .8rem;
+}
+
+.existingCommentContent {
+    padding: .25em;
+    border: .1rem solid var(--hex-shadow-light);
+    border-radius: .3em;
+}
+
+#existingCommentsPageList {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.2rem;
+}
+
+.page {
+    padding: .3em;
+    background: var(--hex-main-dark);
+    border-radius: .2em;
+    color: var(--hex-shadow-light);
+    cursor: pointer;
+    user-select: none;
+}
+
+.page:hover {
+    background: var(--hex-main-light);
+}
+
+#currentPage {
+    border: .1rem solid;
+}
+
 /* Add Product Pop Up */
 #addProductPopUp {
     width: 100%;

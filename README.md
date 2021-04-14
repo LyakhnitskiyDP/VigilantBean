@@ -10,9 +10,10 @@ A web store built on Java platform.
 3. [Features](#features)
 4. [Demo](#showcase)
     1. [Main Page](#showcaseMainPage)
-    2. [Searching for products](#showcaseProductSearch)   
+    2. [Searching for products](#showcaseProductSearch)
+    3. [Adding comments to products](#showcaseComments)   
     3. [Registration](#showcaseRegistration)
-    4. [Adding products to cart](#)  
+    4. [Adding products to cart](#showcaseAddingProductsToCart)  
     5. [Adding new Category](#showcaseNewCategory)
     6. [Adding new Product](#showcaseNewProduct)
 5. [How to set up](#howToSetUp)    
@@ -61,6 +62,10 @@ A web store built on Java platform.
 #### Product search
 ![slide_13](showcase/13.png)
 ![slide_14](showcase/14.png)
+
+<a name="showcaseComments"></a>
+#### Adding comments for products
+![slide_comments](showcase/comments.gif)
 
 <a name="showcaseRegistration"></a>
 #### Registration
