@@ -6,9 +6,55 @@ class CommentSection extends React.Component {
 
         this.state = {
             userIsAuthenticated: false,
+            currentPage: 1,
+            comments: [],
+            commentsPerPage: 3,
+            pages: []
         }
 
-        this.productId = $('comment-clause').attr('productId');
+        this.productId = $('#comment-clause').attr('productId');
+        this.handlePageChange = this.handlePageChange.bind(this);
+        this.queryComments = this.queryComments.bind(this);
+
+        this.onCommentSubmit = this.onCommentSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        this.queryComments();
+    }
+
+    handlePageChange(event) {
+
+        this.setState({
+            currentPage: event.target.innerHTML
+        }, () => { this.queryComments(); });
+    }
+
+    onCommentSubmit() {
+        this.queryComments();
+    }
+
+    queryComments() {
+       $.ajax({
+           type: 'GET',
+           contentType: 'application/json',
+           url: 'http://localhost:8080/vigilantBean/api/comment/getComments',
+           data: {
+               productId: this.productId,
+               currentPage: this.state.currentPage,
+               commentsPerPage: this.state.commentsPerPage
+           },
+           timeout: 600000,
+           success: (data) => {
+               this.setState({
+                   pages: data.pages,
+                   comments: data.entities
+               });
+           },
+           error: function(jqXHR, exception) {
+               console.log(exception);
+           }
+       });
     }
 
     render() {
@@ -20,12 +66,16 @@ class CommentSection extends React.Component {
                 AddComment,
                 {
                     productId: this.productId,
+                    onCommentSubmit: this.onCommentSubmit
                 }
             ),
             React.createElement(
                 ExistingComments,
                 {
-                    productId: this.productId,
+                    comments: this.state.comments,
+                    pages: this.state.pages,
+                    commentsPerPage: this.state.commentsPerPage,
+                    handlePageChange: this.handlePageChange
                 }
             )
         );
@@ -51,6 +101,7 @@ class AddComment extends React.Component {
 
         this.handleStarsDecrease = this.handleStarsDecrease.bind(this);
         this.handleStarsIncrease = this.handleStarsIncrease.bind(this);
+
     }
 
     componentDidMount() {
@@ -232,147 +283,88 @@ class AddComment extends React.Component {
     }
 }
 
-/* Existing Comments sub-component */
-class ExistingComments extends React.Component {
+function ExistingComments(props) {
 
-    static defaultProps = {
-        commentsPerPage: 3,
-    }
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            currentPage: 1,
-            comments: [],
-            pages: []
-        }
-
-        this.handlePageChange = this.handlePageChange.bind(this);
-    }
-
-    componentDidMount() {
-        this.queryComments();
-    }
-
-    handlePageChange(event) {
-
-        this.setState({
-            currentPage: event.target.innerHTML
-        }, () => { this.queryComments(); });
-    }
-
-    queryComments() {
-       $.ajax({
-           type: 'GET',
-           contentType: 'application/json',
-           url: 'http://localhost:8080/vigilantBean/api/comment/getComments',
-           data: {
-               productId: this.props.productId,
-               currentPage: this.state.currentPage,
-               commentsPerPage: this.props.commentsPerPage
-           },
-           timeout: 600000,
-           success: (data) => {
-               this.setState({
-                   pages: data.pages,
-                   comments: data.entities
-               });
-           },
-           error: function(jqXHR, exception) {
-               console.log(exception);
-           }
-       });
-    }
-
-
-
-
-    render() {
-        return React.createElement(
+    return React.createElement(
+        'div',
+        {
+         id: 'existingCommentsSection',
+        },
+        React.createElement(
             'div',
             {
-             id: 'existingCommentsSection',
+             id: 'existingComments',
             },
-            React.createElement(
-                'div',
-                {
-                 id: 'existingComments',
-                },
-                this.state.comments.map(
-                    (comment) => (
+            props.comments.map(
+                (comment) => (
+                    React.createElement(
+                        'div',
+                        {
+                         className: 'comment'
+                        },
                         React.createElement(
                             'div',
                             {
-                             className: 'comment'
+                             className: 'commentHeader'
                             },
                             React.createElement(
-                                'div',
+                                'span',
                                 {
-                                 className: 'commentHeader'
+                                 className: 'commentUserName',
                                 },
-                                React.createElement(
-                                    'span',
-                                    {
-                                     className: 'commentUserName',
-                                    },
-                                    comment.appUser.username
-                                ),
-                                React.createElement(
-                                    'span',
-                                    {
-                                     className: 'commentUserStars',
-                                     style: { color: getColor(comment.stars) }
-                                    },
-                                    comment.stars + '/10'
-                                )
+                                comment.appUser.username
                             ),
                             React.createElement(
-                                'div',
+                                'span',
                                 {
-                                 className: 'existingCommentContent',
+                                 className: 'commentUserStars',
+                                 style: { color: getColor(comment.stars) }
                                 },
-                                comment.content
-                            ),
-                            React.createElement(
-                                'div',
-                                {
-                                 className: 'commentFooter',
-                                },
-                                React.createElement(
-                                    'span',
-                                    {
-                                     className: 'commentCreationDate',
-                                    },
-                                    parseNanos(comment.creationDate)
-                                )
+                                comment.stars + '/10'
                             )
+                        ),
+                        React.createElement(
+                            'div',
+                            {
+                             className: 'existingCommentContent',
+                            },
+                            comment.content
+                        ),
+                        React.createElement(
+                            'div',
+                            {
+                             className: 'commentFooter',
+                            },
+                            React.createElement(
+                                'span',
+                                {
+                                 className: 'commentCreationDate',
+                                },
+                                parseNanos(comment.creationDate)
                             )
                         )
-                )
-
-            ),
-            React.createElement(
-                'div',
-                {
-                 id: 'existingCommentsPageList',
-                },
-                this.state.pages.map(
-                    (page) => (React.createElement(
-                        'div',
-                        {
-                         className: 'page',
-                         id: (page == this.state.currentPage ? 'currentPage' : undefined),
-                         onClick: this.handlePageChange,
-                        },
-                        page)
                     )
                 )
-
             )
-
-        );
-    }
+        ),
+        React.createElement(
+            'div',
+            {
+             id: 'existingCommentsPageList',
+            },
+            props.pages.map(
+                (page) => (React.createElement(
+                    'div',
+                    {
+                     className: 'page',
+                     id: (page == props.currentPage ? 'currentPage' : undefined),
+                     onClick: props.handlePageChange,
+                    },
+                    page)
+                )
+            )
+        )
+    );
 }
 
 /* Helper Functions */
