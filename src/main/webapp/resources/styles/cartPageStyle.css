@@ -29,9 +29,14 @@ main {
     margin-bottom: 2em;
 }
 
+.emptyCartLabel {
+    text-align: center;
+}
+
 #cart table {
     width: 100%;
     border-spacing: 0 1em;
+    margin-bottom: 1.5em;
 }
 
 #cart table thead {
@@ -41,6 +46,7 @@ main {
 #cart table tbody {
     text-align: center;
     font-size: 1.25rem;
+    margin-bottom: 1.5em;
 }
 
 #cart table tbody tr .productName {
@@ -53,14 +59,19 @@ main {
     margin-right: 1em;
 }
 
-#cart table form {
+#cart table tbody tr .total {
+    min-width: 5rem;
+    max-width: 5rem;
+}
+
+#cart table .itemQuantity {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
 }
 
-#cart table form input[type=number] {
+#cart table .itemQuantity input[type=number] {
     font-family: 'pacifico';
     text-align: center;
     font-size: 1rem;
@@ -79,14 +90,40 @@ main {
     cursor: pointer;
 }
 
-#grantTotal {
+#grandTotal {
     text-align: right;
 }
 
-#checkout-clause {
+#grandTotal p {
+    margin: 0;
+}
+
+#grandTotal span {
+    color: var(--hex-shadow-light);
+}
+
+#coupon {
+    width: fit-content;
+    float: left;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+}
+
+#coupon input {
+    text-align: center;
+    font-size: 1.25rem;
+    border-radius: .25em;
+    margin-right: .2em;
+    padding: .25rem 0;
+}
+
+#coupon button {
+    font-size: 1.2rem;
+}
+
+#checkout-clause {
+    width: fit-content;
+    float: right;
+    margin-top: 2em;
 }
 
 #checkout-clause form {

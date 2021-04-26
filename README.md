@@ -34,6 +34,7 @@ A web store built on Java platform.
 * JUnit5
 * AssertJ  
 * Mockito
+* Frontend: jQuery, React
 
 <a name="features"></a>
 ### Features
@@ -45,6 +46,7 @@ A web store built on Java platform.
 * Product management
     * Paginated listing of Products
     * Product search
+    * Adding comments for Products  
     * Adding/Removing/Changing quantity of products in cart  
     * Grouping products by Categories (Many to many)
     * Adding new Products (admin)
