@@ -4,6 +4,7 @@ import com.ldp.vigilantBean.domain.order.Cart;
 import com.ldp.vigilantBean.domain.order.CartItem;
 import com.ldp.vigilantBean.domain.order.CartItemDTO;
 import com.ldp.vigilantBean.service.CartService;
+import com.ldp.vigilantBean.validator.CouponValidator;
 import com.ldp.vigilantBean.validator.EntityProcessingResponse;
 import com.ldp.vigilantBean.validator.NewCartItemValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,27 @@ public class CartRestController {
 
       response.externalizeMessages();
       return new ResponseEntity<>(response, HttpStatus.OK);
+   }
+
+   @PostMapping("/applyCoupon")
+   public ResponseEntity<EntityProcessingResponse> applyCoupon(
+           @RequestParam("coupon")
+           String couponValue,
+           HttpServletRequest request) {
+
+      EntityProcessingResponse response =
+              new EntityProcessingResponse(
+                      request.getLocale(),
+                      messageSource
+              );
+
+      cartService.applyCoupon(couponValue, response);
+
+      response.externalizeMessages();
+      if (response.hasErrors())
+         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+      else
+         return new ResponseEntity<>(response, HttpStatus.OK);
    }
 
    private CartItemDTO extractCartItem(HttpServletRequest request) {

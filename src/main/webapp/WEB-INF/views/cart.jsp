@@ -24,8 +24,14 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-   <spring:url value="/resources/scripts/cartPageScript.js" var="cartPageScript"/>
-   <script type="text/javascript" src="${cartPageScript}"></script>
+    <spring:url value="/resources/scripts/react/react-dev-17.js" var="react"/>
+    <script type="text/javascript" src="${react}"></script>
+
+    <spring:url value="/resources/scripts/react/react-dom-dev-17.js" var="reactDom"/>
+    <script type="text/javascript" src="${reactDom}"></script>
+
+   <spring:url value="/resources/scripts/react/InjectCartComponent.js" var="cartPageScript"/>
+   <script type="module" type="text/javascript" src="${cartPageScript}"></script>
 
 </head>
 <body>
@@ -46,37 +52,6 @@
     </div>
 
     <div id="cart" class="clause">
-
-        <table>
-          <thead>
-           <tr>
-            <th></th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-           </tr>
-          </thead>
-          <tbody id="cartTableBody">
-
-          </tbody>
-        </table>
-    </div>
-
-    <div id="grantTotal" class="clause">
-        <p>Grant Total</span>
-        <span id="grandTotalValue"></span><span id="grantTotalCurrency">$</span>
-    </div>
-
-    <div id="checkout-clause" class="clause">
-
-        <form id="coupon-form">
-            <input type="text" />
-            <input type="submit" value="Apply" />
-        </form>
-
-        <button>
-            Checkout
-        </button>
 
     </div>
 

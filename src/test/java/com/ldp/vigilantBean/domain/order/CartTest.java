@@ -12,6 +12,7 @@ import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -58,7 +59,7 @@ public class CartTest {
                                            .reduce(BigDecimal.ZERO, BigDecimal::add);
 
        expectedPrice = expectedPrice.subtract(
-               expectedPrice.multiply(BigDecimal.valueOf((double) discount / 100))
+               expectedPrice.multiply(BigDecimal.valueOf((double) discount / 100)).setScale(2, RoundingMode.HALF_EVEN)
        );
 
        Assertions.assertEquals(

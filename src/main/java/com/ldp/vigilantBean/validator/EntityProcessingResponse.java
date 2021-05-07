@@ -29,7 +29,8 @@ public class EntityProcessingResponse {
                                     .map(errorCode -> messageSource.getMessage(errorCode, null, locale))
                                     .collect(Collectors.toList());
 
-        this.successCode = messageSource.getMessage(successCode, null, locale);
+        if (this.successCode != null)
+            this.successCode = messageSource.getMessage(successCode, null, locale);
     }
 
     public void setErrorCodes(List<String> errorCodes) {
