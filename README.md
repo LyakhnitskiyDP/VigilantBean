@@ -13,7 +13,7 @@ A web store built on Java platform.
     2. [Searching for products](#showcaseProductSearch)
     3. [Adding comments to products](#showcaseComments)   
     3. [Registration](#showcaseRegistration)
-    4. [Adding products to cart](#showcaseAddingProductsToCart)  
+    4. [Using cart](#showcaseAddingProductsToCart)  
     5. [Adding new Category](#showcaseNewCategory)
     6. [Adding new Product](#showcaseNewProduct)
 5. [How to set up](#howToSetUp)    
@@ -47,7 +47,8 @@ A web store built on Java platform.
     * Paginated listing of Products
     * Product search
     * Adding comments for Products  
-    * Adding/Removing/Changing quantity of products in cart  
+    * Adding/Removing/Changing quantity of products in cart
+    * Discount system based on coupons  
     * Grouping products by Categories (Many to many)
     * Adding new Products (admin)
     * Adding new Categories (admin)
@@ -86,7 +87,7 @@ A web store built on Java platform.
 <a name="showcaseNewCategory"></a>
 #### Adding new category (admin)
 ![slide_8](showcase/8.jpg)
-![slide_9](showcase/9.jpg)
+![slide_9](showcase/cartDemo.gif)
 
 <a name="showcaseNewProduct"></a>
 #### Adding new product (admin)

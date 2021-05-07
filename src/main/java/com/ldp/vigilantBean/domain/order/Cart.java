@@ -6,32 +6,37 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
+    @EqualsAndHashCode.Include
     private Long cartId;
 
     @OneToMany(mappedBy = "cart",
                cascade = CascadeType.ALL,
                fetch = FetchType.EAGER,
                orphanRemoval = true)
-    @EqualsAndHashCode.Exclude
     private Set<CartItem> cartItems;
 
     @OneToOne(mappedBy = "cart")
+    @EqualsAndHashCode.Include
     private AppUser appUser;
 
     @JsonIgnore
-    @EqualsAndHashCode.Exclude
     private Byte discount = 0;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "applied_coupon_id")
+    private Coupon appliedCoupon;
 
     /**
      * Calculates sum of all Cart Items and applies a discount
@@ -47,10 +52,17 @@ public class Cart {
 
         // Apply a discount
         BigDecimal grandTotalWithDiscount =
-                grandTotal.subtract( getDiscountValue(grandTotal) );
-
+                grandTotal.subtract( getDiscountValue(grandTotal) )
+                          .setScale(2, RoundingMode.HALF_EVEN);
 
         return grandTotalWithDiscount;
+    }
+
+    public BigDecimal getGrandTotalWithoutDiscount() {
+
+        return cartItems.stream()
+                        .map(CartItem::getTotal)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private BigDecimal getDiscountValue(BigDecimal initialValue) {

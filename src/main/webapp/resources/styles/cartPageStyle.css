@@ -90,6 +90,12 @@ main {
     cursor: pointer;
 }
 
+#subTable {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
 #grandTotal {
     text-align: right;
 }
@@ -102,10 +108,18 @@ main {
     color: var(--hex-shadow-light);
 }
 
+#grandTotalValueWithDiscount {
+    margin-left: .2em;
+}
+
 #coupon {
     width: fit-content;
     float: left;
     display: flex;
+}
+
+#couponProcessingResponse {
+    text-align: center;
 }
 
 #coupon input {
@@ -114,6 +128,7 @@ main {
     border-radius: .25em;
     margin-right: .2em;
     padding: .25rem 0;
+    font-family: 'pacifico';
 }
 
 #coupon button {

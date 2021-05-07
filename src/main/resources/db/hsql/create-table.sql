@@ -8,6 +8,7 @@ DROP TABLE app_user IF EXISTS;
 
 DROP TABLE cart_item IF EXISTS;
 DROP TABLE cart IF EXISTS;
+DROP TABLE coupon IF EXISTS;
 
 DROP TABLE product_picture IF EXISTS;
 DROP TABLE category_picture IF EXISTS;
@@ -95,9 +96,18 @@ CREATE TABLE verification_token (
     expiry_date TIMESTAMP DEFAULT NOW()
 )
 
+CREATE TABLE coupon (
+    coupon_id INTEGER IDENTITY PRIMARY KEY,
+    coupon_value VARCHAR(6) NOT NULL,
+    discount_percentage INTEGER NOT NULL CHECK (discount_percentage > 0 AND discount_percentage <= 100),
+    creation_date TIMESTAMP DEFAULT NOW(),
+    expiry_date TIMESTAMP
+)
+
 CREATE TABLE cart (
     cart_id INTEGER IDENTITY PRIMARY KEY,
-    discount INTEGER
+    discount INTEGER,
+    applied_coupon_id INTEGER FOREIGN KEY REFERENCES coupon (coupon_id)
 )
 
 CREATE TABLE cart_item (

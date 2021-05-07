@@ -6,7 +6,11 @@ class Cart extends React.Component {
     this.state = {
       cartItems: [],
       grandTotal: 0,
+      grandTotalWithDiscount: 0,
       coupon: "",
+      couponLoading: false,
+      couponProcessingResponse: { text: "", isError: false },
+      couponApplied: false
     };
 
     this.queryCart = this.queryCart.bind(this);
@@ -55,12 +59,39 @@ class Cart extends React.Component {
 
   handleCouponChange(event) {
 
-    if (event.target.value < 7)
+    if (event.target.value.length <= 6)
       this.setState({ coupon: event.target.value.toUpperCase() });
+
   }
 
   handleCouponSubmit() {
 
+   this.setState({ couponLoading: true });
+   $.ajax({
+     type: 'POST',
+     url: 'api/cart/applyCoupon',
+     data: { coupon: this.state.coupon },
+     success: (response) => {
+        console.log(response)
+        this.setState({
+            couponProcessingResponse: { text: response.successCode, isError: false },
+            coupon: "",
+            couponApplied: true
+        });
+        this.queryCart();
+     },
+     error: (error) => {
+        console.log(error);
+        const processingError = JSON.parse(error.responseText);
+        const errorCode = processingError.errorCodes[0];
+        this.setState({
+            couponProcessingResponse: { text: errorCode, isError: true }
+        });
+     },
+     complete: () => {
+        this.setState({ couponLoading: false })
+     }
+   });
 
   }
 
@@ -69,9 +100,11 @@ class Cart extends React.Component {
       type: 'GET',
       url: 'api/cart/getCart',
       success: (cart) => {
+        console.log(cart);
         this.setState({
             cartItems: cart.cartItems,
-            grandTotal: cart.grandTotal
+            grandTotal: cart.grandTotalWithoutDiscount,
+            grandTotalWithDiscount: cart.grandTotal
         });
       },
       error: function (error) {
@@ -95,7 +128,7 @@ class Cart extends React.Component {
     }, /*#__PURE__*/React.createElement("img", {
       src: ("resources/images/products/" + cartItem.product.mainPicture.fullName)
     }), /*#__PURE__*/React.createElement("span", null, cartItem.product.name)), /*#__PURE__*/React.createElement("td", null, cartItem.product.unitPrice, "$"), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", { className: 'itemQuantity' }, /*#__PURE__*/React.createElement("input", {
-      class: "quantityCounter",
+      className: "quantityCounter",
       type: "number",
       min: "1",
       max: "9999",
@@ -105,28 +138,53 @@ class Cart extends React.Component {
     }), /*#__PURE__*/React.createElement("span", {
       className: "discard",
       onClick: () => { this.handleCartItemRemoval(cartItem.cartItemId) },
-    }, "\xD7"))), /*#__PURE__*/React.createElement("td", { className: 'total' }, cartItem.total, "$"))))), /*#__PURE__*/React.createElement("div", {
-      id: "coupon"
-    }, /*#__PURE__*/React.createElement("input", {
+    }, "\xD7"))), /*#__PURE__*/React.createElement("td", { className: 'total' }, cartItem.total, "$"))))), /*#__PURE__*/
+    React.createElement("div", { id: "subTable" },
+    React.createElement("div", {
+      id: "couponClaus"
+    },
+    React.createElement("p", {
+        id: "couponProcessingResponse",
+        style: {
+            display: this.state.couponProcessingResponse.text.length > 0 ? "block" : "none",
+            color: this.state.couponProcessingResponse.isError ? "#E64346" : "#99ff99"
+            },
+    }, this.state.couponProcessingResponse.text),
+    React.createElement("div", { id: "coupon" },
+    React.createElement("input", {
       type: "text",
       placeholder: "Have a coupon?",
       value: this.state.coupon,
-      onChange: this.handleCouponChange
+      onChange: this.handleCouponChange,
+      disabled: this.state.couponLoading
     }), /*#__PURE__*/React.createElement("button", {
         onClick: this.handleCouponSubmit,
-    }, "Apply")), /*#__PURE__*/React.createElement("div", {
+        disabled: this.state.couponLoading
+    }, "Apply"))),
+    /*#__PURE__*/React.createElement("div", {
       id: "grandTotal",
       className: "clause"
-    }, /*#__PURE__*/React.createElement("p", null, "Grand Total"), /*#__PURE__*/React.createElement("span", {
-      id: "grandTotalValue"
+    }, /*#__PURE__*/
+    React.createElement("p", null, "Grand Total"),
+
+    React.createElement("span", {
+      id: "grandTotalValue",
+      style: { "textDecoration": (this.state.couponApplied ? "line-through" : "none")}
     }, this.state.grandTotal
-    ), /*#__PURE__*/React.createElement("span", {
+    ),
+    React.createElement("span", {
+        style: { display: (this.state.couponApplied ? "inline" : "none") },
+        id: "grandTotalValueWithDiscount"
+    }, this.state.grandTotalWithDiscount),
+    React.createElement("span", {
       id: "grantTotalCurrency"
-    }, "$")),
-        React.createElement("div", {
-          id: "checkout-clause",
-          class: "clause"
-        }, /*#__PURE__*/React.createElement("button", null, "Checkout"))
+    }, "$"))
+
+    ),
+    React.createElement("div", {
+      id: "checkout-clause",
+      className: "clause"
+    }, /*#__PURE__*/React.createElement("button", null, "Checkout"))
     )
   }
 

@@ -79,3 +79,6 @@ INSERT INTO user_role (app_user_id, role_id)
 
 INSERT INTO cart (cart_id, discount)
     VALUES (1, 0);
+
+INSERT INTO coupon (coupon_value, discount_percentage)
+    VALUES ('OFF50', 50);
