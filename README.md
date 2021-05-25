@@ -82,12 +82,12 @@ A web store built on Java platform.
 <a name="showcaseAddingProductsToCart"></a>
 #### Adding products to cart
 ![slide_13](showcase/15.png)
-![slide_14](showcase/16.png)
+![slide_14](showcase/cartDemo.gif)
 
 <a name="showcaseNewCategory"></a>
 #### Adding new category (admin)
 ![slide_8](showcase/8.jpg)
-![slide_9](showcase/cartDemo.gif)
+![slide_9](showcase/9.jpg)
 
 <a name="showcaseNewProduct"></a>
 #### Adding new product (admin)
